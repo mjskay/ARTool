@@ -6,7 +6,7 @@ _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
 ART is an R package implementing the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. This implementation is based on the ART procedure as used in [ARTool](http://depts.washington.edu/aimgroup/proj/art/). 
 
-__Note__: the documentation of this package assumes some level of familiarity with when and why you may want to use the aligned rank transform; the [ARTool page](http://depts.washington.edu/aimgroup/proj/art/) provides a more in-depth (yet highly approachable) introduction to the aligned rank transform and the motivation for its use.
+__Note__: The documentation of this package assumes some level of familiarity with when and why you may want to use the aligned rank transform; the [ARTool page](http://depts.washington.edu/aimgroup/proj/art/) provides a more in-depth (and highly approachable) introduction to the aligned rank transform and the motivation for its use.
 
 ## Installation
 
