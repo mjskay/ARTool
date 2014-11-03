@@ -1,0 +1,11 @@
+import(lme4)
+import(car)
+import(plyr)
+import(pbkrtest)
+
+export(art, artlm)
+
+S3method(anova, art)    
+S3method(summary, art)
+S3method(print, art)
+S3method(print, summary.art)

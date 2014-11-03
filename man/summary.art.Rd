@@ -1,0 +1,40 @@
+\name{summary.art}
+\alias{summary.art}
+\title{
+Aligned Rank Transform Summary
+}
+\description{
+Summary and diagnostics for aligned rank transformed data
+}
+\usage{
+\method{summary}{art}(object, ...)
+}
+\arguments{
+  \item{object}{
+An object of class \code{\link{art}}.
+}
+  \item{\dots}{
+Potentially further arguments passed from other methods.
+}
+}
+\details{
+This function gives diagnostic output to help evaluate whether the ART procedure is
+appropriate for an analysis. It tests that column sums of aligned responses are ~0
+and that F values of ANOVAs on aligned responses not of interest are ~0. For more
+details on these diagnostics see Wobbrock \emph{et al.} (2011).
+}
+\value{
+An object of class \code{"summary.art"}, which usually is printed.
+}
+\references{
+Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J. (2011). The Aligned Rank Transform for nonparametric factorial 
+analyses using only ANOVA procedures. \emph{Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI '11)}. 
+Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. 
+}
+\author{
+Matthew Kay
+}
+\seealso{
+See \code{\link{art}} for an example. See also \code{\link{anova.art}}.
+}
+\keyword{nonparametric}

@@ -1,0 +1,24 @@
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{ART}: Aligned Rank Transform for Nonparametric Factorial ANOVAs",
+         author = c(person("Matthew", "Kay"),
+                    person("Jacob O.", "Wobbrock")),
+         year = year,
+         note = note,
+         url = "https://github.com/mjskay/ART")
+
+bibentry(bibtype = "InProceedings",
+         title = "The Aligned Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA Procedures",
+         author = c(person("Jacob O.", "Wobbrock"),
+                    person("Leah", "Findlater"),
+                    person("Darren", "Gergle"),
+                    person("James J.", "Higgins")),
+         year = 2011,
+         booktitle = "Proceedings of the ACM Conference on Human Factors in Computing Systems (CHI '11)",
+         address = "New York",
+         publisher = "ACM Press",
+         pages = "143--146",
+         url = "http://depts.washington.edu/aimgroup/proj/art/")
+         
