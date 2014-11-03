@@ -13,8 +13,8 @@ __Note__: the documentation of this package assumes some level of familiarity wi
 You can install the latest version from github via these R commands: 
 
 ```R
-install.packages("devtools")
-devtools::install_github("mjskay/ART")
+> install.packages("devtools")
+> devtools::install_github("mjskay/ART")
 ```
 
 ## Example
@@ -24,14 +24,14 @@ The general approach to using ART is to transform your data using `art`, verify 
 First, let us load some example data:
 
 ```R
-library(ART)
-data(Higgins1990Table5)
+> library(ART)
+> data(Higgins1990Table5)
 ```
 
 `Higgins1990Table5` is a data frame from an experiment in which the effects of `Moisture` and `Fertilizer` on `DryMatter` in peat pots was tested. Four pots were placed on each `Tray`, with `Moisture` varied between `Tray`s and `Fertilizer` varied within `Tray`s. We can see the basic structure of the data:
 
 ```R
-str(Higgins1990Table5)
+> str(Higgins1990Table5)
 ```
 ```
 'data.frame':   48 obs. of  4 variables:
@@ -42,7 +42,7 @@ str(Higgins1990Table5)
 ```
 
 ```R
-head(Higgins1990Table5, n=8)
+> head(Higgins1990Table5, n=8)
 ```
 ```
    Tray Moisture Fertilizer DryMatter
@@ -59,13 +59,13 @@ head(Higgins1990Table5, n=8)
 To analyze this data using the aligned rank transform, we first transform the data using `art`. We specify the response variable (`DryMatter`), the fixed effects and all of their interactions (`Moisture*Fertilizer`, or equivalently `Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if present (here, `(1|Tray)`):
 
 ```R
-m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+> m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 ```
 
 To verify that the ART procedure was correctly applied and is appropriate for this dataset, we can look at the output of `summary`:
 
 ```R
-summary(m)
+> summary(m)
 ```
 ```
 Aligned Rank Transform of Full Factorial Model
@@ -112,4 +112,4 @@ Nonparametric Factorial ANOVAs_. R package version 0.9.1, <https://github.com/mj
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
 Procedures." In _Proceedings of the ACM Conference on Human Factors in
-Computing Systems (CHI '11)_, Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. [http://depts.washington.edu/aimgroup/proj/art/](http://depts.washington.edu/aimgroup/proj/art/).
+Computing Systems (CHI '11)_, Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. <http://depts.washington.edu/aimgroup/proj/art/>.
