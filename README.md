@@ -1,4 +1,4 @@
-# ART: The Aligned Rank Transform for Nonparametric Factorial ANOVAs 
+# ART: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
 
 _Matthew Kay, University of Washington <mjskay@uw.edu>_
 
