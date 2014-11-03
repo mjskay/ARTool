@@ -25,16 +25,16 @@ test_that("art formula must have at least 1 fixed effect", {
     expect_error(ART:::parse.art.formula(y ~ 1 + (1|c)), 'Model must have at least one fixed effect \\(0 given\\)')
 })
 
-test_that("art formula must be full factorial", {
-    expect_error(ART:::parse.art.formula(y ~ a + b),         'Model must be full factorial \\(must include all combinations of interactions of fixed effects\\)')
-    expect_error(ART:::parse.art.formula(y ~ a + b),         'Model must be full factorial \\(must include all combinations of interactions of fixed effects\\)')
-    expect_error(ART:::parse.art.formula(y ~ a + b + c:d),   'Model must be full factorial \\(must include all combinations of interactions of fixed effects\\)')	
-    expect_error(ART:::parse.art.formula(y ~ a * b + c:d),   'Model must be full factorial \\(must include all combinations of interactions of fixed effects\\)')
-    expect_error(ART:::parse.art.formula(y ~ a * b + c),     'Model must be full factorial \\(must include all combinations of interactions of fixed effects\\)')
-    expect_error(ART:::parse.art.formula(y ~ a + b + (1|c)), 'Model must be full factorial \\(must include all combinations of interactions of fixed effects\\)')
+test_that("art formula must have all interactions of fixed effects", {
+    expect_error(ART:::parse.art.formula(y ~ a + b),         'Model must include all combinations of interactions of fixed effects.')
+    expect_error(ART:::parse.art.formula(y ~ a + b),         'Model must include all combinations of interactions of fixed effects.')
+    expect_error(ART:::parse.art.formula(y ~ a + b + c:d),   'Model must include all combinations of interactions of fixed effects.')	
+    expect_error(ART:::parse.art.formula(y ~ a * b + c:d),   'Model must include all combinations of interactions of fixed effects.')
+    expect_error(ART:::parse.art.formula(y ~ a * b + c),     'Model must include all combinations of interactions of fixed effects.')
+    expect_error(ART:::parse.art.formula(y ~ a + b + (1|c)), 'Model must include all combinations of interactions of fixed effects.')
 })
 
-test_that("different variations on full factorial model specifications are accepted by art", {
+test_that("different variations on factorial model specifications are accepted by art", {
     expect_equal(ART:::parse.art.formula(y ~ a)$fixed.only, y ~ a)
     expect_equal(ART:::parse.art.formula(y ~ a)$fixed.terms, ~ a)
     expect_equal(ART:::parse.art.formula(y ~ a + (1|c))$fixed.only, y ~ a)

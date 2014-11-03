@@ -5,7 +5,7 @@
 
 
 ### Parses and validates model formula for art. 
-### Raises exception if formula does not validate (e.g. not full factorial).
+### Raises exception if formula does not validate (e.g. not factorial).
 ### Returns list with:
 ###		fixed.only: formula with only fixed components
 ###		fixed.terms: additive formula with only fixed terms and no response 
@@ -39,8 +39,8 @@ parse.art.formula = function(formula) {
     fixed.f.variables = f.variables[!is.grouping.variable]
     term_index.2 = length(f.term.labels) - length(is.grouping.variable) + 2	#TODO: go back and determine what this is 
     if (term_index.2 < 0) {
-        #only happens when not full factorial? TODO: why?
-        stop("Model must be full factorial (must include all combinations of interactions of fixed effects)")
+        #only happens when not factorial? TODO: why?
+        stop("Model must include all combinations of interactions of fixed effects.")
     }
     term_index = c(!is.grouping.variable[-c(1,2)], rep(TRUE, term_index.2))
     if (length(f.factors) == 0) {
@@ -55,16 +55,16 @@ parse.art.formula = function(formula) {
     fixed.f.term.labels = f.term.labels[term_index]
     fixed.f.order = f.order[term_index]
     
-    #ensure design of fixed effects portion of model is full factorial
+    #ensure design of fixed effects portion of model has all interactions
     #first, pull out the response and the main (i.e. order-1) fixed effect terms 
     response.label = rownames(f.factors)[1]
     main.effects.labels = fixed.f.term.labels[fixed.f.order == 1]
-    #build a full factorial model of all fixed effects
-    full.factorial.formula = eval(parse(text=paste(response.label,"~",do.call(paste, c(main.effects.labels, list(sep="*"))))))
-    #verify the full factorial model is the same as the fixed effects in the supplied model
-    full.factorial.factors = attr(terms(full.factorial.formula), "factors")
-    if (!all(dim(full.factorial.factors) == dim(fixed.f.factors)) || !all(full.factorial.factors == fixed.f.factors)) {
-        stop("Model must be full factorial (must include all combinations of interactions of fixed effects)")
+    #build a factorial model of all fixed effects
+    factorial.formula = eval(parse(text=paste(response.label,"~",do.call(paste, c(main.effects.labels, list(sep="*"))))))
+    #verify the factorial model is the same as the fixed effects in the supplied model
+    factorial.factors = attr(terms(factorial.formula), "factors")
+    if (!all(dim(factorial.factors) == dim(fixed.f.factors)) || !all(factorial.factors == fixed.f.factors)) {
+        stop("Model must include all combinations of interactions of fixed effects.")
     }
     
     #	#ensure grouping terms are intercept-only (TODO: is this necessary?)
@@ -74,7 +74,7 @@ parse.art.formula = function(formula) {
     #	}
     
     #generate all-terms formula
-    all.terms = full.factorial.formula
+    all.terms = factorial.formula
     #add grouping variables back in to formula as standlone terms (not in (1|x) form)
     for (rv in as.list(grouping.f.variables)) {
         all.terms = eval(parse(text=paste("update(all.terms, ~ . +", as.character(rv[[3]]), ")")))
@@ -82,7 +82,7 @@ parse.art.formula = function(formula) {
     
     #return validated formulas
     list(
-        fixed.only=full.factorial.formula,
+        fixed.only=factorial.formula,
         fixed.terms=eval(parse(text=paste("~",do.call(paste, c(main.effects.labels, list(sep="+")))))),
         fixed.term.labels=fixed.f.term.labels,
         all.terms=all.terms,
@@ -91,7 +91,7 @@ parse.art.formula = function(formula) {
 }
 
 
-### Given a full-factorial, fixed-effects-only formula,
+### Given a factorial, fixed-effects-only formula,
 ### calculate the cell means and estimated effects
 ### for all responses. Returns a list of three
 ### data frames all indexed in parallel: data 

@@ -2,10 +2,10 @@
 \alias{Higgins1990Table1}
 \docType{data}
 \title{
-Synthetic 3x3 Full Factorial Randomized Experiment
+Synthetic 3x3 Factorial Randomized Experiment
 }
 \description{
-Synthetic data from a balanced 3x3 full factorial experiment with main effects, no interaction, 
+Synthetic data from a balanced 3x3 factorial experiment with main effects, no interaction, 
 and independent and identically distributed (i.i.d.) Normal errors.
 }
 \usage{data(Higgins1990Table1)}

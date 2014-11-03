@@ -93,7 +93,7 @@ print.summary.art = function(x,
     #sensible names for generic parameters
     m = x
     
-    cat("Aligned Rank Transform of Full Factorial Model\n\nCall:\n", paste(deparse(m$call), sep="\n", collapse="\n"), "\n\n", sep="")
+    cat("Aligned Rank Transform of Factorial Model\n\nCall:\n", paste(deparse(m$call), sep="\n", collapse="\n"), "\n\n", sep="")
     cat("Column sums of aligned responses (should all be ~0):\n")
     print(round(m$aligned.col.sums, display.digits), ...)
     cat("\nF values of ANOVAs on aligned responses not of interest (should all be ~0):\n")
