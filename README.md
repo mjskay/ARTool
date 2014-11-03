@@ -68,7 +68,7 @@ To verify that the ART procedure was correctly applied and is appropriate for th
 > summary(m)
 ```
 ```
-Aligned Rank Transform of Full Factorial Model
+Aligned Rank Transform of Factorial Model
 
 Call:
 art(formula = DryMatter ~ Moisture * Fertilizer + (1 | Tray), 
