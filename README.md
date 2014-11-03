@@ -4,7 +4,7 @@ _Matthew Kay, University of Washington <mjskay@uw.edu>_
 
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
-ART is an implementation of the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. The implementation here is based on the ART procedure as used in [ARTool](http://depts.washington.edu/aimgroup/proj/art/).
+ART is an implementation of the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. The implementation here is based on the ART procedure as used in [ARTool](http://depts.washington.edu/aimgroup/proj/art/). __Note__: the documentation of this package assumes some level of familiarity with when and why you may want to use it; the ARTool page provides a more in-depth and approachable introduction to the aligned rank transform.
 
 ## Installation
 
@@ -98,9 +98,9 @@ We see that the columns sums of aligned responses and the F values of ANOVAs on 
     Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ```
 
-## Further Reading
+## Problems
 
-The [ARTool](http://depts.washington.edu/aimgroup/proj/art/) website has a more complete description of the procedure implemented here, when it is applicable, caveats, etc.
+Should you encounter any issues with `art`, please contact Matthew Kay. If you have found a bug, please file a bug report [here](https://github.com/mjskay/ART/issues/new) with minimal code to reproduce the issue.
 
 ## Citations
 

@@ -20,4 +20,6 @@ Suggests:
     testthat,
     lsmeans
 License: GPL (>= 2)
+BugReports: https://github.com/mjskay/ART/issues/new
+URL: https://github.com/mjskay/ART
 URL: http://depts.washington.edu/aimgroup/proj/art/
