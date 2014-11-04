@@ -7,7 +7,7 @@ conduct nonparametric analyses of variance on models with numeric or ordinal res
 }
 \usage{
 art(formula, data, 
-	rank.comparison.digits = -floor(log10(.Machine$double.eps^0.5)))
+    rank.comparison.digits = -floor(log10(.Machine$double.eps^0.5)))
 }
 \arguments{
   \item{formula}{
@@ -34,11 +34,11 @@ The model specified using this function \emph{must} include all interactions of 
 
 The \code{formula} should contain a single response variable (left-hand side) that can be numeric,
 an ordered factor, or logical. The right-hand side of the formula should contain one or more
-fixed effects and zero or more grouping terms. All possible interactions of the fixed effect terms 
+fixed effect factors and zero or more grouping terms. All possible interactions of the fixed effect terms 
 must be included. For example, \code{y ~ x} and \code{y ~ a*b*c} and \code{y ~ a + b + b:c} are legal, 
 but \code{y ~ a + b} is not, as it omits the interaction \code{a:b}. Grouping terms are specified as in 
 \code{\link{lmer}}, e.g. \code{y ~ a*b*c + (1|d)} includes the random intercept term \code{(1|d)}.
-Grouping terms are not transformed, but are included in the model when anovas are conducted,
+Grouping terms are not transformed, but are included in the model when ANOVAs are conducted,
 see \code{\link{anova.art}}.
 
 For details on the transformation itself, see Wobbrock \emph{et al.} (2011) or the ARTool

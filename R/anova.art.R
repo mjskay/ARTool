@@ -6,7 +6,8 @@
 
 anova.art = function(object, 
     response=c("art", "aligned"),
-    type=c("II", "III", "I", 2, 3, 1), 
+    type=c("III", "II", "I", 3, 2, 1), 
+    factor.contrasts="contr.sum",
     test=c("F", "Chisq"),  
     all.rows=FALSE,
     ...
@@ -51,7 +52,7 @@ anova.art = function(object,
     anovas = NULL
     for (j in 1:ncol(responses)) {	#can't use ldply here because it appears to drop row names when binding rows
         #get linear model
-        m.l = artlm(m, colnames(responses)[[j]], response)
+        m.l = artlm(m, colnames(responses)[[j]], response=response, factor.contrasts=factor.contrasts)
         
         #run anova and extract desired results 
         anova.j = anova.function(m.l)

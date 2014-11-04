@@ -9,8 +9,10 @@ by the specified term from the model.
 }
 \usage{
 artlm(m, 
-	term, 
-	response = c("art", "aligned"))
+    term, 
+    response = c("art", "aligned"),
+    factor.contrasts="contr.sum",
+    ...)
 }
 \arguments{
   \item{m}{
@@ -24,10 +26,19 @@ transformed data in \code{m} to use as the aligned or art response.
 Which response to use: the aligned response (\code{"aligned"}) or the 
 aligned and ranked (\code{"art"}) response.
 }
+  \item{factor.contrasts}{
+The name of the contrast-generating function to be applied by default to fixed effect factors. Sets the
+the first element of \code{\link{options}("contrasts")} for the duration of this function. The default 
+is to use \code{"contr.sum"}, i.e. sum-to-zero contrasts, which is appropriate for Type III ANOVAs 
+(the default in \code{\link{anova.art}}).
+}
+  \item{\dots}{
+Additional arguments passed to \code{\link{lm}} or \code{\link{lmer}}.
+}
 }
 \details{
 This function is used primarily for post-hoc tests. To run an ANOVA, it
-probably does not need to be called directly; instead, use \code{\link{anova.art}},
+does not need to be called directly; instead, use \code{\link{anova.art}},
 which calls this function as needed.
 }
 \value{
