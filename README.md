@@ -89,7 +89,7 @@ We see that the columns sums of aligned responses and the F values of ANOVAs on 
 > anova(m)
 ```
 ```
-Aligned Rank Transform Anova Table (Type II tests)
+Aligned Rank Transform Anova Table (Type III tests)
 
 Response: art(DryMatter)
                           F Df Df.res    Pr(>F)    
