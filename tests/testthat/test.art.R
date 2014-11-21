@@ -4,7 +4,7 @@
 ###############################################################################
 
 library(testthat)
-library(ART)
+library(ARTool)
 
 
 test_that("art does not allow factors as responses", {
@@ -66,9 +66,9 @@ test_that("art allows models with missing data in the grouping terms", {
     expect_equal(nrow(anova(m, response="aligned")), 0) 
 })
 
-test_that("art of Higgins1990Table5 matches results of ARTool", {
+test_that("art of Higgins1990Table5 matches results of the original ARTool", {
     ### verify that art on Higgins1990Table5 is correct
-    data(Higgins1990Table5, Higgins1990Table5.art, package="ART")
+    data(Higgins1990Table5, Higgins1990Table5.art, package="ARTool")
     
     #run art on original data
     m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
@@ -89,9 +89,9 @@ test_that("art of Higgins1990Table5 matches results of ARTool", {
     expect_equal(m$aligned.ranks$`Moisture:Fertilizer`, Higgins1990Table5.art$ART.DryMatter..for.Moisture.Fertilizer)
 })
 
-test_that("art of Higgins1990Table1 matches results of ARTool", {
+test_that("art of Higgins1990Table1 matches results of the original ARTool", {
     ### verify that art on Higgins1990Table5 is correct
-    data(Higgins1990Table1, Higgins1990Table1.art, package="ART")
+    data(Higgins1990Table1, Higgins1990Table1.art, package="ARTool")
     
     #run art on original data
     m = art(Response ~ Row*Column, data=Higgins1990Table1)
@@ -112,9 +112,9 @@ test_that("art of Higgins1990Table1 matches results of ARTool", {
     expect_equal(m$aligned.ranks$`Row:Column`, Higgins1990Table1.art$ART.Response..for.Row.Column)
 })
 
-test_that("art of HigginsABC matches results of ARTool", {
+test_that("art of HigginsABC matches results of the original ARTool", {
     ### verify that art on HigginsABC is correct
-    data(HigginsABC, HigginsABC.art, package="ART")
+    data(HigginsABC, HigginsABC.art, package="ARTool")
     
     #run art on original data
     m = art(Y ~ A*B*C + (1|Subject), data=HigginsABC)

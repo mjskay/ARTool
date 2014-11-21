@@ -5,7 +5,7 @@
 Aligned Rank Transformed Version of Higgins1990Table5
 }
 \description{
-The ART version of \code{\link{Higgins1990Table5}} as produced by ARTool, used to test
+The ART version of \code{\link{Higgins1990Table5}} as produced by the original ARTool, used to test
 the correctness of \code{\link{art}} output.
 }
 \usage{data(Higgins1990Table5.art)}

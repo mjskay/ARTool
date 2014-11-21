@@ -1,4 +1,4 @@
-Package: ART
+Package: ARTool
 Title: Aligned Rank Transform
 Version: 0.9.1
 Date: 2014-11-01
@@ -20,5 +20,5 @@ Suggests:
     testthat,
     lsmeans
 License: GPL (>= 2)
-BugReports: https://github.com/mjskay/ART/issues/new
-URL: https://github.com/mjskay/ART
+BugReports: https://github.com/mjskay/ARTool/issues/new
+URL: https://github.com/mjskay/ARTool

@@ -4,13 +4,13 @@
 ###############################################################################
 
 library(testthat)
-library(ART)
+library(ARTool)
 library(lsmeans)
 
 
 test_that("artlm returns models that can be used by lsmeans", {
     ### verify that art on HigginsABC is correct
-    data(HigginsABC, HigginsABC.art, package="ART")
+    data(HigginsABC, HigginsABC.art, package="ARTool")
     
     #run art on original data (with grouping term to force lmer)
     m = art(Y ~ A*B*C + (1|Subject), data=HigginsABC)

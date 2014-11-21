@@ -5,7 +5,7 @@
 Aligned Rank Transformed Version of HigginsABC
 }
 \description{
-The ART version of \code{\link{HigginsABC}} as produced by ARTool, used to test
+The ART version of \code{\link{HigginsABC}} as produced by the original ARTool, used to test
 the correctness of \code{\link{art}} output.
 }
 \usage{data(HigginsABC.art)}

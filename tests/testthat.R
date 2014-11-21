@@ -1,4 +1,4 @@
 library(testthat)
-library(ART)
+library(ARTool)
 
-test_check("ART")
+test_check("ARTool")

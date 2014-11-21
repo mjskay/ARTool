@@ -74,7 +74,7 @@ Matthew Kay
 \code{\link{summary.art}}, \code{\link{anova.art}}, \code{\link{artlm}}.
 }
 \examples{
-data(Higgins1990Table5, package="ART")
+data(Higgins1990Table5, package="ARTool")
 
 ## perform aligned rank transform
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)

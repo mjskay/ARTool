@@ -4,7 +4,7 @@
 ###############################################################################
 
 library(testthat)
-library(ART)
+library(ARTool)
 
 
 test_that("summary(art) gives a warning on models with approx nonzero F on aligned responses not of interest", {

@@ -1,10 +1,10 @@
-# ART: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
+# ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
 
 _Matthew Kay, University of Washington <mjskay@uw.edu>_
 
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
-ART is an R package implementing the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. This implementation is based on the ART procedure as used in [ARTool](http://depts.washington.edu/aimgroup/proj/art/). 
+ARTool is an R package implementing the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. This implementation is based on the ART procedure as used in the original implementation of [ARTool](http://depts.washington.edu/aimgroup/proj/art/) by Wobbrock et al. 
 
 __Note__: The documentation of this package assumes some level of familiarity with when and why you may want to use the aligned rank transform; the [ARTool page](http://depts.washington.edu/aimgroup/proj/art/) provides a more in-depth (and highly approachable) introduction to the aligned rank transform and the motivation for its use.
 
@@ -14,7 +14,7 @@ You can install the latest version from github via these R commands:
 
 ```R
 > install.packages("devtools")
-> devtools::install_github("mjskay/ART")
+> devtools::install_github("mjskay/ARTool")
 ```
 
 ## Example
@@ -24,7 +24,7 @@ The general approach to using ART is to transform your data using `art`, verify 
 First, let us load some example data:
 
 ```R
-> library(ART)
+> library(ARTool)
 > data(Higgins1990Table5)
 ```
 
@@ -102,12 +102,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ## Problems
 
-Should you encounter any issues with this package, contact Matthew Kay (<mjskay@uw.edu>). If you have found a bug, please file it [here](https://github.com/mjskay/ART/issues/new) with minimal code to reproduce the issue.
+Should you encounter any issues with this package, contact Matthew Kay (<mjskay@uw.edu>). If you have found a bug, please file it [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to reproduce the issue.
 
 ## Citations
 
-Kay M and Wobbrock J (2014). _ART: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs_. R package version 0.9.1, <https://github.com/mjskay/ART>.
+Kay M and Wobbrock J (2014). _ARTool: Aligned Rank Transform for
+Nonparametric Factorial ANOVAs_. R package version 0.9.1, <https://github.com/mjskay/ARTool>.
 
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
