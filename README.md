@@ -10,7 +10,13 @@ __Note__: The documentation of this package assumes some level of familiarity wi
 
 ## Installation
 
-You can install the latest version from github via these R commands: 
+You can install the latest released version from CRAN with this R command:
+
+```R
+> install.packages("ARTool")
+```
+
+__Or__, you can install the latest development version from GitHub with these R commands: 
 
 ```R
 > install.packages("devtools")
