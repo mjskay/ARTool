@@ -6,7 +6,6 @@ Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@uw.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
-Author: Matthew Kay and Jacob O. Wobbrock
 Maintainer: Matthew Kay <mjskay@uw.edu>
 Description: Aligned Rank Transform for nonparametric
     factorial ANOVAs
