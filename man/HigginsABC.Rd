@@ -25,11 +25,11 @@ Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J. \emph{ARTool}. \u
 \seealso{
 \code{\link{art}}, \code{\link{anova.art}}. 
 }
-\examples{
+\examples{\dontrun{
 data(HigginsABC, HigginsABC.art, package="ARTool")
 
 ## run aligned-rank transform and ANOVA on the data
 m <- art(Y ~ A*B*C + (1|Subject), data=HigginsABC)
 anova(m)
-}
+}}
 \keyword{datasets}

@@ -73,7 +73,7 @@ Matthew Kay
 \seealso{
 \code{\link{summary.art}}, \code{\link{anova.art}}, \code{\link{artlm}}.
 }
-\examples{
+\examples{\dontrun{
 data(Higgins1990Table5, package="ARTool")
 
 ## perform aligned rank transform
@@ -101,5 +101,5 @@ lsmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
 
 ## pairwise contrasts on Fertilizer:
 lsmeans(artlm(m, "Fertilizer"), pairwise ~ Fertilizer)
-}
+}}
 \keyword{nonparametric}
