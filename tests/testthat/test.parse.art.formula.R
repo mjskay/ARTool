@@ -6,6 +6,7 @@
 library(testthat)
 library(ARTool)
 
+context("art formula parsing")
 
 test_that("art formula must have 1 response variable", {
     expect_error(ARTool:::parse.art.formula(~ a*b*c), 'Model must have exactly one independent variable \\(got 0\\)')

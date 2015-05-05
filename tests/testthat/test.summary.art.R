@@ -6,6 +6,7 @@
 library(testthat)
 library(ARTool)
 
+context("summary.art")
 
 test_that("summary(art) gives a warning on models with approx nonzero F on aligned responses not of interest", {
     df = data.frame(y=1:20, a=factor(rep(c(1,2),10)))

@@ -7,6 +7,7 @@ library(testthat)
 library(ARTool)
 library(lsmeans)
 
+context("artlm")
 
 test_that("artlm returns models that can be used by lsmeans", {
     ### verify that art on HigginsABC is correct

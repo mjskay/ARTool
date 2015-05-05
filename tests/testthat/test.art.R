@@ -6,6 +6,7 @@
 library(testthat)
 library(ARTool)
 
+context("art")
 
 test_that("art does not allow factors as responses", {
     expect_error(art(y ~ a, data=data.frame(y=factor(c(1,2,3)), a=factor(c(1,2,3)))), 'Reponse term must be numeric, ordered factor, or logical \\(it was factor\\)')
