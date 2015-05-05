@@ -1,14 +1,14 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.9.3
-Date: 2014-11-20
+Version: 0.9.4
+Date: 2015-05-05
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@uw.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
 Maintainer: Matthew Kay <mjskay@uw.edu>
-Description: Aligned Rank Transform for nonparametric
-    factorial ANOVAs
+Description: The Aligned Rank Transform for nonparametric
+    factorial ANOVAs as described by Wobbrock et al.
 Depends:
     lme4,
     car
