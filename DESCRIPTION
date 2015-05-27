@@ -16,7 +16,7 @@ Imports:
     plyr,
     pbkrtest
 Suggests:
-    testthat,
+    testthat (>= 0.10.0),
     lsmeans
 License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
