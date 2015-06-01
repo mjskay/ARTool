@@ -21,11 +21,11 @@ test_that("artlm returns models whose data can be recovered by lsmeans", {
     #this will only work if lsmeans can recover the data using
     #lsmeans:::recover.data, which will only work if artlm
     #correctly sets the environment of the returned model
-    expect_equal(round(summary(lsmeans(artlm(m, "A"), pairwise ~ A)$contrasts)$p.value, 8), 0.00702493)
+    expect_equal(round(summary(pairs(lsmeans(artlm(m, "A"), "A")))$p.value, 5), 0.00702)
     
     #run art without grouping term to use lm
     m = art(Y ~ A*B*C, data=HigginsABC)
     
     #will only work if lsmeans can recover data (see comment above)
-    expect_equal(round(summary(lsmeans(artlm(m, "A"), pairwise ~ A)$contrasts)$p.value, 8), 0.00093959)
+    expect_equal(round(summary(pairs(lsmeans(artlm(m, "A"), "A")))$p.value, 5), 0.00094)
 })
