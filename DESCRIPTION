@@ -8,7 +8,10 @@ Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "wobbrock@uw.edu"))
 Maintainer: Matthew Kay <mjskay@uw.edu>
 Description: The Aligned Rank Transform for nonparametric
-    factorial ANOVAs as described by Wobbrock et al.
+    factorial ANOVAs as described by J. O. Wobbrock,
+    L. Findlater, D. Gergle, & J. J. Higgins, "The Aligned
+    Rank Transform for nonparametric factorial analyses
+    using only ANOVA procedures", CHI 2011.
 Depends:
     lme4,
     car
