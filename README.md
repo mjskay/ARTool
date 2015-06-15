@@ -1,5 +1,7 @@
 # ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
 
+[![Build Status](https://travis-ci.org/mjskay/ARTool.png?branch=master)](https://travis-ci.org/mjskay/ARTool)
+
 _Matthew Kay, University of Washington <mjskay@uw.edu>_
 
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
