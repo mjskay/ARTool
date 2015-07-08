@@ -77,7 +77,7 @@ test_that("art of Higgins1990Table5 matches results of the original ARTool", {
     #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
     expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
     aligned.anova = anova(m, response="aligned")
-    expect_equal(aligned.anova$F, rep(0, nrow(aligned.anova)), check.names=FALSE)
+    expect_equal(round(aligned.anova$F, digits=25), rep(0, nrow(aligned.anova)), check.names=FALSE)
     
     #verify that aligned responses were all calculated correctly
     expect_equal(m$aligned$Moisture, Higgins1990Table5.art$aligned.DryMatter..for.Moisture)
@@ -100,7 +100,7 @@ test_that("art of Higgins1990Table1 matches results of the original ARTool", {
     #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
     expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
     aligned.anova = anova(m, response="aligned")
-    expect_equal(aligned.anova$F, rep(0, nrow(aligned.anova)), check.names=FALSE)
+    expect_equal(round(aligned.anova$F, digits=25), rep(0, nrow(aligned.anova)), check.names=FALSE)
     
     #verify that aligned responses were all calculated correctly
     expect_equal(m$aligned$Row, Higgins1990Table1.art$aligned.Response..for.Row)
@@ -118,12 +118,12 @@ test_that("art of HigginsABC matches results of the original ARTool", {
     data(HigginsABC, HigginsABC.art, package="ARTool")
     
     #run art on original data
-    m = art(Y ~ A*B*C + (1|Subject), data=HigginsABC)
+    m = art(Y ~ A*B*C + Error(Subject), data=HigginsABC)
     
     #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
     expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
     aligned.anova = anova(m, response="aligned")
-    expect_equal(aligned.anova$F, rep(0, nrow(aligned.anova)), check.names=FALSE)
+    expect_equal(round(aligned.anova$F, digits=25), rep(0, nrow(aligned.anova)), check.names=FALSE)
     
     #verify that aligned responses were all calculated correctly
     expect_equal(m$aligned$A, HigginsABC.art$aligned.Y..for.A)

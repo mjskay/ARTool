@@ -70,33 +70,23 @@ test_that("anova.art of Higgins1990Table1 matches results of the original ARTool
     expect_equal(a, ref)
 })
 
-#test_that("art of HigginsABC matches results of the original ARTool", {
-#            ### verify that art on HigginsABC is correct
-#            data(HigginsABC, HigginsABC.art, package="ARTool")
-#            
-#            #run art on original data
-#            m = art(Y ~ A*B*C + (1|Subject), data=HigginsABC)
-#            
-#            #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
-#            expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
-#            aligned.anova = anova(m, response="aligned")
-#            expect_equal(aligned.anova$F, rep(0, nrow(aligned.anova)), check.names=FALSE)
-#            
-#            #verify that aligned responses were all calculated correctly
-#            expect_equal(m$aligned$A, HigginsABC.art$aligned.Y..for.A)
-#            expect_equal(m$aligned$B, HigginsABC.art$aligned.Y..for.B)
-#            expect_equal(m$aligned$C, HigginsABC.art$aligned.Y..for.C)
-#            expect_equal(m$aligned$`A:B`, HigginsABC.art$aligned.Y..for.A.B)
-#            expect_equal(m$aligned$`A:C`, HigginsABC.art$aligned.Y..for.A.C)
-#            expect_equal(m$aligned$`B:C`, HigginsABC.art$aligned.Y..for.B.C)
-#            expect_equal(m$aligned$`A:B:C`, HigginsABC.art$aligned.Y..for.A.B.C)
-#            
-#            #verify that ART responses were all calculated correctly
-#            expect_equal(m$aligned.ranks$A, HigginsABC.art$ART.Y..for.A)
-#            expect_equal(m$aligned.ranks$B, HigginsABC.art$ART.Y..for.B)
-#            expect_equal(m$aligned.ranks$C, HigginsABC.art$ART.Y..for.C)
-#            expect_equal(m$aligned.ranks$`A:B`, HigginsABC.art$ART.Y..for.A.B)
-#            expect_equal(m$aligned.ranks$`A:C`, HigginsABC.art$ART.Y..for.A.C)
-#            expect_equal(m$aligned.ranks$`B:C`, HigginsABC.art$ART.Y..for.B.C)
-#            expect_equal(m$aligned.ranks$`A:B:C`, HigginsABC.art$ART.Y..for.A.B.C)	
-#    })
+test_that("anova.art of HigginsABC matches results of the original ARTool", {
+    ### verify that art on HigginsABC is correct
+    data(HigginsABC, package="ARTool")
+    
+    #reference result
+    ref = data.frame(
+        Term = c("A", "B", "C", "A:B", "A:C", "B:C", "A:B:C" ), 
+        Error = c("Subject", "Subject", "Within", "Subject", "Within",  "Within", "Within"), 
+        Df = c(1, 1, 1, 1, 1, 1, 1), 
+        Df.res = c(4,  4, 4, 4, 4, 4, 4), 
+        F = c(120.4706, 120.4706, 14.3217, 81.92,  0.1259, 0.2319, 0.9715), 
+        "Pr(>F)" = c(4e-04, 4e-04, 0.0194, 8e-04,  0.7407, 0.6553, 0.3801),
+        check.names = FALSE
+    )
+            
+    #run art using linear model
+    m = art(Y ~ A*B*C + Error(Subject), data=HigginsABC)
+    a = comparable.anova(m, include.error=TRUE)
+    expect_equal(a, ref)
+})
