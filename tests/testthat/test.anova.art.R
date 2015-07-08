@@ -67,7 +67,7 @@ test_that("anova.art of Higgins1990Table1 matches results of the original ARTool
     #run art using linear model
     m = art(Response ~ Row*Column, data=Higgins1990Table1)
     a = comparable.anova(m)
-    expect_equal(a, ref)        
+    expect_equal(a, ref)
 })
 
 #test_that("art of HigginsABC matches results of the original ARTool", {
