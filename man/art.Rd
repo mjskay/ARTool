@@ -2,8 +2,9 @@
 \alias{art}
 \title{Aligned Rank Transform}
 \description{
-Apply the aligned rank transform to a factorial model (with optional grouping terms) in order to
-conduct nonparametric analyses of variance on models with numeric or ordinal responses.
+Apply the aligned rank transform to a factorial model (with optional grouping terms). Usually done
+in preparation for a nonparametric analyses of variance on models with numeric or ordinal responses, which
+can be done by following up with \code{anova.art}.
 }
 \usage{
 art(formula, data, 
@@ -11,10 +12,12 @@ art(formula, data,
 }
 \arguments{
   \item{formula}{
-A factorial formula with optional grouping terms. Should be a formula with a single
+A factorial formula with optional grouping terms or error terms (but not both). Should be a formula with a single
 response variable (left-hand side) and one or more terms with all interactions on the right-hand side, e.g.
-\code{y ~ x} or \code{y ~ a*b*c} or \code{y ~ a + b + b:c}. May also include grouping terms, e.g. 
-\code{y ~ a*b*c + (1|d)}. See 'Details'.
+\code{y ~ x} or \code{y ~ a*b*c} or \code{y ~ a + b + b:c}. If you want to run a mixed effects Anova on the 
+transformed data using \code{\link{lmer}}, you can include grouping terms, as in \code{y ~ a*b*c + (1|d)}. 
+If you want to run a repeated measures Anova using \code{\link{aov}}, you can include error terms, as in 
+\code{y ~ a*b*c + Error(d)}. See 'Details'.
 }
   \item{data}{
 An optional data frame containing the variables in the model. 
@@ -27,19 +30,22 @@ fuzzy comparison in \code{all.equal}.
 }
 \details{
 The aligned rank transform allows a nonparametric analysis of variance to be conducted 
-on factorial models with fixed and random effects and numeric or ordinal responses. This is done by first aligning 
-and ranking the fixed effects using this function, then conducting an analysis of variance 
-on linear models built from the transformed data using \code{\link{anova.art}} (see 'Examples'). 
-The model specified using this function \emph{must} include all interactions of fixed effects. 
+on factorial models with fixed and random effects (or repeated measures) and numeric or 
+ordinal responses. This is done by first aligning and ranking the fixed effects using this 
+function, then conducting an analysis of variance on linear models built from the transformed 
+data using \code{\link{anova.art}} (see 'Examples'). The model specified using this function 
+\emph{must} include all interactions of fixed effects.   
 
 The \code{formula} should contain a single response variable (left-hand side) that can be numeric,
 an ordered factor, or logical. The right-hand side of the formula should contain one or more
-fixed effect factors and zero or more grouping terms. All possible interactions of the fixed effect terms 
+fixed effect factors, zero or more grouping terms, and zero or more error terms. Error terms and
+grouping terms cannot be used simultaneously. All possible interactions of the fixed effect terms 
 must be included. For example, \code{y ~ x} and \code{y ~ a*b*c} and \code{y ~ a + b + b:c} are legal, 
 but \code{y ~ a + b} is not, as it omits the interaction \code{a:b}. Grouping terms are specified as in 
 \code{\link{lmer}}, e.g. \code{y ~ a*b*c + (1|d)} includes the random intercept term \code{(1|d)}.
-Grouping terms are not transformed, but are included in the model when ANOVAs are conducted,
-see \code{\link{anova.art}}.
+Error terms are specified as in \code{\link{aov}}, e.g. \code{y ~ a*b*c + Error(d)}.
+Grouping terms and error terms are not involved in the transformation, but are included in the model 
+when ANOVAs are conducted, see \code{\link{anova.art}}.
 
 For details on the transformation itself, see Wobbrock \emph{et al.} (2011) or the ARTool
 website: \url{http://depts.washington.edu/aimgroup/proj/art/}.
@@ -55,7 +61,7 @@ An object of class \code{"art"}:
 \item{aligned}{ A data frame of aligned responses for each fixed term and interaction on the right-hand side of formula. }
 \item{aligned.ranks}{ A data frame of aligned and ranked responses for each fixed term and interaction on the right-hand side of formula. }
 \item{data}{ The input data frame }
-\item{n.grouping.variables}{ The number of grouping variables in the input formula. }
+\item{n.grouping.terms}{ The number of grouping variables in the input formula. }
 
 For a complete description of cell means, estimated effects,
 aligned ranks, etc., in the above output, see Wobbrock \emph{et al.} (2011).

@@ -30,7 +30,7 @@ aligned and ranked (\code{"art"}) response.
 The name of the contrast-generating function to be applied by default to fixed effect factors. Sets the
 the first element of \code{\link{options}("contrasts")} for the duration of this function. The default 
 is to use \code{"contr.sum"}, i.e. sum-to-zero contrasts, which is appropriate for Type III ANOVAs 
-(the default in \code{\link{anova.art}}).
+(the default ANOVA type for \code{\link{anova.art}}).
 }
   \item{\dots}{
 Additional arguments passed to \code{\link{lm}} or \code{\link{lmer}}.
@@ -43,8 +43,10 @@ which calls this function as needed.
 }
 \value{
 An object of class \code{\link{lm}} if \code{formula(m)} does not contain
-grouping terms, and an object of class \code{\link{merMod}} (i.e. a model
-fit by \code{\link{lmer}}) if it does.
+grouping or error terms, an object of class \code{\link{merMod}} (i.e. a model
+fit by \code{\link{lmer}}) if it contains grouping terms, or an object of class 
+\code{aovlist} (i.e. a model fit by \code{\link{aov}}) if it contains
+error terms.
 }
 \author{
 Matthew Kay

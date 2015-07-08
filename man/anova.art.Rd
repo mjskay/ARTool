@@ -1,5 +1,6 @@
 \name{anova.art}
 \alias{anova.art}
+\alias{print.anova.art}
 \title{
 Aligned Rank Transform Analysis of Variance
 }
@@ -13,6 +14,10 @@ Conduct analyses of variance on aligned rank transformed data.
     factor.contrasts="contr.sum",
     test = c("F", "Chisq"),
     all.rows = FALSE, 
+    ...)
+\method{print}{anova.art}(x, 
+    verbose=FALSE, 
+    digits=5, 
     ...)
 }
 \arguments{
@@ -40,8 +45,19 @@ Test statistic to use. Default \code{"F"}. Note that some models and ANOVA types
 Show all rows of the resulting ANOVA tables? By default (\code{FALSE}), shows only the
 rows that are relevant depending on the type of \code{response}.
 }
+  \item{x}{
+An object of class \code{\link{art}}.
+}
+  \item{verbose}{
+When \code{TRUE}, sums of squares and reisdual sum of squares in addition to degrees of freedom
+are printed in some Anova types (e.g. repeated measures Anovas). Default \code{FALSE}, for brevity.
+}
+  \item{digits}{
+Digits of output in printed table; see \code{\link{print}}.
+}
   \item{\dots}{
-Additional arguments passed to \code{\link{Anova}} or \code{\link{anova}}.
+Additional arguments passed to \code{\link{Anova}} or \code{\link{anova}} by \code{anova.art}
+or to \code{\link{print}} by \code{print.anova.art}.
 }
 }
 \details{
