@@ -97,9 +97,14 @@ To analyze this data using the aligned rank transform, we first transform the
 data using `art` . We specify the response variable (`DryMatter` ), the fixed
 effects and all of their interactions (`Moisture*Fertilizer`, or equivalently 
 `Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if 
-present (here, `(1|Tray)` ). While `(1|Tray)` has no effect on the results of 
+present (here, `(1|Tray)` ). 
+
+While `(1|Tray)` has no effect on the results of 
 the aligned rank transformation, it will be used by `anova` to determine the 
-type of model to run. 
+type of model to run: when grouping terms are present, mixed effects models
+are run using `lmer`. If you wish to use a repeated measures ANOVA instead of
+a mixed effects model, you can use an `Error` term instead (see below for an
+example of this).
 
 
 ```r
@@ -166,7 +171,7 @@ anova(m)
 ### Alternative model: Repeated Measures ANOVA
 
 This particular study could also be analyzed using a repeated measures ANOVA, 
-yielding the same results (repeated measures ANOVAs and mixed
+yielding the same results (note that repeated measures ANOVAs and mixed
 effects models will not always yield the same results). To instead run
 a repeated measures ANOVA, add an `Error` term to the model as you
 might for a call to `aov`:
