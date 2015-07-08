@@ -1,3 +1,5 @@
+importFrom(stats, anova, complete.cases, lm, model.frame, terms, update)
+
 import(lme4)
 import(car)
 importFrom(plyr, laply, ldply, llply, ddply)
