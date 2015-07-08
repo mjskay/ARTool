@@ -12,6 +12,13 @@ nonparametric analyses of variance on factorial models. This implementation is
 based on the ART procedure as used in the original implementation of 
 [ARTool](http://depts.washington.edu/aimgroup/proj/art/) by Wobbrock et al.
 
+The package automates the Aligning-and-Ranking process using the `art` function.
+It also automates the process of running a series of ANOVAs on the transformed
+data and extracting the results of interest. It supports traditional ANOVA
+models (fit using `lm`), repeated measures ANOVAs (fit using `aov`), and 
+mixed effects models (fit using `lmer`); the model used is determined by the
+formula passed to `art`.
+
 __Note__: The documentation of this package assumes some level of familiarity
 with when and why you may want to use the aligned rank transform; the 
 [ARTool page](http://depts.washington.edu/aimgroup/proj/art/) provides a more in-depth (and
@@ -84,16 +91,22 @@ head(Higgins1990Table5, n=8)
 ## 8    2        1          4       7.3
 ```
 
+### Step 1: Transform the data
+
 To analyze this data using the aligned rank transform, we first transform the
 data using `art` . We specify the response variable (`DryMatter` ), the fixed
 effects and all of their interactions (`Moisture*Fertilizer`, or equivalently 
 `Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if 
-present (here, `(1|Tray)` ):
+present (here, `(1|Tray)` ). While `(1|Tray)` has no effect on the results of 
+the aligned rank transformation, it will be used by `anova` to determine the 
+type of model to run. 
 
 
 ```r
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 ```
+
+### Step 2: Verify appropriateness of ART
 
 To verify that the ART procedure was correctly applied and is appropriate for
 this dataset, we can look at the output of `summary` :
@@ -122,7 +135,13 @@ summary(m)
 We see that the columns sums of aligned responses and the F values of ANOVAs on
 aligned responses not of interest are all ~0, indicating that the alignment
 correctly "stripped out" effects not of interest. Thus, we can apply the ANOVA
-on the transformed data:
+on the transformed data. 
+
+### Step 3: Run the ANOVA
+
+ARTool automatically selects the model to be used
+for the ANOVA. Because we have included a grouping term, `(1|Tray)`, ARTool
+will fit mixed effects models using `lmer` and run the ANOVAs on them:
 
 
 ```r
@@ -130,15 +149,47 @@ anova(m)
 ```
 
 ```
-## Aligned Rank Transform Anova Table (Type III tests)
+## Analysis of Variance of Aligned Rank Transformed Data
 ## 
+## Table Type: Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df) 
+## Model: Mixed Effects (lmer)
 ## Response: art(DryMatter)
-##                           F Df Df.res    Pr(>F)    
-## Moisture             23.833  3      8 0.0002420 ***
-## Fertilizer          122.402  3     24 1.112e-14 ***
-## Moisture:Fertilizer   5.118  9     24 0.0006466 ***
+## 
+##                             F Df Df.res     Pr(>F)    
+## 1 Moisture             23.833  3      8 0.00024199 ***
+## 2 Fertilizer          122.402  3     24 1.1124e-14 ***
+## 3 Moisture:Fertilizer   5.118  9     24 0.00064665 ***
 ## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+### Alternative model: Repeated Measures ANOVA
+
+This particular study could also be analyzed using a repeated measures ANOVA, 
+yielding the same results (repeated measures ANOVAs and mixed
+effects models will not always yield the same results). To instead run
+a repeated measures ANOVA, add an `Error` term to the model as you
+might for a call to `aov`:
+
+
+```r
+m <- art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
+anova(m)
+```
+
+```
+## Analysis of Variance of Aligned Rank Transformed Data
+## 
+## Table Type: Repeated Measures Analysis of Variance Table (Type I) 
+## Model: Repeated Measures (aov)
+## Response: art(DryMatter)
+## 
+##                       Error Df Df.res F value     Pr(>F)    
+## 1 Moisture             Tray  3      8  23.833 0.00024199 ***
+## 2 Fertilizer          Withn  3     24 122.402 1.1124e-14 ***
+## 3 Moisture:Fertilizer Withn  9     24   5.118 0.00064665 ***
+## ---
+## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
 ## Problems
