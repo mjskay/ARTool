@@ -17,6 +17,8 @@ Depends:
     car
 Imports:
     plyr,
+    magrittr,
+    dplyr,
     pbkrtest
 Suggests:
     testthat (>= 0.10.0),

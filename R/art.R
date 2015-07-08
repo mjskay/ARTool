@@ -59,7 +59,8 @@ art = function(formula, data,
     m$formula = formula
     m$call = match.call()
     m$data = data
-    m$n.grouping.variables = f$n.grouping.variables
+    m$n.grouping.terms = f$n.grouping.terms
+    m$n.error.terms = f$n.error.terms
     m
 }
 

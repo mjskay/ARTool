@@ -11,8 +11,8 @@
 ###		fixed.terms: additive formula with only variables from fixed terms and no response 
 ###							(e.g. for use with ddply)
 ###    	fixed.term.labels:	character vector of term labels
-###     n.grouping.variables: number of grouping variables (e.g. (1|d))
-###     n.error.variables: number of error variables (e.g. Error(g))
+###     n.grouping.terms: number of grouping terms (e.g. (1|d))
+###     n.error.terms: number of error terms (e.g. Error(g))
 parse.art.formula = function(formula) {
     #extract terms from the formula
     f.terms = terms(formula)
@@ -82,8 +82,8 @@ parse.art.formula = function(formula) {
         fixed.only=factorial.formula,
         fixed.terms=eval(bquote(~ .(Reduce(function(x,y) bquote(.(x) + .(y)), Map(as.name, main.effects.labels))))),
         fixed.term.labels=fixed.term.labels,
-        n.grouping.variables=sum(is.grouping.variable),
-        n.error.variables=sum(is.error.variable)
+        n.grouping.terms=sum(is.grouping.variable),
+        n.error.terms=sum(is.error.variable)
     )
 }
 

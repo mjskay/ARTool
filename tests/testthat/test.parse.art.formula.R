@@ -61,10 +61,10 @@ test_that("different variations on factorial model specifications are accepted b
 })
 
 test_that("grouping terms and error terms are counted correctly", {
-    expect_equal(ARTool:::parse.art.formula(y ~ a + (1|d))$n.grouping.variables, 1)
-    expect_equal(ARTool:::parse.art.formula(y ~ a + (1|d) + (1|g))$n.grouping.variables, 2)
-    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(d))$n.error.variables, 1)
-    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(d) + Error(g))$n.error.variables, 2)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + (1|d))$n.grouping.terms, 1)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + (1|d) + (1|g))$n.grouping.terms, 2)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(d))$n.error.terms, 1)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(d) + Error(g))$n.error.terms, 2)
 })
 
 test_that("grouping terms and error terms are counted correctly", {

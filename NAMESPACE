@@ -1,6 +1,8 @@
 import(lme4)
 import(car)
 import(plyr)
+import(magrittr)
+import(dplyr)
 import(pbkrtest)
 
 export(art, artlm)

@@ -29,19 +29,26 @@ artlm = function(m, term,
         
         #run linear model
         env = sys.frame(sys.nframe())
-        if (m$n.grouping.variables == 0) {	#no grouping terms => OLS
-            m = lm(f, data=df, ...)
-            #reassign the environment of the model to this frame so that the data can be correctly recreated
-            #by other functions (e.g. lsmeans:::recover.data) that use the function call and environment
-            environment(m$terms) = env
-            environment(attr(m$model, "terms")) = env
-        }
-        else {								#grouping terms => REML
+        if (m$n.grouping.terms > 0) {       #grouping terms => REML
             m = lmer(f, data=df, ...)
             #reassign the environment of the model to this frame so that the data can be correctly recreated
             #by other functions (e.g. lsmeans:::recover.data) that use the function call and environment
             environment(attr(m@frame, "terms")) = env
             environment(attr(m@frame, "formula")) = env
+        } else if (m$n.error.terms > 0) {   #error terms => repeated measures ANOVA
+            m = aov(f, data=df, ...)
+            #reassign the environment of the model to this frame so that the data can be correctly recreated
+            #by other functions (e.g. lsmeans:::recover.data) that use the function call and environment
+            environment(attr(m, "terms")) = env
+            for (i in seq_along(m)) {
+                environment(m[[i]]$terms) = env
+            }
+        } else {	                        #no grouping or error terms => OLS
+            m = lm(f, data=df, ...)
+            #reassign the environment of the model to this frame so that the data can be correctly recreated
+            #by other functions (e.g. lsmeans:::recover.data) that use the function call and environment
+            environment(m$terms) = env
+            environment(attr(m$model, "terms")) = env
         }
         
         attr(m, "term") = term
