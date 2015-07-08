@@ -7,9 +7,16 @@ _Matthew Kay, University of Washington <mjskay@uw.edu>_
 
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
-ARTool is an R package implementing the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. This implementation is based on the ART procedure as used in the original implementation of [ARTool](http://depts.washington.edu/aimgroup/proj/art/) by Wobbrock et al. 
+ARTool is an R package implementing the Aligned Rank Transform for conducting
+nonparametric analyses of variance on factorial models. This implementation is
+based on the ART procedure as used in the original implementation of 
+[ARTool](http://depts.washington.edu/aimgroup/proj/art/) by Wobbrock et al.
 
-__Note__: The documentation of this package assumes some level of familiarity with when and why you may want to use the aligned rank transform; the [ARTool page](http://depts.washington.edu/aimgroup/proj/art/) provides a more in-depth (and highly approachable) introduction to the aligned rank transform and the motivation for its use.
+__Note__: The documentation of this package assumes some level of familiarity
+with when and why you may want to use the aligned rank transform; the 
+[ARTool page](http://depts.washington.edu/aimgroup/proj/art/) provides a more in-depth (and
+highly approachable) introduction to the aligned rank transform and the
+motivation for its use.
 
 ## Installation
 
@@ -19,7 +26,8 @@ You can install the latest released version from CRAN with this R command:
 install.packages("ARTool")
 ```
 
-__Or__, you can install the latest development version from GitHub with these R commands: 
+__Or__, you can install the latest development version from GitHub with these R
+commands:
 
 ```{r, eval=FALSE}
 install.packages("devtools")
@@ -28,7 +36,9 @@ devtools::install_github("mjskay/ARTool")
 
 ## Example
 
-The general approach to using ART is to transform your data using `art`, verify the ART procedure is appropriate to the dataset using `summary`, and then run an anova on the transformed data using `anova`.
+The general approach to using ART is to transform your data using `art` , verify
+the ART procedure is appropriate to the dataset using `summary` , and then run an
+anova on the transformed data using `anova` .
 
 First, let us load some example data:
 
@@ -37,26 +47,37 @@ library(ARTool)
 data(Higgins1990Table5)
 ```
 
-`Higgins1990Table5` is a data frame from an experiment in which the effects of `Moisture` and `Fertilizer` on `DryMatter` in peat pots was tested. Four pots were placed on each `Tray`, with `Moisture` varied between `Tray`s and `Fertilizer` varied within `Tray`s. We can see the basic structure of the data:
+`Higgins1990Table5`  is a data frame from an experiment in which the effects of `Moisture`
+and `Fertilizer` on `DryMatter` in peat pots was tested. Four pots were placed on
+each `Tray` , with `Moisture` varied between `Tray` s and `Fertilizer` varied
+within `Tray` s. We can see the basic structure of the data:
 
 ```{r}
 str(Higgins1990Table5)
 head(Higgins1990Table5, n=8)
 ```
 
-To analyze this data using the aligned rank transform, we first transform the data using `art`. We specify the response variable (`DryMatter`), the fixed effects and all of their interactions (`Moisture*Fertilizer`, or equivalently `Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if present (here, `(1|Tray)`):
+To analyze this data using the aligned rank transform, we first transform the
+data using `art` . We specify the response variable (`DryMatter` ), the fixed
+effects and all of their interactions (`Moisture*Fertilizer`, or equivalently 
+`Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if 
+present (here, `(1|Tray)` ):
 
 ```{r}
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 ```
 
-To verify that the ART procedure was correctly applied and is appropriate for this dataset, we can look at the output of `summary`:
+To verify that the ART procedure was correctly applied and is appropriate for
+this dataset, we can look at the output of `summary` :
 
 ```{r}
 summary(m)
 ```
 
-We see that the columns sums of aligned responses and the F values of ANOVAs on aligned responses not of interest are all ~0, indicating that the alignment correctly "stripped out" effects not of interest. Thus, we can apply the ANOVA on the transformed data:
+We see that the columns sums of aligned responses and the F values of ANOVAs on
+aligned responses not of interest are all ~0, indicating that the alignment
+correctly "stripped out" effects not of interest. Thus, we can apply the ANOVA
+on the transformed data:
 
 ```{r}
 anova(m)
@@ -64,7 +85,10 @@ anova(m)
 
 ## Problems
 
-Should you encounter any issues with this package, contact Matthew Kay (<mjskay@uw.edu>). If you have found a bug, please file it [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to reproduce the issue.
+Should you encounter any issues with this package, contact Matthew Kay
+(<mjskay@uw.edu>). If you have found a bug, please file it [here]
+(https://github.com/mjskay/ARTool/issues/new) with minimal code to reproduce the
+issue.
 
 ## Citations
 
@@ -74,4 +98,5 @@ Nonparametric Factorial ANOVAs_. R package version 0.9.5, <https://github.com/mj
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
 Procedures." In _Proceedings of the ACM Conference on Human Factors in
-Computing Systems (CHI '11)_, Vancouver, British Columbia (May 7-12, 2011). New York: ACM Press, pp. 143-146. <http://depts.washington.edu/aimgroup/proj/art/>.
+Computing Systems (CHI '11)_, Vancouver, British Columbia (May 7-12, 2011). 
+New York: ACM Press, pp. 143-146. <http://depts.washington.edu/aimgroup/proj/art/>.
