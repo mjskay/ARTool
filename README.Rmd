@@ -77,7 +77,8 @@ the aligned rank transformation, it will be used by `anova` to determine the
 type of model to run: when grouping terms are present, mixed effects models
 are run using `lmer`. If you wish to use a repeated measures ANOVA instead of
 a mixed effects model, you can use an `Error` term instead (see below for an
-example of this).
+example of this). If you do not having repeated measures, do not include
+any grouping terms or error terms. 
 
 ```{r}
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
