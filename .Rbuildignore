@@ -2,6 +2,8 @@
 ^\.Rproj\.user$
 ^TODO$
 ^.*\.md$
+^.*\.Rmd$
+^.*\.html$
 ^.*~$
 ^\.gitignore$
 ^\.git$
