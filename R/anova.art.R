@@ -53,8 +53,9 @@ anova.art = function(object,
         #for art, this is the one row correponding to the effect we aligned and ranked by
         #for aligned, this is every effect *except* the one we aligned and ranked by 
         if (!all.rows) {
-            row.index.j = switch(response, aligned=-j, art=j)
-            anova.j = anova.j[row.index.j,]
+            include.row = anova.j$Term == aligned.by.term
+            if (response == "aligned") include.row = !include.row
+            anova.j = anova.j[include.row,]
         }
         
         #Add "Aligned By" column when needed to disambiguate
