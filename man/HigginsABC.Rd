@@ -29,7 +29,7 @@ Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J. \emph{ARTool}. \u
 data(HigginsABC, HigginsABC.art, package="ARTool")
 
 ## run aligned-rank transform and ANOVA on the data
-m <- art(Y ~ A*B*C + (1|Subject), data=HigginsABC)
+m <- art(Y ~ A*B*C + Error(Subject), data=HigginsABC)
 anova(m)
 }}
 \keyword{datasets}
