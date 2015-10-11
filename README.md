@@ -15,7 +15,8 @@ based on the ART procedure as used in the original implementation of
 The package automates the Aligning-and-Ranking process using the `art` function.
 It also automates the process of running a series of ANOVAs on the transformed
 data and extracting the results of interest. It supports traditional ANOVA
-models (fit using `lm`), repeated measures ANOVAs (fit using `aov`), and 
+models (fit using `lm`), repeated measures ANOVAs (fit using `aov`, __currently
+only supported in the dev version__), and 
 mixed effects models (fit using `lmer`); the model used is determined by the
 formula passed to `art`.
 
@@ -42,6 +43,11 @@ commands:
 install.packages("devtools")
 devtools::install_github("mjskay/ARTool")
 ```
+
+__Note:__ _If you plan to use repeated measures ANOVAs (the `Error()` syntax) instead of
+mixed effects (the `(...|...)` syntax), you must install the development version
+from GitHub, as the current release of ARTool on CRAN does not support the `Error()` 
+syntax._
 
 ## Example
 
@@ -197,6 +203,10 @@ anova(m)
 ## ---
 ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
+
+__Note:__ _If you plan to use repeated measures ANOVAs instead of mixed effects, 
+you must install the development version from GitHub, as the current release 
+of ARTool on CRAN does not support the `Error()` syntax. See [Installation](#installation)_
 
 ## Problems
 
