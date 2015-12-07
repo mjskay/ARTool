@@ -1,9 +1,11 @@
-## ARTool 0.9.5
+ARTool 0.9.5
+============
 
 Testing fix for changes in upcoming version of lsmeans: round lsmeans p value tests to 5 decimal places to accommodate changes to Tukey adjustment
 
 
-## ARTool 0.9.4
+ARTool 0.9.4
+============
 
 Minor changes to testing based on updated version of testthat (0.10.0):
 
