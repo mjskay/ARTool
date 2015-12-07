@@ -74,19 +74,13 @@ df = InteractionTestData    #save some typing
 
 The "true" means from the model look like this:
 
-+----+----------+------+
 | X1 | X2       | Mean |
-+====+==========+======+
+|:--:|:--------:|:----:|
 | A  | C or D   | 0    |
-+----+----------+------+
 | A  | E        | 2    |
-+----+----------+------+
 | B  | C        | 1    |
-+----+----------+------+
 | B  | D        | 5    |
-+----+----------+------+
 | B  | E        | 3    |
-+----+----------+------+
 
 Which we can see pretty well:
 
@@ -110,19 +104,13 @@ ggplot(df, aes(x=X1, y=Y, color=X2)) +
 
 And "true" means for each level (averaging over the levels of the other factor):
 
-+----------+------+
-| Level    | Mean |
-+==========+======+
-| X1 == A  | 0.66666|
-+----------+------+
-| X1 == B  | 3    |
-+----------+------+
-| X2 == C  | 0.5  |
-+----------+------+
-| X2 == D  | 2.5  |
-+----------+------+
-| X2 == E  | 2.5  |
-+----------+------+
+| Level    | Mean     |
+|:--------:|:--------:|
+| X1 == A  | 0.66666  |
+| X1 == B  | 3        |
+| X2 == C  | 0.5      |
+| X2 == D  | 2.5      |
+| X2 == E  | 2.5      |
 
 Let's fit a linear model:
 
