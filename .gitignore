@@ -1,4 +1,7 @@
 *~
 .project
 .settings
+*.R*
 README.html
+art-contrasts.html
+cache

@@ -1,11 +1,14 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^TODO$
-^.*\.md$
-^.*\.Rmd$
-^.*\.html$
+^[^/]*\.md$
+^[^/]*\.Rmd$
+^[^/]*\.html$
 ^.*~$
 ^\.gitignore$
 ^\.git$
 ^\.gitattributes$
 ^\.travis\.yml$
+^github-markdown\.css$
+^figure$
+^cache$

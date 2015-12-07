@@ -208,12 +208,23 @@ __Note:__ _If you plan to use repeated measures ANOVAs instead of mixed effects,
 you must install the development version from GitHub, as the current release 
 of ARTool on CRAN does not support the `Error()` syntax. See [Installation](#installation)_
 
+## Contrast tests
+
+For an example of how to run contrast tests on an `art` model, see this vignette:
+
+
+```r
+vignette("art-contrasts")
+```
+
+Also available [here](art-contrasts.md).
+
 ## Problems
 
 Should you encounter any issues with this package, contact Matthew Kay
-(<mjskay@uw.edu>). If you have found a bug, please file it [here]
-(https://github.com/mjskay/ARTool/issues/new) with minimal code to reproduce the
-issue.
+(<mjskay@uw.edu>). If you have found a bug, please file it 
+[here](https://github.com/mjskay/ARTool/issues/new) with minimal code to 
+reproduce the issue.
 
 ## Citations
 

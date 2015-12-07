@@ -1,0 +1,301 @@
+---
+title: "Contrast tests with ART"
+author: "Matthew Kay"
+date: "`r Sys.Date()`"
+output:  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interaction Contrasts with ART}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The aligned-rank transform (ART) allows for non-parametric analyses of variance. 
+But how should we do contrast tests with ART? 
+
+**Within a single factor**, contrasts in ART are straightforward: simply conduct contrasts on the linear model containing the response aligned for that factor.
+
+**For interactions**, which necessarily involve effects across factors, what types of contrasts are valid may not be immediately obvious. This page explains what types of interaction contrasts are 
+appropriate on aligned-rank-transformed (ART) data, what are not, and why.
+
+## Contents
+
+1. [Test Dataset](#test-dataset): Description of the test data we will use to compare a linear model against ART
+2. [Contrast tests of main effects](#contrast-tests-of-main-effects): Demo of conducting contrasts within a single factor (no interaction)
+3. [Tests of differences in pairwise combinations of levels between factors in interactions](#tests-of-differences-in-pairwise-combinations-of-levels-between-factors-in-interactions):
+   Interaction contrasts that **are not valid** in ART 
+4. [Tests of differences of differences in interactions](#tests-of-differences-of-differences-in-interactions):
+   Interaction contrasts that **are valid** in ART
+
+## Libraries needed for this
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(  #default code chunk options
+    dev = "CairoPNG",      #nicer PNG figures
+    fig.width = 6,
+    fig.height = 4
+)           
+# pander::panderOptions("table.split.table", Inf)     #don't split wide tables in output
+# pander::panderOptions("table.style", "rmarkdown")   #table style that's supported by github
+```
+
+```{r message=FALSE}
+library(ARTool)     #art, artlm
+library(dplyr)      #data_frame, %>%, filter, etc
+library(lsmeans)    #lsmeans
+library(phia)       #testInteractions
+library(tidyr)      #spread, gather
+library(ggplot2)    #ggplot, stat_..., geom_..., etc
+```
+
+
+## Test dataset
+
+Let's generate some test data where we actually know what the effects are. Specifically,
+
+
+```{r}
+n_per_group = 150
+df = data_frame(
+    X1 = factor(c(rep("A", n_per_group), rep("B", n_per_group))),
+    X2 = factor(rep(c("C","D","E"), n_per_group*2/3)),
+    Y = rnorm(n_per_group*2, 
+        (X1 == "B")
+        + 2* (X2 == "D")
+        + 2 * (X1 == "B" & X2 == "D")
+        - 2 * (X1 == "A" & X2 == "D")
+        + 2 * (X2 == "E")) 
+)
+```
+
+This is normally-distributed error with the same variance at all levels, so we can compare the results of ART to a linear model,
+which will correctly estimate the effects.
+
+I pre-ran the above code and saved it as `InteractionTestData` so that the text here is consistent:
+
+```{r}
+data("InteractionTestData")
+df = InteractionTestData    #save some typing
+```  
+
+The "true" means from the model look like this:
+
++----+----------+------+
+| X1 | X2       | Mean |
++====+==========+======+
+| A  | C or D   | 0    |
++----+----------+------+
+| A  | E        | 2    |
++----+----------+------+
+| B  | C        | 1    |
++----+----------+------+
+| B  | D        | 5    |
++----+----------+------+
+| B  | E        | 3    |
++----+----------+------+
+
+Which we can see pretty well:
+
+```{r interaction_plot, fig.cap=""}
+palette = c("#1b9e77", "#d95f02", "#7570b3")
+names(palette) = c("C", "D", "E")
+ggplot(df, aes(x=X1, y=Y, color=X2)) + 
+    geom_violin(trim=FALSE, adjust=1.5) + 
+    geom_point(pch="-", size=4) +
+    stat_summary(fun.y=mean, geom="point", size=4) + 
+    stat_summary(fun.y=mean, geom="line", size=1, mapping=aes(group=X2)) +
+    stat_summary(fun.y=mean, geom="point", size=9, mapping=aes(x=1.5, group=NA), pch="+") +
+    scale_y_continuous(breaks=seq(-6,10,by=2), minor_breaks=-6:10) +
+    scale_color_manual(guide=FALSE, values=palette) +
+    coord_cartesian(ylim=c(-6,10)) + 
+    facet_grid(. ~ X2)
+```
+
+And "true" means for each level (averaging over the levels of the other factor):
+
++----------+------+
+| Level    | Mean |
++==========+======+
+| X1 == A  | 0.66666|
++----------+------+
+| X1 == B  | 3    |
++----------+------+
+| X2 == C  | 0.5  |
++----------+------+
+| X2 == D  | 2.5  |
++----------+------+
+| X2 == E  | 2.5  |
++----------+------+
+
+Let's fit a linear model:
+
+```{r}
+m.linear = lm(Y ~ X1*X2, data=df)
+anova(m.linear)
+```
+
+Now with ART:
+
+```{r}
+m.art = art(Y ~ X1*X2, data=df)
+anova(m.art)
+```
+
+Both have significance at all levels (expected given the number of samples and the "true" effects) and similar enough F values. 
+The real question is whether/what kind of contrast tests make sense.
+
+### Contrast tests of main effects
+
+For the main effects, let's look at contrast tests for the linear model:
+
+```{r, message=FALSE}
+lsmeans(m.linear, pairwise ~ X1)$contrasts
+lsmeans(m.linear, pairwise ~ X2)$contrasts
+```
+
+These are about right: The "true" effect for `A - B` is `-2.3333`, for `C - D` and `C - E` is `-2`, and for `D - E` is `0` (see table above). From ART:
+
+```{r, message=FALSE}
+lsmeans(artlm(m.art, "X1"), pairwise ~ X1)$contrasts
+lsmeans(artlm(m.art, "X2"), pairwise ~ X2)$contrasts
+```
+
+This is about right (effects in the same direction, the estimates aren't
+the same because they are on the scale of ranks and not the data, but the t values are similar to the linear model, as we should hope). 
+Contrast tests of main effects seem to be consistent then.
+
+### Tests of differences in pairwise combinations of levels between factors in interactions
+
+Now let's look at tests of differences in combinations of levels between factors:
+
+```{r}
+lsmeans(m.linear, pairwise ~ X1:X2)$contrasts
+```
+
+And for ART:
+
+```{r}
+#DO NOT DO THIS!
+lsmeans(artlm(m.art, "X1:X2"), pairwise ~ X1:X2)$contrasts
+```
+
+Very different results. 
+
+The linear model tests are easy to interpret: 
+they tell us the expected mean difference between combinations of levels.
+
+The ART results are more difficult to interpret. Take `A,C - A,D`, which looks like this:
+
+```{r interaction_plot_AC_AD, fig.cap="", fig.width=3}
+df %>%
+    filter(X1 == "A", X2 %in% c("C", "D")) %>%
+    ggplot(aes(x=X1:X2, y=Y, color=X2)) + 
+    geom_violin(trim=FALSE, adjust=1.5) + 
+    geom_point(pch="-", size=4) +
+    stat_summary(fun.y=mean, geom="point", size=4) + 
+    scale_y_continuous(breaks=seq(-6,10,by=2), minor_breaks=-6:10) +
+    scale_color_manual(guide=FALSE, values=palette) +
+    coord_cartesian(ylim=c(-6,10)) 
+```
+
+The linear model correctly estimates this difference as `~0`, which is both the true effect and what we should expect from a visual
+inspection of the data. Unlike the linear model, the ART model gives us a statistically significant difference between `A,C` and `A,D`, 
+which if we interpret in the same way as the linear model is obviously incorrect.
+
+The key here is to understand that ART is reporting differences with the main effects subtracted out.
+That is, the `A,C - A,D` effect is something like the difference between this combination of levels if we first
+subtracted out the effect of `C - D`. We can see this if we take the ART estimate for `C - D` in the lsmeans for `X2` above (`-123.13`) and the
+ART estimate for `A,C - A,D` (`125.12`) here, we can get approximate an estimate of the difference (`-123.13 + 125.12 == 1.99`)
+that is consistent with the expected 0 (given the SE here).
+
+If we first combine the factors before aligning-and-ranking, we can get an estimate of these effects:
+
+```{r}
+#DO NOT DO THIS WITHOUT READING THE NOTE BELOW
+df$X = with(df, X1:X2)
+m.art.12 = art(Y ~ X, data=df)
+lsmeans(artlm(m.art.12, "X"), pairwise ~ X)$contrasts
+```
+
+Note that the above table is not in the same order as the previous ones, but does have similar t values to the corresponding effects
+from the linear model. __However, it is not clear this will generalize.__ In this case there aren't any other factors except these two, 
+so this is equivalent to just ranking the response before fitting the model, and in the general case it can incorrectly estimate 
+interactions (see issues with using the plain-old rank transform in the ART literature, specifically Higgins' papers). Thus, I 
+can't recommended this approach in the general case (or at least, not without more investigation).
+
+### Tests of _differences of differences_ in interactions
+
+While tests of differences of combinations of levels between factors have issues in ART, we can test _differences of differences_; e.g., 
+for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`? We
+can test this using the `testInteractions` function from package `phia`.
+
+Before we test, let's try to visualize what's going on in just this interaction:
+
+```{r, interaction_plot_C_D, fig.cap=""}
+plot_interaction_for_X2_levels = function(...) {
+    x2_levels = c(...)
+    df. = filter(df, X2 %in% x2_levels)
+    X1_in_X2 = df. %>%
+        group_by(X1, X2) %>%
+        summarise(Y = mean(Y)) %>%
+        spread(X1, Y)
+    print(ggplot(df., aes(x=X1, y=Y, color=X2)) +  
+        geom_violin(trim=FALSE, adjust=1.5) + 
+        geom_point(pch="-", size=4) +
+        stat_summary(fun.y=mean, geom="point", size=4) + 
+        stat_summary(fun.y=mean, geom="line", size=1, mapping=aes(group=X2), linetype="dashed") +
+        geom_errorbar(aes(x=2.2, ymin=A, ymax=B, y=0), 
+            data=X1_in_X2, width=.19, size=0.8, color="black") +
+        geom_text(aes(x=2.35, y=(A + B)/2, label=paste("A - B |", X2)), 
+            data=X1_in_X2, hjust=0, size=5, color="black") +
+        scale_y_continuous(breaks=seq(-6,10,by=2), minor_breaks=-6:10) +
+        scale_color_manual(guide=FALSE, values=palette[x2_levels]) + 
+        coord_cartesian(xlim=c(0, 3.5), ylim=c(-6,10)) +
+        facet_grid(. ~ X2))
+}
+plot_interaction_for_X2_levels("C", "D")
+```
+
+The true effect for `A - B | C` is -1, for `A - B | D` is -5, and for `(A - B | C) - (A - B | D)` is `(-1) - (-5) = 4`.
+Visually, we're asking if the two dashed lines in the above plot are parallel. Equivalently, we're asking if the vertical distance from the mean of
+A to the mean of B in the left panel (when X2 == C) is the same as the vertical distance between A and B in the right panel (when X2 == D).
+The true difference between these vertical distances (the "difference of a difference") is 4, which is also about what we would estimate
+it to be by looking at the above plot.
+
+We can get the estimate of this "difference of a difference" from the linear model:
+
+```{r}
+#unfortunately, the meaning of "pairwise" here isn't the same as how lsmeans
+#uses it when multiple factors are involved --- here we get differences of differences.
+testInteractions(m.linear, pairwise=c("X1", "X2"))
+```
+
+Here we can interpret the row `A-B : C-D` as the difference between (`A-B | C`) and (`A-B | D`), which
+is estimated as `3.82` (close to the true effect of 4, see the plot above). 
+
+We can look at a similar plot for `A-B : C-E`:
+
+```{r interaction_plot_C_E, fig.cap=""}
+plot_interaction_for_X2_levels("C", "E")
+```
+
+Here the true effect for `A - B | C` is -1, `A - B | E` is also -1, and `(A - B | C) - (A - B | E)` is `0`.
+Visually, this sample looks close to the true effects (the height of `A - B | C` is about the same as `A - B | E`). 
+From the the row `A-B : C-E` above we can see that the 
+estimate from the linear model is ~0, as we should hope.
+
+A similar visual analysis finds the estimate for `A-B : D-E` (~ -4.2) also to be correct (true effect is -4):
+
+```{r, interaction_plot_D_E, fig.cap=""}
+plot_interaction_for_X2_levels("D", "E")
+```
+
+Now we look at these differences of differences in art:
+
+```{r}
+testInteractions(artlm(m.art, "X1:X2"), pairwise=c("X1", "X2"))
+```
+
+And we see F values consistent with the linear model and the same effect directions. These types of comparisons work under ART because they
+do not involve coefficients of main effects (see the description of these tests in 
+[this phia vignette](https://cran.r-project.org/web/packages/phia/vignettes/phia.pdf)), thus are consistent even when we've
+stripped out the main effects.

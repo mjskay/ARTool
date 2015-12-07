@@ -107,5 +107,13 @@ lsmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
 
 ## pairwise contrasts on Fertilizer:
 lsmeans(artlm(m, "Fertilizer"), pairwise ~ Fertilizer)
+
+## N.B. The above types of contrasts ARE NOT valid for interactions.
+## Instead, use testInteractions from the phia package. For example:
+library(phia)
+testInteractions(artlm(m, "Moisture:Fertilizer"), pairwise=c("Moisture", "Fertilizer"))
+## For a more in-depth explanation and example, see this vignette:
+vignette("art-contrasts")
+
 }}
 \keyword{nonparametric}
