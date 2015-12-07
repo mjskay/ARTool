@@ -5,3 +5,11 @@ sudo: required
 
 # Be strict when checking our package
 warnings_are_errors: true
+
+# NOT_CRAN and options in .Rprofile are workarounds for "cyclic dependency check" error
+# see https://github.com/travis-ci/travis-ci/issues/4125
+env:
+  global:
+    - NOT_CRAN=true
+before_install: 
+ - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
