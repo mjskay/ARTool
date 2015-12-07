@@ -27,7 +27,8 @@ Suggests:
     rmarkdown,
     ggplot2,
     phia,
-    tidyr
+    tidyr,
+    pander
 License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool
