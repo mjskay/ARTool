@@ -150,6 +150,7 @@ anova.art = function(object,
 }
 
 ### Generate p stars for a vector of p values
+#' @importFrom stats symnum
 p.stars = function(p.values) {
     unclass(symnum(p.values, corr = FALSE, na = FALSE, cutpoints = c(0, 
                             0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", 

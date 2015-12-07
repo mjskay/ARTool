@@ -36,7 +36,7 @@
 #' \code{\link{anova.art}}, which makes use of this function.
 #' @keywords nonparametric
 #' 
-#' @importFrom stats lm update
+#' @importFrom stats lm update aov
 #' @importFrom lme4 lmer
 #' @export
 artlm = function(m, term, 
