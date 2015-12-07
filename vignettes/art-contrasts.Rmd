@@ -75,7 +75,7 @@ which will correctly estimate the effects.
 I pre-ran the above code and saved it as `InteractionTestData` so that the text here is consistent:
 
 ```{r}
-data("InteractionTestData")
+data(InteractionTestData)
 df = InteractionTestData    #save some typing
 ```  
 

@@ -70,7 +70,7 @@ I pre-ran the above code and saved it as `InteractionTestData` so that the text 
 
 
 ```r
-data("InteractionTestData")
+data(InteractionTestData)
 df = InteractionTestData    #save some typing
 ```
 

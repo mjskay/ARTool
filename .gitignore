@@ -1,7 +1,8 @@
 *~
 .project
 .settings
-*.R*
+*.Rproj*
+.Rhistory
 README.html
 art-contrasts.html
 cache
