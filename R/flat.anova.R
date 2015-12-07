@@ -14,6 +14,9 @@ flat.anova = function(m, ...) {
     UseMethod("flat.anova", m)
 }
 
+#' @importFrom stats anova
+#' @importFrom car Anova
+#' @importFrom magrittr %<>%
 flat.anova.default = function(m, type="III", test="F", ...) {
     #get ANOVA table
     a = switch(type,
@@ -34,6 +37,7 @@ flat.anova.default = function(m, type="III", test="F", ...) {
     a
 }
 
+#' @importFrom magrittr %<>%
 flat.anova.lm = function(m, type="III", test="F", ...) {
     a = flat.anova.default(m, type, test, ...)
     description = attr(a, "description")
@@ -46,6 +50,8 @@ flat.anova.lm = function(m, type="III", test="F", ...) {
     a
 }
 
+#' @importFrom magrittr %<>%
+#' @import dplyr
 columnify.anova.residuals = function (a.table) {
     #given a flat anova table with "Term", "Df", and "Sum Sq" columns
     #and the last row containing residual Df and Sum Sq, move the 
@@ -69,6 +75,8 @@ columnify.anova.residuals = function (a.table) {
 }
 
 ### Flat version of an anova from an aov model
+#' @importFrom plyr ldply
+#' @import dplyr
 flat.anova.aovlist = function(m, 
         type="I", test="F", #type and test are ignored: they are always "I" and "F" for aov objects 
         ...

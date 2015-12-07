@@ -1,6 +1,6 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.9.5.0004
+Version: 0.9.5.0005
 Date: 2015-12-06
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@uw.edu"),
@@ -12,15 +12,13 @@ Description: The Aligned Rank Transform for nonparametric
     L. Findlater, D. Gergle, & J. J. Higgins, "The Aligned
     Rank Transform for nonparametric factorial analyses
     using only ANOVA procedures", CHI 2011.
-Depends: 
+Imports:
     lme4,
-    car
-Imports: 
+    car (>= 2.0-24),
     plyr,
     magrittr,
-    dplyr,
-    pbkrtest
-Suggests: 
+    dplyr
+Suggests:
     testthat (>= 0.10.0),
     lsmeans,
     knitr,
@@ -34,3 +32,4 @@ License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

@@ -13,6 +13,8 @@
 ###    	fixed.term.labels:	character vector of term labels
 ###     n.grouping.terms: number of grouping terms (e.g. (1|d))
 ###     n.error.terms: number of error terms (e.g. Error(g))
+#' @importFrom stats terms
+#' @importFrom plyr laply
 parse.art.formula = function(formula) {
     #extract terms from the formula
     f.terms = terms(formula)
@@ -100,6 +102,7 @@ parse.art.formula = function(formula) {
 ### parameters to art.estimated effects are:
 ### formula.terms = terms(f)
 ### data = model.frame(f, df)
+#' @importFrom plyr ddply
 art.estimated.effects = function(formula.terms, data) {
     #N.B. in this method "interaction" refers to 
     #all 0 - n order interactions (i.e., grand mean, 
