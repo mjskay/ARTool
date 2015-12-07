@@ -9,6 +9,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+## Introduction
+
 The aligned-rank transform (ART) allows for non-parametric analyses of variance. 
 But how should we do contrast tests with ART? 
 
