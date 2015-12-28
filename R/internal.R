@@ -70,22 +70,28 @@ parse.art.formula = function(formula) {
     #ensure design of fixed effects portion of model has all interactions
     #first, pull out the response and the main (i.e. order-1) fixed effect terms 
     response = formula[[2]]
-    main.effects.labels = fixed.term.labels[fixed.term.order == 1]
     #build a factorial model of all fixed effects
-    factorial.formula = eval(bquote(.(response) ~ .(Reduce(function(x,y) bquote(.(x) * .(y)), Map(as.name, main.effects.labels)))))
+    #e.g. y ~ a*b*c + (1|d) + Error(g) -> y ~ a*b*c
+    factorial.formula = eval(bquote(.(response) ~ .(Reduce(function(x,y) bquote(.(x) * .(y)), variables[is.fixed.variable]))))
+    environment(factorial.formula) = environment(formula)
     #verify the factorial model is the same as the fixed effects in the supplied model
     factorial.factors = attr(terms(factorial.formula), "factors")[-1,,drop=FALSE]
     if (!all(dim(factorial.factors) == dim(fixed.variables.by.terms)) || !all(factorial.factors == fixed.variables.by.terms)) {
         stop("Model must include all combinations of interactions of fixed effects.")
     }
-    
+
+    #build a formula with only fixed variables on the right-hand-side (added to each other)
+    #e.g. y ~ a*b*c + (1|d) + Error(g) ->  ~ a + b + c
+    fixed.terms = eval(bquote(~ .(Reduce(function(x,y) bquote(.(x) + .(y)), variables[is.fixed.variable]))))
+    environment(fixed.terms) = environment(formula)
+
     #return validated formulas
     list(
-        fixed.only=factorial.formula,
-        fixed.terms=eval(bquote(~ .(Reduce(function(x,y) bquote(.(x) + .(y)), Map(as.name, main.effects.labels))))),
-        fixed.term.labels=fixed.term.labels,
-        n.grouping.terms=sum(is.grouping.variable),
-        n.error.terms=sum(is.error.variable)
+        fixed.only = factorial.formula,
+        fixed.terms = fixed.terms,
+        fixed.term.labels = fixed.term.labels,
+        n.grouping.terms = sum(is.grouping.variable),
+        n.error.terms = sum(is.error.variable)
     )
 }
 
@@ -102,7 +108,7 @@ parse.art.formula = function(formula) {
 ### parameters to art.estimated effects are:
 ### formula.terms = terms(f)
 ### data = model.frame(f, df)
-#' @importFrom plyr ddply
+#' @importFrom plyr ddply .
 art.estimated.effects = function(formula.terms, data) {
     #N.B. in this method "interaction" refers to 
     #all 0 - n order interactions (i.e., grand mean, 
@@ -127,7 +133,12 @@ art.estimated.effects = function(formula.terms, data) {
     for (j in 2:ncol(interaction.matrix)) {
         term.index = interaction.matrix[,j]
         #calculate cell means
-        cell.mean.df = ddply(data, term.names[term.index], function (df) {
+        #must dervie term.formula as below (instead of just passing term.names[term.index] to ddply)
+        #because otherwise expressions like "factor(a)" would be converted to ~ factor(a) (instead of ~ `factor(a)`, which
+        #is what we want here because the expression has already been evaluated previously)
+        #A nicer way to do all this would be good to come up with eventually  
+        term.formula = eval(bquote(~ .(Reduce(function(x,y) bquote(.(x) + .(y)), Map(as.name, term.names[term.index])))))
+        cell.mean.df = ddply(data, term.formula, function (df) {
             df$.cell.mean = mean(df[,1])	#mean of response for this interaction
             df
         })

@@ -70,3 +70,19 @@ test_that("grouping terms and error terms are counted correctly", {
 test_that("grouping terms and error terms are counted correctly", {
     expect_error(ARTool:::parse.art.formula(y ~ a + (1|d) + Error(g)), "Model cannot contain both grouping terms, like (1|d), and error terms, like Error(d). Use one or the other.", fixed=TRUE)
 })
+
+test_that("formulas with expressions for terms are parsed correctly", {
+    expect_equal(ARTool:::parse.art.formula(y ~ factor(a) + b + Error(g) + factor(a):b)$fixed.only, y ~ factor(a) * b)
+    expect_equal(ARTool:::parse.art.formula(y ~ factor(a) + b + Error(g) + factor(a):b)$fixed.terms, ~ factor(a) + b)
+    expect_equal(ARTool:::parse.art.formula(y ~ factor(a) + b + Error(g) + factor(a):b)$fixed.term.labels, c("factor(a)", "b", "factor(a):b"))
+})
+
+test_that("formulas with expressions for responses are parsed correctly", {
+    expect_equal(ARTool:::parse.art.formula(as.numeric(y) ~ a)$fixed.only, as.numeric(y) ~ a)
+})
+
+test_that("formulas generated from parsing have their environments set to that of the original formula", {
+    f = y ~ a
+    expect_equal(environment(ARTool:::parse.art.formula(f)$fixed.only), environment(f))
+    expect_equal(environment(ARTool:::parse.art.formula(f)$fixed.terms), environment(f))
+})

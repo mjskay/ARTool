@@ -67,6 +67,24 @@ test_that("art allows models with missing data in the grouping terms", {
     expect_equal(nrow(anova(m, response="aligned")), 0) 
 })
 
+test_that("art correctly interprets formulas with expressions on the right-hand side", {
+    df = data.frame(y=rep(c(1,2,0,3),5), a=c(1,2), fa=factor(c(1,2)))
+    m1 = art(y ~ factor(a), data=df)
+    m2 = art(y ~ fa, data=df)
+    
+    #neither of the following anovas should throw an error
+    expect_equal(m1$aligned.ranks$`factor(a)`, m2$aligned.ranks$fa)
+})
+
+test_that("art correctly interprets formulas with expressions on the left-hand side", {
+    df = data.frame(y=rep(c("1","2","0","3"),5), ny=rep(c(1,2,0,3),5), a=factor(c(1,2)), stringsAsFactors=FALSE)
+    m1 = art(as.numeric(y) ~ a, data=df)
+    m2 = art(ny ~ a, data=df)
+    
+    #neither of the following anovas should throw an error
+    expect_equal(m1$aligned.ranks$`factor(a)`, m2$aligned.ranks$fa)
+})
+
 test_that("art of Higgins1990Table5 matches results of the original ARTool", {
     ### verify that art on Higgins1990Table5 is correct
     data(Higgins1990Table5, Higgins1990Table5.art, package="ARTool")

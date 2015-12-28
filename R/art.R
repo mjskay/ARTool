@@ -154,8 +154,16 @@ art = function(formula, data,
     df[,1] = as.numeric(df[,1]) 
     
     #verify that all fixed effects are factors #TODO: can these be ordered factors?
-    if (!all(laply(df[,-1], function(col) is.factor(col) || is.logical(col)))) {
-        stop("All fixed effect terms must be factors or logical (e.g. not numeric).")
+    non.factor.terms = Filter(function (col) !is.factor(df[,col]) && !is.logical(df[,col]), 2:ncol(df))
+    if (any(non.factor.terms)) {
+        stop(paste0(
+            "All fixed effect terms must be factors or logical (e.g. not numeric).\n",
+            "  The following terms are not factors or logical:\n    ",
+            paste0(names(df)[non.factor.terms], collapse = "\n    "),
+            "\n  If these terms are intended to represent categorical data, you may\n  ",
+            "want to convert them into factors using factor()."
+            ))
+        
     }
     #coerce fixed effects to numeric for processing
     for (j in 2:ncol(df)) {
