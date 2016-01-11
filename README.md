@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/mjskay/ARTool.png?branch=master)](https://travis-ci.org/mjskay/ARTool)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ARTool)](http://cran.r-project.org/web/packages/ARTool)
+[![GPL >= 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
-_Matthew Kay, University of Washington <mjskay@uw.edu>_
-
+_Matthew Kay, University of Washington <mjskay@uw.edu>_<br>
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
 ARTool is an R package implementing the Aligned Rank Transform for conducting
