@@ -116,7 +116,7 @@ parse.art.formula = function(formula) {
 ### parameters to art.estimated effects are:
 ### formula.terms = terms(f)
 ### data = model.frame(f, df)
-#' @importFrom plyr ddply .
+#' @importFrom plyr ddply
 art.estimated.effects = function(formula.terms, data) {
     #N.B. in this method "interaction" refers to 
     #all 0 - n order interactions (i.e., grand mean, 

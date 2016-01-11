@@ -5,7 +5,8 @@
 \title{Aligned Rank Transform}
 \usage{
 art(formula, data,
-  rank.comparison.digits = -floor(log10(.Machine$double.eps^0.5)))
+  rank.comparison.digits = -floor(log10(.Machine$double.eps^0.5)),
+  check.errors.are.factors = TRUE)
 }
 \arguments{
 \item{formula}{A factorial formula with optional grouping terms or error
@@ -25,6 +26,13 @@ responses to before ranking (to ensure ties are computed consistently).  See
 the \code{digits} argument of \code{\link{round}}. The default value is
 based on the default \code{tolerance} used for fuzzy comparison in
 \code{all.equal}.}
+
+\item{check.errors.are.factors}{Should we check to ensure \code{Error()}
+terms are all factors? A common mistake involves coding a categorical variable
+as numeric and passing it to \code{Error()}, yielding incorrect results
+from \code{\link{aov}}. Disabling this check is not recommended unless you
+know what you are doing; the most common uses of \code{Error()} (e.g.
+in repeated measures designs) involve categorical variables (factors).}
 }
 \value{
 An object of class \code{"art"}:
