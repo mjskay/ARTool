@@ -1,6 +1,6 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.10.0
+Version: 0.10.0.0001
 Date: 2016-01-10
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@uw.edu"),
@@ -11,7 +11,7 @@ Description: The Aligned Rank Transform for nonparametric
     factorial ANOVAs as described by J. O. Wobbrock,
     L. Findlater, D. Gergle, & J. J. Higgins, "The Aligned
     Rank Transform for nonparametric factorial analyses
-    using only ANOVA procedures", CHI 2011.
+    using only ANOVA procedures", CHI 2011, DOI: 10.1145/1978942.1978963
 Imports:
     lme4,
     car (>= 2.0-24),
