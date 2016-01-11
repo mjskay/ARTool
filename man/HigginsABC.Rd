@@ -5,10 +5,13 @@
 \alias{HigginsABC}
 \title{Synthetic 2x2x2 Mixed Design Experiment}
 \format{A data frame with 16 observations on the following 5 variables.
-\describe{ \item{Subject}{a numeric vector} \item{A}{a
-factor with levels \code{1} \code{2}} \item{B}{a factor with levels
-\code{1} \code{2}} \item{C}{a factor with levels \code{1} \code{2}}
-\item{Y}{a numeric vector} }}
+\describe{ 
+     \item{Subject}{a factor with levels \code{"s1"} .. \code{"s8"}} 
+     \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
+     \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
+     \item{C}{a factor with levels \code{"c1"} \code{"c2"}}
+     \item{Y}{a numeric vector} 
+}}
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.

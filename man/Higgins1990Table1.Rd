@@ -5,10 +5,12 @@
 \alias{Higgins1990Table1}
 \title{Synthetic 3x3 Factorial Randomized Experiment}
 \format{A data frame with 36 observations on the following 4 variables.
-\describe{ \item{Subject}{a numeric vector} \item{Row}{a
-factor with levels \code{1} \code{2} \code{3}} \item{Column}{a
-factor with levels \code{1} \code{2} \code{3}} \item{Response}{a
-numeric vector} }}
+\describe{ 
+     \item{Subject}{a factor with levels \code{"s1"} .. \code{"s36"}}
+     \item{Row}{a factor with levels \code{"r1"} .. \code{"r3"}}
+     \item{Column}{a factor with levels \code{"c1"} .. \code{"c3"}}
+     \item{Response}{a numeric vector} 
+}}
 \source{
 Higgins, J. J., Blair, R. C. and Tashtoush, S. (1990). The aligned
 rank transform procedure.  \emph{Proceedings of the Conference on Applied

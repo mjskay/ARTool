@@ -13,15 +13,18 @@
 #' @name Higgins1990Table1.art
 #' @docType data
 #' @format A data frame with 36 observations on the following 10 variables.
-#' \describe{ \item{Subject}{a numeric vector} \item{Row}{a
-#' numeric vector} \item{Column}{a numeric vector}
-#' \item{Response}{a numeric vector}
-#' \item{aligned.Response..for.Row}{a numeric vector}
-#' \item{aligned.Response..for.Column}{a numeric vector}
-#' \item{aligned.Response..for.Row.Column}{a numeric vector}
-#' \item{ART.Response..for.Row}{a numeric vector}
-#' \item{ART.Response..for.Column}{a numeric vector}
-#' \item{ART.Response..for.Row.Column}{a numeric vector} }
+#' \describe{
+#'      \item{Subject}{a factor with levels \code{"s1"} .. \code{"s36"}}
+#'      \item{Row}{a factor with levels \code{"r1"} .. \code{"r3"}}
+#'      \item{Column}{a factor with levels \code{"c1"} .. \code{"c3"}}
+#'      \item{Response}{a numeric vector}
+#'      \item{aligned.Response..for.Row}{a numeric vector}
+#'      \item{aligned.Response..for.Column}{a numeric vector}
+#'      \item{aligned.Response..for.Row.Column}{a numeric vector}
+#'      \item{ART.Response..for.Row}{a numeric vector}
+#'      \item{ART.Response..for.Column}{a numeric vector}
+#'      \item{ART.Response..for.Row.Column}{a numeric vector}
+#' }
 #' @seealso \code{\link{Higgins1990Table1}}, \code{\link{art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
@@ -39,10 +42,12 @@ NULL
 #' @name Higgins1990Table1
 #' @docType data
 #' @format A data frame with 36 observations on the following 4 variables.
-#' \describe{ \item{Subject}{a numeric vector} \item{Row}{a
-#' factor with levels \code{1} \code{2} \code{3}} \item{Column}{a
-#' factor with levels \code{1} \code{2} \code{3}} \item{Response}{a
-#' numeric vector} }
+#' \describe{ 
+#'      \item{Subject}{a factor with levels \code{"s1"} .. \code{"s36"}}
+#'      \item{Row}{a factor with levels \code{"r1"} .. \code{"r3"}}
+#'      \item{Column}{a factor with levels \code{"c1"} .. \code{"c3"}}
+#'      \item{Response}{a numeric vector} 
+#' }
 #' @seealso \code{\link{art}}, \code{\link{anova.art}}.
 #' @source Higgins, J. J., Blair, R. C. and Tashtoush, S. (1990). The aligned
 #' rank transform procedure.  \emph{Proceedings of the Conference on Applied
@@ -73,15 +78,18 @@ NULL
 #' @name Higgins1990Table5.art
 #' @docType data
 #' @format A data frame with 48 observations on the following 10 variables.
-#' \describe{ \item{Tray}{a numeric vector} \item{Moisture}{a
-#' numeric vector} \item{Fertilizer}{a numeric vector}
-#' \item{DryMatter}{a numeric vector}
-#' \item{aligned.DryMatter..for.Moisture}{a numeric vector}
-#' \item{aligned.DryMatter..for.Fertilizer}{a numeric vector}
-#' \item{aligned.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
-#' \item{ART.DryMatter..for.Moisture}{a numeric vector}
-#' \item{ART.DryMatter..for.Fertilizer}{a numeric vector}
-#' \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector} }
+#' \describe{
+#'      \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
+#'      \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
+#'      \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
+#'      \item{DryMatter}{a numeric vector}
+#'      \item{aligned.DryMatter..for.Moisture}{a numeric vector}
+#'      \item{aligned.DryMatter..for.Fertilizer}{a numeric vector}
+#'      \item{aligned.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
+#'      \item{ART.DryMatter..for.Moisture}{a numeric vector}
+#'      \item{ART.DryMatter..for.Fertilizer}{a numeric vector}
+#'      \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector} 
+#' }
 #' @seealso \code{\link{Higgins1990Table5}}, \code{\link{art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
@@ -105,12 +113,12 @@ NULL
 #' @name Higgins1990Table5
 #' @docType data
 #' @format A data frame with 48 observations on the following 4 variables.
-#' \describe{ \item{Tray}{a factor with levels \code{1} \code{2}
-#' \code{3} \code{4} \code{5} \code{6} \code{7} \code{8} \code{9} \code{10}
-#' \code{11} \code{12}} \item{Moisture}{a factor with levels \code{1}
-#' \code{2} \code{3} \code{4}} \item{Fertilizer}{a factor with levels
-#' \code{1} \code{2} \code{3} \code{4}} \item{DryMatter}{a numeric
-#' vector} }
+#' \describe{ 
+#'      \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
+#'      \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
+#'      \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
+#'      \item{DryMatter}{a numeric vector} 
+#' }
 #' @seealso See \code{\link{art}} for a more complete example. See also
 #' \code{\link{anova.art}}.
 #' @references Higgins, J. J., Blair, R. C. and Tashtoush, S. (1990). The
@@ -140,22 +148,27 @@ NULL
 #' @name HigginsABC.art
 #' @docType data
 #' @format A data frame with 16 observations on the following 19 variables.
-#' \describe{ \item{Subject}{a numeric vector} \item{A}{a
-#' numeric vector} \item{B}{a numeric vector} \item{C}{a
-#' numeric vector} \item{Y}{a numeric vector}
-#' \item{aligned.Y..for.A}{a numeric vector}
-#' \item{aligned.Y..for.B}{a numeric vector}
-#' \item{aligned.Y..for.A.B}{a numeric vector}
-#' \item{aligned.Y..for.C}{a numeric vector}
-#' \item{aligned.Y..for.A.C}{a numeric vector}
-#' \item{aligned.Y..for.B.C}{a numeric vector}
-#' \item{aligned.Y..for.A.B.C}{a numeric vector}
-#' \item{ART.Y..for.A}{a numeric vector} \item{ART.Y..for.B}{a
-#' numeric vector} \item{ART.Y..for.A.B}{a numeric vector}
-#' \item{ART.Y..for.C}{a numeric vector}
-#' \item{ART.Y..for.A.C}{a numeric vector}
-#' \item{ART.Y..for.B.C}{a numeric vector}
-#' \item{ART.Y..for.A.B.C}{a numeric vector} }
+#' \describe{ 
+#'      \item{Subject}{a factor with levels \code{"s1"} .. \code{"s8"}} 
+#'      \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
+#'      \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
+#'      \item{C}{a factor with levels \code{"c1"} \code{"c2"}}
+#'      \item{Y}{a numeric vector}
+#'      \item{aligned.Y..for.A}{a numeric vector}
+#'      \item{aligned.Y..for.B}{a numeric vector}
+#'      \item{aligned.Y..for.A.B}{a numeric vector}
+#'      \item{aligned.Y..for.C}{a numeric vector}
+#'      \item{aligned.Y..for.A.C}{a numeric vector}
+#'      \item{aligned.Y..for.B.C}{a numeric vector}
+#'      \item{aligned.Y..for.A.B.C}{a numeric vector}
+#'      \item{ART.Y..for.A}{a numeric vector} 
+#'      \item{ART.Y..for.B}{a numeric vector} 
+#'      \item{ART.Y..for.A.B}{a numeric vector}
+#'      \item{ART.Y..for.C}{a numeric vector}
+#'      \item{ART.Y..for.A.C}{a numeric vector}
+#'      \item{ART.Y..for.B.C}{a numeric vector}
+#'      \item{ART.Y..for.A.B.C}{a numeric vector}
+#' }
 #' @seealso \code{\link{HigginsABC}}, \code{\link{art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
@@ -173,10 +186,13 @@ NULL
 #' @name HigginsABC
 #' @docType data
 #' @format A data frame with 16 observations on the following 5 variables.
-#' \describe{ \item{Subject}{a numeric vector} \item{A}{a
-#' factor with levels \code{1} \code{2}} \item{B}{a factor with levels
-#' \code{1} \code{2}} \item{C}{a factor with levels \code{1} \code{2}}
-#' \item{Y}{a numeric vector} }
+#' \describe{ 
+#'      \item{Subject}{a factor with levels \code{"s1"} .. \code{"s8"}} 
+#'      \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
+#'      \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
+#'      \item{C}{a factor with levels \code{"c1"} \code{"c2"}}
+#'      \item{Y}{a numeric vector} 
+#' }
 #' @seealso \code{\link{art}}, \code{\link{anova.art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.

@@ -5,15 +5,18 @@
 \alias{Higgins1990Table1.art}
 \title{Aligned Rank Transformed Version of Higgins1990Table1}
 \format{A data frame with 36 observations on the following 10 variables.
-\describe{ \item{Subject}{a numeric vector} \item{Row}{a
-numeric vector} \item{Column}{a numeric vector}
-\item{Response}{a numeric vector}
-\item{aligned.Response..for.Row}{a numeric vector}
-\item{aligned.Response..for.Column}{a numeric vector}
-\item{aligned.Response..for.Row.Column}{a numeric vector}
-\item{ART.Response..for.Row}{a numeric vector}
-\item{ART.Response..for.Column}{a numeric vector}
-\item{ART.Response..for.Row.Column}{a numeric vector} }}
+\describe{
+     \item{Subject}{a factor with levels \code{"s1"} .. \code{"s36"}}
+     \item{Row}{a factor with levels \code{"r1"} .. \code{"r3"}}
+     \item{Column}{a factor with levels \code{"c1"} .. \code{"c3"}}
+     \item{Response}{a numeric vector}
+     \item{aligned.Response..for.Row}{a numeric vector}
+     \item{aligned.Response..for.Column}{a numeric vector}
+     \item{aligned.Response..for.Row.Column}{a numeric vector}
+     \item{ART.Response..for.Row}{a numeric vector}
+     \item{ART.Response..for.Column}{a numeric vector}
+     \item{ART.Response..for.Row.Column}{a numeric vector}
+}}
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.

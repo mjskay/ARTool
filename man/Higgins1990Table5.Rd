@@ -6,12 +6,12 @@
 \title{Split-plot Experiment Examining Effect of Moisture and Fertilizer on Dry
 Matter in Peat Pots}
 \format{A data frame with 48 observations on the following 4 variables.
-\describe{ \item{Tray}{a factor with levels \code{1} \code{2}
-\code{3} \code{4} \code{5} \code{6} \code{7} \code{8} \code{9} \code{10}
-\code{11} \code{12}} \item{Moisture}{a factor with levels \code{1}
-\code{2} \code{3} \code{4}} \item{Fertilizer}{a factor with levels
-\code{1} \code{2} \code{3} \code{4}} \item{DryMatter}{a numeric
-vector} }}
+\describe{ 
+     \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
+     \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
+     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
+     \item{DryMatter}{a numeric vector} 
+}}
 \source{
 Milliken, G.A., Johnson, D.E. (1984). \emph{Analysis of Messy Data
 Vol I: Designed Experiments}. Van Nostrand Reinhold Company, New York.

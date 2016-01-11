@@ -75,9 +75,9 @@ str(Higgins1990Table5)
 
 ```
 ## 'data.frame':	48 obs. of  4 variables:
-##  $ Tray      : Factor w/ 12 levels "1","2","3","4",..: 1 1 1 1 2 2 2 2 3 3 ...
-##  $ Moisture  : Factor w/ 4 levels "1","2","3","4": 1 1 1 1 1 1 1 1 1 1 ...
-##  $ Fertilizer: Factor w/ 4 levels "1","2","3","4": 1 2 3 4 1 2 3 4 1 2 ...
+##  $ Tray      : Factor w/ 12 levels "t1","t2","t3",..: 1 1 1 1 2 2 2 2 3 3 ...
+##  $ Moisture  : Factor w/ 4 levels "m1","m2","m3",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Fertilizer: Factor w/ 4 levels "f1","f2","f3",..: 1 2 3 4 1 2 3 4 1 2 ...
 ##  $ DryMatter : num  3.3 4.3 4.5 5.8 4 4.1 6.5 7.3 1.9 3.8 ...
 ```
 
@@ -87,14 +87,14 @@ head(Higgins1990Table5, n=8)
 
 ```
 ##   Tray Moisture Fertilizer DryMatter
-## 1    1        1          1       3.3
-## 2    1        1          2       4.3
-## 3    1        1          3       4.5
-## 4    1        1          4       5.8
-## 5    2        1          1       4.0
-## 6    2        1          2       4.1
-## 7    2        1          3       6.5
-## 8    2        1          4       7.3
+## 1   t1       m1         f1       3.3
+## 2   t1       m1         f2       4.3
+## 3   t1       m1         f3       4.5
+## 4   t1       m1         f4       5.8
+## 5   t2       m1         f1       4.0
+## 6   t2       m1         f2       4.1
+## 7   t2       m1         f3       6.5
+## 8   t2       m1         f4       7.3
 ```
 
 ### Step 1: Transform the data
