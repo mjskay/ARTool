@@ -95,7 +95,6 @@ test_that("art does not allow Error terms that aren't factors by default", {
 })
 
 test_that("art of Higgins1990Table5 matches results of the original ARTool", {
-    ### verify that art on Higgins1990Table5 is correct
     data(Higgins1990Table5, Higgins1990Table5.art, package="ARTool")
     
     #run art on original data
@@ -118,7 +117,6 @@ test_that("art of Higgins1990Table5 matches results of the original ARTool", {
 })
 
 test_that("art of Higgins1990Table1 matches results of the original ARTool", {
-    ### verify that art on Higgins1990Table5 is correct
     data(Higgins1990Table1, Higgins1990Table1.art, package="ARTool")
     
     #run art on original data
@@ -141,7 +139,6 @@ test_that("art of Higgins1990Table1 matches results of the original ARTool", {
 })
 
 test_that("art of HigginsABC matches results of the original ARTool", {
-    ### verify that art on HigginsABC is correct
     data(HigginsABC, HigginsABC.art, package="ARTool")
     
     #run art on original data

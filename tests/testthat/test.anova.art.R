@@ -51,7 +51,6 @@ test_that("anova.art of Higgins1990Table5 matches results of the original ARTool
 })
 
 test_that("anova.art of Higgins1990Table1 matches results of the original ARTool", {
-    ### verify that art on Higgins1990Table5 is correct
     data(Higgins1990Table1, package="ARTool")
     
     #reference result
@@ -71,7 +70,6 @@ test_that("anova.art of Higgins1990Table1 matches results of the original ARTool
 })
 
 test_that("anova.art of HigginsABC matches results of the original ARTool", {
-    ### verify that art on HigginsABC is correct
     data(HigginsABC, package="ARTool")
     
     #reference result
