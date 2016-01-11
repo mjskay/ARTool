@@ -81,8 +81,16 @@ test_that("formulas with expressions for responses are parsed correctly", {
     expect_equal(ARTool:::parse.art.formula(as.numeric(y) ~ a)$fixed.only, as.numeric(y) ~ a)
 })
 
+test_that("formulas with error terms are parsed correctly", {
+    expect_equal(ARTool:::parse.art.formula(y ~ a)$error.terms, ~ NULL)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(g))$error.terms, ~ g)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(g*h))$error.terms, ~ g*h)
+    expect_equal(ARTool:::parse.art.formula(y ~ a + Error(g*h) + Error(i))$error.terms, ~ g * h + i)
+})
+
 test_that("formulas generated from parsing have their environments set to that of the original formula", {
     f = y ~ a
     expect_equal(environment(ARTool:::parse.art.formula(f)$fixed.only), environment(f))
     expect_equal(environment(ARTool:::parse.art.formula(f)$fixed.terms), environment(f))
+    expect_equal(environment(ARTool:::parse.art.formula(f)$error.terms), environment(f))
 })

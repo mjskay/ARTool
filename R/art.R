@@ -52,6 +52,12 @@
 #' the \code{digits} argument of \code{\link{round}}. The default value is
 #' based on the default \code{tolerance} used for fuzzy comparison in
 #' \code{all.equal}.
+#' @param check.errors.are.factors Should we check to ensure \code{Error()}
+#' terms are all factors? A common mistake involves coding a categorical variable
+#' as numeric and passing it to \code{Error()}, yielding incorrect results
+#' from \code{\link{aov}}. Disabling this check is not recommended unless you
+#' know what you are doing; the most common uses of \code{Error()} (e.g.
+#' in repeated measures designs) involve categorical variables (factors). 
 #' @return An object of class \code{"art"}:
 #' 
 #' \item{call}{ The call used to generate the transformed data. }
@@ -126,7 +132,8 @@
 #' @export
 art = function(formula, data,
     #number of digits to round aligned responses to before ranking (to ensure ties are computed consistently)
-    rank.comparison.digits = -floor(log10(.Machine$double.eps ^ 0.5)) 
+    rank.comparison.digits = -floor(log10(.Machine$double.eps ^ 0.5)),
+    check.errors.are.factors = TRUE 
 ) {
     #parse and validate formula
     f = parse.art.formula(formula)
@@ -170,6 +177,23 @@ art = function(formula, data,
         df[,j] = as.numeric(df[,j])
     }
     
+    #for error terms, issue error if any terms aren't factors
+    if (check.errors.are.factors && f$n.error.terms > 0) {
+        error.term.df = model.frame(f$error.terms, data)
+        non.factor.error.terms = Filter(function (col) !is.factor(error.term.df[,col]), 1:ncol(error.term.df))
+        if (any(non.factor.error.terms)) {
+            stop(paste0(
+                "The following Error terms are not factors:\n    ",
+                paste0(names(error.term.df)[non.factor.error.terms], collapse = "\n    "),
+                "\n  If these terms are intended to represent categorical data, such as subjects in a \n",
+                "  repeated measures design, you should convert them into factors using factor().\n",
+                "  \n",
+                "  If you know what you are doing and still want Error terms that are not factors, use\n",
+                "  check.errors.are.factors = FALSE."
+                ))
+        }
+    }
+
     #calculate cell means and estimated effects
     m = art.estimated.effects(terms(f$fixed.only), df)
     

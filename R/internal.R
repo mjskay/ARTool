@@ -6,13 +6,15 @@
 
 ### Parses and validates model formula for art. 
 ### Raises exception if formula does not validate (e.g. not factorial).
-### Returns list with:
-###		fixed.only: formula with only fixed components
+### Given a formula like y ~ a*b*c + (1|d) + Error(g * h) + Error(i),
+### returns list with:
+###		fixed.only: formula with only fixed components (y ~ a+b+c)
 ###		fixed.terms: additive formula with only variables from fixed terms and no response 
-###							(e.g. for use with ddply)
-###    	fixed.term.labels:	character vector of term labels
-###     n.grouping.terms: number of grouping terms (e.g. (1|d))
-###     n.error.terms: number of error terms (e.g. Error(g))
+###							(for use with ddply) (e.g., ~ a + b + c)
+###    	fixed.term.labels:	character vector of term labels (e.g., c("a", "b", "c", "a:b", "a:c", "b:c", "a:b:c"))
+###     n.grouping.terms: number of grouping terms like (1|d) (e.g. 1)
+###     n.error.terms: number of error terms like Error(g) (e.g. 2)
+###     error.terms: formula with error terms extracted from within Error() (e.g. ~ g * h + i) 
 #' @importFrom stats terms
 #' @importFrom plyr laply
 parse.art.formula = function(formula) {
@@ -85,13 +87,19 @@ parse.art.formula = function(formula) {
     fixed.terms = eval(bquote(~ .(Reduce(function(x,y) bquote(.(x) + .(y)), variables[is.fixed.variable]))))
     environment(fixed.terms) = environment(formula)
 
+    #build a formula with all Error terms extracted from Error() on the right-hand side (added to each other)
+    #e.g. y ~ a*b*c + (1|d) + Error(g * h) + Error(i) ->  ~ g * h + i
+    error.terms = eval(bquote(~ .(Reduce(function(x,y) bquote(.(x) + .(y)), Map(function (v) v[[2]], variables[is.error.variable])))))
+    environment(error.terms) = environment(formula)
+    
     #return validated formulas
     list(
         fixed.only = factorial.formula,
         fixed.terms = fixed.terms,
         fixed.term.labels = fixed.term.labels,
         n.grouping.terms = sum(is.grouping.variable),
-        n.error.terms = sum(is.error.variable)
+        n.error.terms = sum(is.error.variable),
+        error.terms = error.terms
     )
 }
 

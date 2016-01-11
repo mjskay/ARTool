@@ -85,6 +85,15 @@ test_that("art correctly interprets formulas with expressions on the left-hand s
     expect_equal(m1$aligned.ranks$`factor(a)`, m2$aligned.ranks$fa)
 })
 
+test_that("art does not allow Error terms that aren't factors by default", {
+    data(Higgins1990Table5, package="ARTool")
+    Higgins1990Table5$nt = as.numeric(Higgins1990Table5$Tray)
+    
+    expect_error(art(DryMatter ~ Moisture*Fertilizer + Error(nt), data=Higgins1990Table5), "The following Error terms are not factors")
+    art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
+    art(DryMatter ~ Moisture*Fertilizer + Error(factor(nt)), data=Higgins1990Table5)
+})
+
 test_that("art of Higgins1990Table5 matches results of the original ARTool", {
     ### verify that art on Higgins1990Table5 is correct
     data(Higgins1990Table5, Higgins1990Table5.art, package="ARTool")
