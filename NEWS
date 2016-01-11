@@ -1,3 +1,18 @@
+ARTool 0.10.0
+=============
+
+New features:
+
+* Support for Error() terms in model formulas (resulting models are run using aov())
+* Checks for numeric variables passed into formulas that may cause incorrect results (if the user intended data to be treated as categorical)
+* More detailed ANOVA tables
+* New vignette describing contrast tests, particularly for interactions (vignette("art-contrasts"))
+
+Bugfixes:
+
+* Formulas now correctly support arbitrary expressions as terms (rather than just column names).
+
+
 ARTool 0.9.5
 ============
 

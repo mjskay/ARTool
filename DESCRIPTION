@@ -1,6 +1,6 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.9.5.0005
+Version: 0.10.0
 Date: 2016-01-10
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@uw.edu"),
