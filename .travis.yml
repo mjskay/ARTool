@@ -7,11 +7,10 @@ sudo: required
 warnings_are_errors: true
 
 # these packages aren't installing from source on travis currently, so install from binaries
-r_binary_packages:
+r_packages:
  - pbkrtest
  - car
  - lme4
-r_packages:
  - phia
 
 # NOT_CRAN and options in .Rprofile are workarounds for "cyclic dependency check" error
