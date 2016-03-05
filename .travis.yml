@@ -6,6 +6,12 @@ sudo: required
 # Be strict when checking our package
 warnings_are_errors: true
 
+# these packages aren't compiling on travis currently, install from binaries
+r_binary_packages:
+ - pbkrtest
+ - car
+ - lme4
+
 # NOT_CRAN and options in .Rprofile are workarounds for "cyclic dependency check" error
 # see https://github.com/travis-ci/travis-ci/issues/4125
 env:
