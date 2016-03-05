@@ -12,6 +12,7 @@ r_packages:
  - car
  - lme4
  - phia
+ - nlme
 
 # NOT_CRAN and options in .Rprofile are workarounds for "cyclic dependency check" error
 # see https://github.com/travis-ci/travis-ci/issues/4125
