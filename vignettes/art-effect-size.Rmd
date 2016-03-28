@@ -2,7 +2,7 @@
 title: "Effect Sizes with ART"
 author: "Matthew Kay"
 date: "`r Sys.Date()`"
-output:  rmarkdown::html_vignette
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Effect Sizes with ART}
   %\VignetteEngine{knitr::rmarkdown}

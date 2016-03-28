@@ -2,7 +2,7 @@
 title: "Contrast tests with ART"
 author: "Matthew Kay"
 date: "`r Sys.Date()`"
-output:  rmarkdown::html_vignette
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Interaction Contrasts with ART}
   %\VignetteEngine{knitr::rmarkdown}
