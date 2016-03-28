@@ -1,7 +1,7 @@
 ---
 title: "Contrast tests with ART"
 author: "Matthew Kay"
-date: "2015-12-06"
+date: "2016-03-09"
 output:  rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Interaction Contrasts with ART}
@@ -102,7 +102,7 @@ ggplot(df, aes(x=X1, y=Y, color=X2)) +
     facet_grid(. ~ X2)
 ```
 
-![](figure/interaction_plot-1.png) 
+![](figure/interaction_plot-1.png)
 
 And "true" means for each level (averaging over the levels of the other factor):
 
@@ -302,7 +302,7 @@ df %>%
     coord_cartesian(ylim=c(-6,10)) 
 ```
 
-![](figure/interaction_plot_AC_AD-1.png) 
+![](figure/interaction_plot_AC_AD-1.png)
 
 The linear model correctly estimates this difference as `~0`, which is both the true effect and what we should expect from a visual
 inspection of the data. Unlike the linear model, the ART model gives us a statistically significant difference between `A,C` and `A,D`, 
@@ -385,7 +385,7 @@ plot_interaction_for_X2_levels = function(...) {
 plot_interaction_for_X2_levels("C", "D")
 ```
 
-![](figure/interaction_plot_C_D-1.png) 
+![](figure/interaction_plot_C_D-1.png)
 
 The true effect for `A - B | C` is -1, for `A - B | D` is -5, and for `(A - B | C) - (A - B | D)` is `(-1) - (-5) = 4`.
 Visually, we're asking if the two dashed lines in the above plot are parallel. Equivalently, we're asking if the vertical distance from the mean of
@@ -424,7 +424,7 @@ We can look at a similar plot for `A-B : C-E`:
 plot_interaction_for_X2_levels("C", "E")
 ```
 
-![](figure/interaction_plot_C_E-1.png) 
+![](figure/interaction_plot_C_E-1.png)
 
 Here the true effect for `A - B | C` is -1, `A - B | E` is also -1, and `(A - B | C) - (A - B | E)` is `0`.
 Visually, this sample looks close to the true effects (the height of `A - B | C` is about the same as `A - B | E`). 
@@ -438,7 +438,7 @@ A similar visual analysis finds the estimate for `A-B : D-E` (~ -4.2) also to be
 plot_interaction_for_X2_levels("D", "E")
 ```
 
-![](figure/interaction_plot_D_E-1.png) 
+![](figure/interaction_plot_D_E-1.png)
 
 Now we look at these differences of differences in art:
 

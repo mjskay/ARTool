@@ -1,7 +1,7 @@
 ---
 title: "Effect Sizes with ART"
 author: "Matthew Kay"
-date: "2016-03-08"
+date: "2016-03-14"
 output:  rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Effect Sizes with ART}
@@ -33,6 +33,13 @@ library(phia)       #testInteractions
 library(tidyr)      #spread, gather
 library(ggplot2)    #ggplot, stat_..., geom_..., etc
 library(DescTools)  #EtaSq
+```
+
+```
+## Error in library(DescTools): there is no package called 'DescTools'
+```
+
+```r
 library(car)        #sigmaHat
 ```
 
@@ -124,10 +131,7 @@ EtaSq(m.linear, type=3)
 ```
 
 ```
-##          eta.sq eta.sq.part
-## X1    0.3562872   0.5991468
-## X2    0.1890921   0.4423595
-## X1:X2 0.2162503   0.4756719
+## Error in eval(expr, envir, enclos): could not find function "EtaSq"
 ```
 
 The results are comparable.
