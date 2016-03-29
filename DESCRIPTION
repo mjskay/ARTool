@@ -20,7 +20,7 @@ Imports:
     dplyr
 Suggests:
     testthat (>= 0.10.0),
-    lsmeans,
+    lsmeans (>= 2.22),
     knitr,
     rmarkdown,
     ggplot2,

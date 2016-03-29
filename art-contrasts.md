@@ -1,8 +1,8 @@
 ---
 title: "Contrast tests with ART"
 author: "Matthew Kay"
-date: "2016-03-09"
-output:  rmarkdown::html_vignette
+date: "2016-03-28"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Interaction Contrasts with ART}
   %\VignetteEngine{knitr::rmarkdown}
@@ -37,7 +37,6 @@ appropriate on aligned-rank-transformed (ART) data, what are not, and why.
 library(ARTool)     #art, artlm
 library(dplyr)      #data_frame, %>%, filter, etc
 library(lsmeans)    #lsmeans
-library(phia)       #testInteractions
 library(tidyr)      #spread, gather
 library(ggplot2)    #ggplot, stat_..., geom_..., etc
 ```
@@ -167,7 +166,7 @@ For the main effects, let's look at contrast tests for the linear model:
 
 
 ```r
-lsmeans(m.linear, pairwise ~ X1)$contrasts
+contrast(lsmeans(m.linear, ~ X1), method="pairwise")
 ```
 
 ```
@@ -178,7 +177,7 @@ lsmeans(m.linear, pairwise ~ X1)$contrasts
 ```
 
 ```r
-lsmeans(m.linear, pairwise ~ X2)$contrasts
+contrast(lsmeans(m.linear, ~ X2), method="pairwise")
 ```
 
 ```
@@ -195,7 +194,7 @@ These are about right: The "true" effect for `A - B` is `-2.3333`, for `C - D` a
 
 
 ```r
-lsmeans(artlm(m.art, "X1"), pairwise ~ X1)$contrasts
+contrast(lsmeans(artlm(m.art, "X1"), ~ X1), method="pairwise")
 ```
 
 ```
@@ -206,7 +205,7 @@ lsmeans(artlm(m.art, "X1"), pairwise ~ X1)$contrasts
 ```
 
 ```r
-lsmeans(artlm(m.art, "X2"), pairwise ~ X2)$contrasts
+contrast(lsmeans(artlm(m.art, "X2"), ~ X2), method="pairwise")
 ```
 
 ```
@@ -229,7 +228,7 @@ Now let's look at tests of differences in combinations of levels between factors
 
 
 ```r
-lsmeans(m.linear, pairwise ~ X1:X2)$contrasts
+contrast(lsmeans(m.linear, ~ X1:X2), method="pairwise")
 ```
 
 ```
@@ -258,7 +257,7 @@ And for ART:
 
 ```r
 #DO NOT DO THIS!
-lsmeans(artlm(m.art, "X1:X2"), pairwise ~ X1:X2)$contrasts
+contrast(lsmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise")
 ```
 
 ```
@@ -321,7 +320,7 @@ If we first combine the factors before aligning-and-ranking, we can get an estim
 #DO NOT DO THIS WITHOUT READING THE NOTE BELOW
 df$X = with(df, X1:X2)
 m.art.12 = art(Y ~ X, data=df)
-lsmeans(artlm(m.art.12, "X"), pairwise ~ X)$contrasts
+contrast(lsmeans(artlm(m.art.12, "X"), ~ X), method="pairwise")
 ```
 
 ```
@@ -355,7 +354,7 @@ can't recommended this approach in the general case (or at least, not without mo
 
 While tests of differences of combinations of levels between factors have issues in ART, we can test _differences of differences_; e.g., 
 for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`? We
-can test this using the `testInteractions` function from package `phia`.
+can test this using the `interaction` argument to the `contrast` function in the `lsmeans` package.
 
 Before we test, let's try to visualize what's going on in just this interaction:
 
@@ -393,31 +392,24 @@ A to the mean of B in the left panel (when X2 == C) is the same as the vertical 
 The true difference between these vertical distances (the "difference of a difference") is 4, which is also about what we would estimate
 it to be by looking at the above plot.
 
-We can get the estimate of this "difference of a difference" from the linear model:
+We can get the estimate of this "difference of a difference" from the linear model by adding `interaction=TRUE` to the same call to `contrast` we made previously:
 
 
 ```r
-#unfortunately, the meaning of "pairwise" here isn't the same as how lsmeans
-#uses it when multiple factors are involved --- here we get differences of differences.
-testInteractions(m.linear, pairwise=c("X1", "X2"))
+contrast(lsmeans(m.linear, ~ X1:X2), method="pairwise", interaction=TRUE)
 ```
 
 ```
-## F Test: 
-## P-value adjustment method: holm
-##             Value  Df Sum of Sq      F Pr(>F)    
-## A-B : C-D  3.8232   1   182.715 180.23 <2e-16 ***
-## A-B : C-E -0.3821   1     1.825   1.80 0.1808    
-## A-B : D-E -4.2053   1   221.059 218.05 <2e-16 ***
-## Residuals         294   298.059                  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##  X1_pairwise X2_pairwise   estimate        SE  df t.ratio p.value
+##  A - B       C - D        3.8232451 0.2847883 294  13.425  <.0001
+##  A - B       C - E       -0.3820788 0.2847883 294  -1.342  0.1808
+##  A - B       D - E       -4.2053239 0.2847883 294 -14.766  <.0001
 ```
 
-Here we can interpret the row `A-B : C-D` as the difference between (`A-B | C`) and (`A-B | D`), which
+Here we can interpret the row `A - B    C - D` as the difference between (`A - B | C`) and (`A - B | D`), which
 is estimated as `3.82` (close to the true effect of 4, see the plot above). 
 
-We can look at a similar plot for `A-B : C-E`:
+We can look at a similar plot for the row `A - B    C - E`:
 
 
 ```r
@@ -431,7 +423,7 @@ Visually, this sample looks close to the true effects (the height of `A - B | C`
 From the the row `A-B : C-E` above we can see that the 
 estimate from the linear model is ~0, as we should hope.
 
-A similar visual analysis finds the estimate for `A-B : D-E` (~ -4.2) also to be correct (true effect is -4):
+A similar visual analysis finds the estimate for row `A - B    D - E` (~ -4.2) also to be correct (true effect is -4):
 
 
 ```r
@@ -444,22 +436,18 @@ Now we look at these differences of differences in art:
 
 
 ```r
-testInteractions(artlm(m.art, "X1:X2"), pairwise=c("X1", "X2"))
+contrast(lsmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise", interaction=TRUE)
 ```
 
 ```
-## F Test: 
-## P-value adjustment method: holm
-##             Value  Df Sum of Sq        F Pr(>F)    
-## A-B : C-D  247.28   1    764342 198.8827 <2e-16 ***
-## A-B : C-E  -22.34   1      6238   1.6232 0.2036    
-## A-B : D-E -269.62   1    908687 236.4412 <2e-16 ***
-## Residuals         294   1129896                    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+##  X1_pairwise X2_pairwise estimate       SE  df t.ratio p.value
+##  A - B       C - D         247.28 17.53438 294  14.103  <.0001
+##  A - B       C - E         -22.34 17.53438 294  -1.274  0.2036
+##  A - B       D - E        -269.62 17.53438 294 -15.377  <.0001
 ```
 
-And we see F values consistent with the linear model and the same effect directions. These types of comparisons work under ART because they
-do not involve coefficients of main effects (see the description of these tests in 
-[this phia vignette](https://cran.r-project.org/web/packages/phia/vignettes/phia.pdf)), thus are consistent even when we've
-stripped out the main effects.
+And we see t values consistent with the linear model, and consistent estimates (given the SE). 
+These types of comparisons work under ART because they do not involve coefficients of main 
+effects (see the description of these tests in 
+[this phia vignette](https://cran.r-project.org/web/packages/phia/vignettes/phia.pdf)),
+thus are consistent even when we've stripped out the main effects.
