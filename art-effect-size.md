@@ -29,7 +29,6 @@ But how do we derive effect sizes from ART results?
 library(ARTool)     #art, artlm
 library(dplyr)      #data_frame, %>%, filter, etc
 library(lsmeans)    #lsmeans
-library(phia)       #testInteractions
 library(tidyr)      #spread, gather
 library(ggplot2)    #ggplot, stat_..., geom_..., etc
 library(DescTools)  #EtaSq

@@ -25,7 +25,6 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
-    phia,
     tidyr,
     pander,
     Cairo,
