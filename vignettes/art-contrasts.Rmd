@@ -41,10 +41,10 @@ pander::panderOptions("table.style", "rmarkdown")   #table style that's supporte
 ```
 
 ```{r message=FALSE}
+library(dplyr)      #data_frame, %>%, filter, summarise, group_by
+library(lsmeans)    #lsmeans, contrast
+library(tidyr)      #spread
 library(ARTool)     #art, artlm
-library(dplyr)      #data_frame, %>%, filter, etc
-library(lsmeans)    #lsmeans
-library(tidyr)      #spread, gather
 library(ggplot2)    #ggplot, stat_..., geom_..., etc
 ```
 

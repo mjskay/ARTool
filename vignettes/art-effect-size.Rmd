@@ -33,13 +33,12 @@ pander::panderOptions("table.style", "rmarkdown")   #table style that's supporte
 ```
 
 ```{r message=FALSE}
-library(ARTool)     #art, artlm
-library(dplyr)      #data_frame, %>%, filter, etc
+library(dplyr)      #%>%
 library(lsmeans)    #lsmeans
-library(tidyr)      #spread, gather
-library(ggplot2)    #ggplot, stat_..., geom_..., etc
 library(DescTools)  #EtaSq
 library(car)        #sigmaHat
+library(ARTool)     #art, artlm
+library(ggplot2)    #ggplot, stat_..., geom_..., etc
 ```
 
 
