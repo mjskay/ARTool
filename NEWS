@@ -1,3 +1,16 @@
+ARTool 0.10.1
+=============
+
+New features:
+
+* New vignette describing effect size estimates
+* Using lsmeans interactions argument instead of phia for interaction contrasts vignette
+
+Bugfixes:
+
+* Require R >= 3.2 and lsmeans >= 2.22 to fix some bugs in earlier versions
+
+
 ARTool 0.10.0
 =============
 
