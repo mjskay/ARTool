@@ -1,3 +1,8 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Changed the DOI format in DESCRIPTION to use angle brackets.
+
 ## Test environments
 * local Windows install, R 3.2.4 and 3.3.0
 * Ubuntu 12.04 (on travis-ci), R 3.2.4
