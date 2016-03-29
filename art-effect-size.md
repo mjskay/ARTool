@@ -1,8 +1,8 @@
 ---
 title: "Effect Sizes with ART"
 author: "Matthew Kay"
-date: "2016-03-14"
-output:  rmarkdown::html_vignette
+date: "2016-03-28"
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Effect Sizes with ART}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,8 +17,8 @@ But how do we derive effect sizes from ART results?
 ## Contents
 
 1. [Test Dataset](#test-dataset): The test data we will use to compare a linear model against ART
-1. [Partial eta-squared](#partial-eta-squared): Calculation of partial eta-squared (effect size for F tests)
-1. [Cohen's d](#cohens-d): Calculation of standardized mean differences (Cohen's d; effect size for t tests), including confidence intervals
+1. [Partial _eta_-squared](#partial-eta-squared): Calculation of partial _eta_-squared (effect size for _F_ tests)
+1. [Cohen's _d_](#cohens-d): Calculation of standardized mean differences (Cohen's _d_; effect size for _t_ tests), including confidence intervals
 
 ## Libraries needed for this
 
@@ -33,13 +33,6 @@ library(phia)       #testInteractions
 library(tidyr)      #spread, gather
 library(ggplot2)    #ggplot, stat_..., geom_..., etc
 library(DescTools)  #EtaSq
-```
-
-```
-## Error in library(DescTools): there is no package called 'DescTools'
-```
-
-```r
 library(car)        #sigmaHat
 ```
 
@@ -71,7 +64,7 @@ m.art = art(Y ~ X1*X2, data=df)
 ```
 
 
-## Partial eta-squared
+## Partial _eta_-squared
 
 Note that for Fixed-effects-only models and repeated measures models
 (those with `Error()` terms) ARTool also collects the sums of squares, but
@@ -99,7 +92,7 @@ print(m.art.anova, verbose=TRUE)
 ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-We can use the sums of squares to calculate partial eta-squared:
+We can use the sums of squares to calculate partial _eta_-squared:
 
 
 ```r
@@ -122,7 +115,7 @@ m.art.anova
 ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
-We can compare the above results to partial eta-squared calculated on the
+We can compare the above results to partial _eta_-squared calculated on the
 linear model (the second column below):
 
 
@@ -131,15 +124,18 @@ EtaSq(m.linear, type=3)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): could not find function "EtaSq"
+##          eta.sq eta.sq.part
+## X1    0.3562872   0.5991468
+## X2    0.1890921   0.4423595
+## X1:X2 0.2162503   0.4756719
 ```
 
 The results are comparable.
 
 
-## Cohen's d
+## Cohen's _d_
 
-We can derive Cohen's d (the standardized mean difference) by dividing estimated differences by the
+We can derive Cohen's _d_ (the standardized mean difference) by dividing estimated differences by the
 residual standard deviation of the model. Note that this relies somewhat on the assumption of 
 constant variance across levels (aka homoscedasticity).
 
@@ -157,7 +153,7 @@ x2.contrasts = summary(pairs(lsmeans(m.linear, ~ X2)))
 ## NOTE: Results may be misleading due to involvement in interactions
 ```
 
-Then divide these estimates by the residual standard deviation to get an estimate of d:
+Then divide these estimates by the residual standard deviation to get an estimate of _d_:
 
 
 ```r
@@ -207,8 +203,8 @@ x2.contrasts.art
 ## P value adjustment: tukey method for comparing a family of 3 estimates
 ```
 
-Note how standardization is helping us now: The standardized mean differences (d) are
-quite similar to the estimates of d from the linear model above.
+Note how standardization is helping us now: The standardized mean differences (_d_) are
+quite similar to the estimates of _d_ from the linear model above.
 
 ## Confidence intervals
 
