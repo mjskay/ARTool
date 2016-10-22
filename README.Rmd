@@ -1,3 +1,9 @@
+---
+output: 
+    md_document:
+        variant: markdown_github
+---
+
 # ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
 
 [![Build Status](https://travis-ci.org/mjskay/ARTool.png?branch=master)](https://travis-ci.org/mjskay/ARTool)
@@ -142,8 +148,8 @@ reproduce the issue.
 
 ## Citations
 
-Kay M and Wobbrock J (2014). _ARTool: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs_. R package version 0.10.2, <https://github.com/mjskay/ARTool>.
+Kay M and Wobbrock J (`r format(Sys.Date(), "%Y")`). _ARTool: Aligned Rank Transform for
+Nonparametric Factorial ANOVAs_. R package version `r getNamespaceVersion("ARTool")`, <https://github.com/mjskay/ARTool>.
 DOI: [10.5281/zenodo.48543](http://dx.doi.org/10.5281/zenodo.48543).
 
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
