@@ -1,3 +1,18 @@
+ARTool 0.10.3
+=============
+
+Minor changes:
+
+* Cautionary note about standardized effect sizes in effect size vignette
+* Added testInteractions example as alternative in contrasts vignette
+
+Bugfixes:
+
+* Dependency fixes for failed test at testthat/test.artlm.R:35 (our use of lsmeans in that
+test requires some additional packages only declared as "suggests" in lsmeans, so now
+we "suggest" them as well).
+
+
 ARTool 0.10.1
 =============
 
