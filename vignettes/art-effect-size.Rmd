@@ -14,6 +14,13 @@ vignette: >
 The aligned-rank transform (ART) allows for non-parametric analyses of variance. 
 But how do we derive effect sizes from ART results? 
 
+__NOTE:__ Before embarking down the path of calculating standardized effect sizes, it is
+always worth asking if that is what you really want. Carefully consider, for example, the arguments
+of [Cummings (2011)](https://dx.doi.org/10.1001/archpediatrics.2011.97) against the use of
+standardized effect sizes and in favor of simple (unstandardized) effect sizes. If you decide you would rather
+use simple effect sizes, you may need to consider a different procedure than ART, as the ranking
+procedure destroys the information necessary to calculate simple effect sizes.
+
 ## Contents
 
 1. [Test Dataset](#test-dataset): The test data we will use to compare a linear model against ART
