@@ -30,6 +30,7 @@ Suggests:
     Cairo,
     lmerTest,
     cluster,
+    phia,
     DescTools
 License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
