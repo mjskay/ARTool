@@ -3,7 +3,7 @@ ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANO
 
 [![Build Status](https://travis-ci.org/mjskay/ARTool.png?branch=master)](https://travis-ci.org/mjskay/ARTool) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ARTool)](http://cran.r-project.org/web/packages/ARTool) [![GPL &gt;= 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3) [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool) [![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](http://dx.doi.org/10.1145/1978942.1978963)
 
-*Matthew Kay, University of Washington <mjskay@uw.edu>*<br> *Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>*
+*Matthew Kay, University of Washington <mjskay@umich.edu>*<br> *Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>*
 
 ARTool is an R package implementing the Aligned Rank Transform for conducting nonparametric analyses of variance on factorial models. This implementation is based on the ART procedure as used in the original implementation of [ARTool](http://depts.washington.edu/aimgroup/proj/art/) by Wobbrock et al.
 
@@ -156,7 +156,7 @@ This vignette is also available [here](https://cran.r-project.org/web/packages/A
 Problems
 --------
 
-Should you encounter any issues with this package, contact Matthew Kay (<mjskay@uw.edu>). If you have found a bug, please file it [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to reproduce the issue.
+Should you encounter any issues with this package, contact Matthew Kay (<mjskay@umich.edu>). If you have found a bug, please file it [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to reproduce the issue.
 
 Citations
 ---------

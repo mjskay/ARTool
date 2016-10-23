@@ -3,10 +3,10 @@ Title: Aligned Rank Transform
 Version: 0.10.3
 Date: 2016-10-23
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
-    email = "mjskay@uw.edu"),
+    email = "mjskay@umich.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
-Maintainer: Matthew Kay <mjskay@uw.edu>
+Maintainer: Matthew Kay <mjskay@umich.edu>
 Description: The Aligned Rank Transform for nonparametric
     factorial ANOVAs as described by J. O. Wobbrock,
     L. Findlater, D. Gergle, & J. J. Higgins, "The Aligned

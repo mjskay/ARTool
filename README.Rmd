@@ -12,7 +12,7 @@ output:
 [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool)
 [![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](http://dx.doi.org/10.1145/1978942.1978963)
 
-_Matthew Kay, University of Washington <mjskay@uw.edu>_<br>
+_Matthew Kay, University of Washington <mjskay@umich.edu>_<br>
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
 ARTool is an R package implementing the Aligned Rank Transform for conducting
@@ -142,7 +142,7 @@ This vignette is also available [here](https://cran.r-project.org/web/packages/A
 ## Problems
 
 Should you encounter any issues with this package, contact Matthew Kay
-(<mjskay@uw.edu>). If you have found a bug, please file it 
+(<mjskay@umich.edu>). If you have found a bug, please file it 
 [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to 
 reproduce the issue.
 
