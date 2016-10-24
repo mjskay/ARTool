@@ -285,8 +285,7 @@ contrast(lsmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise", interaction
 
 And we see t values consistent with the linear model, and consistent estimates (given the SE). 
 These types of comparisons work under ART because they do not involve coefficients of main 
-effects (see the description of these tests in 
-[this phia vignette](https://cran.r-project.org/web/packages/phia/vignettes/phia.pdf)),
+effects (see the description of these tests in `vignette("phia")`),
 thus are consistent even when we've stripped out the main effects.
 
 If you prefer the `phia` package, the code to run the equivalent tests using the `testInteractions` 
