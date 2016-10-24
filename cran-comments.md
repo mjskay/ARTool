@@ -3,7 +3,7 @@
 This is a resubmit from earlier today. I removed a non-canonical CRAN URL 
 referencing the phia package vignette from one of the ARTool vignettes.
 
-Per Uwe Ligges I will also note my change in email address here and
+Per Uwe Ligges I also note my change in email address here and
 cite that exchange:
 
 > On Sun, Oct 23, 2016 at 4:57 PM, Uwe Ligges <ligges@statistik.tu-dortmund.de> wrote:
@@ -33,7 +33,7 @@ cite that exchange:
 > > http://www.mjskay.com/
 
 
-## Original submission comments
+## Original submission comments (unchanged past this point)
 
 This submission is primarily to fix a test that was failing in the
 most recent Devel versions of R due to some missing dependencies.
