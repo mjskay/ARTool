@@ -1,3 +1,40 @@
+## Resubmission
+
+This is a resubmit from earlier today. I removed a non-canonical CRAN URL 
+referencing the phia package vignette from one of the ARTool vignettes.
+
+Per Uwe Ligges I will also note my change in email address here and
+cite that exchange:
+
+> On Sun, Oct 23, 2016 at 4:57 PM, Uwe Ligges <ligges@statistik.tu-dortmund.de> wrote:
+> Thanks for confirming, please cite this message in your next submission comment.
+> 
+> Best,
+> Uwe Ligges
+> 
+> 
+> > On 23.10.2016 20:00, Matthew Kay wrote:
+> > In the most recent submission for the ARTool package I have changed my
+> > email address from:
+> > 
+> > mjskay@uw.edu <mailto:mjskay@uw.edu>
+> > 
+> > to:
+> > 
+> > mjskay@umich.edu <mailto:mjskay@umich.edu>
+> > 
+> > since I have moved to the University of Michigan.
+> > 
+> > ---Matt
+> > 
+> > --
+> > Matthew Kay
+> > mjskay@cs.washington.edu <mailto:mjskay@cs.washington.edu>
+> > http://www.mjskay.com/
+
+
+## Original submission comments
+
 This submission is primarily to fix a test that was failing in the
 most recent Devel versions of R due to some missing dependencies.
 I think those errors were caused by lsmeans declaring some

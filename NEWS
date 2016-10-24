@@ -3,6 +3,7 @@ ARTool 0.10.3
 
 Minor changes:
 
+* Reference phia vignette using function call instead of non-canonical URL
 * Cautionary note about standardized effect sizes in effect size vignette
 * Added testInteractions example as alternative in contrasts vignette
 
