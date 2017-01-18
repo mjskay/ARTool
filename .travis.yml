@@ -4,6 +4,14 @@ cache: packages
 # Be strict when checking our package
 warnings_are_errors: true
 
+# lmerTest and Hmisc are not installing correctly from source currently
+# due to a dependency on a new version of survival,
+# so install these as binary packages
+r_binary_packages:
+  - survival
+  - Hmisc
+  - lmerTest
+
 # NOT_CRAN and options in .Rprofile are workarounds for "cyclic dependency check" error
 # see https://github.com/travis-ci/travis-ci/issues/4125
 env:
