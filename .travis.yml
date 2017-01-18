@@ -1,5 +1,4 @@
 language: r
-cache: packages
 
 # Be strict when checking our package
 warnings_are_errors: true
@@ -7,6 +6,7 @@ warnings_are_errors: true
 # lmerTest and Hmisc are not installing correctly from source currently
 # due to a dependency on a new version of survival,
 # so install these as binary packages
+sudo: required          #needed for r_binary_packages to work
 r_binary_packages:
   - survival
   - Hmisc
