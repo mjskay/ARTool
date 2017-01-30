@@ -1,4 +1,6 @@
-language: r
+language: R
+sudo: false
+cache: packages
 
 # Be strict when checking our package
 warnings_are_errors: true
@@ -8,5 +10,9 @@ warnings_are_errors: true
 env:
   global:
     - NOT_CRAN=true
-#before_install: 
-# - echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
+
+# update all packages before install
+# (should solve problem of stale packages in ubuntu R distro)
+# see https://github.com/travis-ci/travis-ci/issues/6850
+before_install: 
+  - Rscript -e 'update.packages(ask = FALSE)'
