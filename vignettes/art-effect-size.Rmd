@@ -51,7 +51,7 @@ library(ggplot2)    #ggplot, stat_..., geom_..., etc
 
 ## Test dataset
 
-Let's load the test dataset from `vignette("art-contrasts")`:
+Let's load the test dataset from <code>[vignette("art-contrasts")](art-contrasts.html)</code>:
 
 ```{r}
 data(InteractionTestData)
