@@ -34,4 +34,3 @@ anova(m)
 \code{\link{art}}, \code{\link{anova.art}}.
 }
 \keyword{datasets}
-

@@ -3,6 +3,7 @@
 \name{anova.art}
 \alias{anova.art}
 \alias{print.anova.art}
+\alias{print.anova.art}
 \title{Aligned Rank Transform Analysis of Variance}
 \usage{
 \method{anova}{art}(object, response = c("art", "aligned"), type = c("III",
@@ -20,7 +21,10 @@ argument is passed to \code{\link{artlm}}. See 'Details'.}
 
 \item{type}{Type of ANOVAs to conduct. If \code{type} is \code{1} or
 \code{"I"}, then conducts Type I ANOVAs using \code{\link{anova}}.
-Otherwise, conducts Type II or Type III ANOVAs using \code{\link{Anova}}.}
+Otherwise, conducts Type II or Type III ANOVAs using \code{\link{Anova}}.
+The default is Type III \emph{if} the underlying model supports it. Models
+fit with \code{Error} terms are fit using \code{\link{aov}}, which only
+supports Type I ANOVAs.}
 
 \item{factor.contrasts}{The name of the contrast-generating function to be
 applied by default to fixed effect factors. See the first element of
@@ -36,6 +40,10 @@ and ANOVA types may not support \code{"Chisq"}.}
 (\code{FALSE}), shows only the rows that are relevant depending on the type
 of \code{response}.}
 
+\item{\dots}{Additional arguments passed to \code{\link{Anova}} or
+\code{\link{anova}} by \code{anova.art} or to \code{\link{print}} by
+\code{print.anova.art}.}
+
 \item{x}{An object of class \code{\link{art}}.}
 
 \item{verbose}{When \code{TRUE}, sums of squares and reisdual sum of squares
@@ -43,10 +51,6 @@ in addition to degrees of freedom are printed in some Anova types (e.g.
 repeated measures Anovas). Default \code{FALSE}, for brevity.}
 
 \item{digits}{Digits of output in printed table; see \code{\link{print}}.}
-
-\item{\dots}{Additional arguments passed to \code{\link{Anova}} or
-\code{\link{anova}} by \code{anova.art} or to \code{\link{print}} by
-\code{print.anova.art}.}
 }
 \value{
 An object of class \code{"anova"}, which usually is printed.
@@ -77,9 +81,6 @@ case, another analysis should be considered. This diagnostic is tested by
 \code{\link{summary.art}} and a warning generated if the F values are not
 all approximately 0.
 }
-\author{
-Matthew Kay
-}
 \references{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 (2011). The Aligned Rank Transform for nonparametric factorial analyses
@@ -91,5 +92,7 @@ Human Factors in Computing Systems (CHI '11)}.  Vancouver, British Columbia
 See \code{\link{art}} for an example. See also
 \code{\link{summary.art}}, \code{\link{artlm}}.
 }
+\author{
+Matthew Kay
+}
 \keyword{nonparametric}
-

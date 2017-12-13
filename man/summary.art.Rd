@@ -24,9 +24,6 @@ aligned responses are ~0 and that F values of ANOVAs on aligned responses
 not of interest are ~0. For more details on these diagnostics see Wobbrock
 \emph{et al.} (2011).
 }
-\author{
-Matthew Kay
-}
 \references{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 (2011). The Aligned Rank Transform for nonparametric factorial analyses
@@ -38,5 +35,7 @@ Human Factors in Computing Systems (CHI '11)}.  Vancouver, British Columbia
 See \code{\link{art}} for an example. See also
 \code{\link{anova.art}}.
 }
+\author{
+Matthew Kay
+}
 \keyword{nonparametric}
-

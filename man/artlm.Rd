@@ -42,12 +42,11 @@ This function is used primarily for post-hoc tests. To run an ANOVA, it does
 not need to be called directly; instead, use \code{\link{anova.art}}, which
 calls this function as needed.
 }
-\author{
-Matthew Kay
-}
 \seealso{
 See \code{\link{art}} for an example. See also
 \code{\link{anova.art}}, which makes use of this function.
 }
+\author{
+Matthew Kay
+}
 \keyword{nonparametric}
-

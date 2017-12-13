@@ -47,4 +47,3 @@ See \code{\link{art}} for a more complete example. See also
 \code{\link{anova.art}}.
 }
 \keyword{datasets}
-

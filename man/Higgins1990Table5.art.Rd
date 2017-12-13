@@ -30,4 +30,3 @@ original ARTool, used to test the correctness of \code{\link{art}} output.
 }
 \keyword{datasets}
 \keyword{internal}
-

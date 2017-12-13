@@ -126,9 +126,6 @@ vignette("art-contrasts")
 }
 
 }
-\author{
-Matthew Kay
-}
 \references{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
@@ -143,5 +140,7 @@ New York: ACM Press, pp. 143-146.
 \code{\link{summary.art}}, \code{\link{anova.art}},
 \code{\link{artlm}}.
 }
+\author{
+Matthew Kay
+}
 \keyword{nonparametric}
-

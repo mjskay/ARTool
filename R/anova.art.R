@@ -40,6 +40,9 @@
 #' @param type Type of ANOVAs to conduct. If \code{type} is \code{1} or
 #' \code{"I"}, then conducts Type I ANOVAs using \code{\link{anova}}.
 #' Otherwise, conducts Type II or Type III ANOVAs using \code{\link{Anova}}.
+#' The default is Type III \emph{if} the underlying model supports it. Models
+#' fit with \code{Error} terms are fit using \code{\link{aov}}, which only
+#' supports Type I ANOVAs.
 #' @param factor.contrasts The name of the contrast-generating function to be
 #' applied by default to fixed effect factors. See the first element of
 #' \code{\link{options}("contrasts")}. The default is to use
