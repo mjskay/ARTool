@@ -21,7 +21,7 @@ Imports:
     dplyr
 Suggests:
     testthat (>= 0.10.0),
-    lsmeans (>= 2.22),
+    emmeans,
     knitr,
     rmarkdown,
     ggplot2,

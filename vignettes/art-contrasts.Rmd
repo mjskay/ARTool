@@ -42,7 +42,7 @@ pander::panderOptions("table.style", "rmarkdown")   #table style that's supporte
 
 ```{r message=FALSE}
 library(dplyr)      #data_frame, %>%, filter, summarise, group_by
-library(lsmeans)    #lsmeans, contrast
+library(emmeans)    #emmeans, contrast
 library(phia)       #testInteractions
 library(tidyr)      #spread
 library(ARTool)     #art, artlm
@@ -138,15 +138,15 @@ The real question is whether/what kind of contrast tests make sense.
 For the main effects, let's look at contrast tests for the linear model:
 
 ```{r, message=FALSE}
-contrast(lsmeans(m.linear, ~ X1), method="pairwise")
-contrast(lsmeans(m.linear, ~ X2), method="pairwise")
+contrast(emmeans(m.linear, ~ X1), method="pairwise")
+contrast(emmeans(m.linear, ~ X2), method="pairwise")
 ```
 
 These are about right: The "true" effect for `A - B` is `-2.3333`, for `C - D` and `C - E` is `-2`, and for `D - E` is `0` (see table above). From ART:
 
 ```{r, message=FALSE}
-contrast(lsmeans(artlm(m.art, "X1"), ~ X1), method="pairwise")
-contrast(lsmeans(artlm(m.art, "X2"), ~ X2), method="pairwise")
+contrast(emmeans(artlm(m.art, "X1"), ~ X1), method="pairwise")
+contrast(emmeans(artlm(m.art, "X2"), ~ X2), method="pairwise")
 ```
 
 This is about right (effects in the same direction, the estimates aren't
@@ -158,14 +158,14 @@ Contrast tests of main effects seem to be consistent then.
 Now let's look at tests of differences in combinations of levels between factors:
 
 ```{r}
-contrast(lsmeans(m.linear, ~ X1:X2), method="pairwise")
+contrast(emmeans(m.linear, ~ X1:X2), method="pairwise")
 ```
 
 And for ART:
 
 ```{r}
 #DO NOT DO THIS!
-contrast(lsmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise")
+contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise")
 ```
 
 Very different results. 
@@ -193,7 +193,7 @@ which if we interpret in the same way as the linear model is obviously incorrect
 
 The key here is to understand that ART is reporting differences with the main effects subtracted out.
 That is, the `A,C - A,D` effect is something like the difference between this combination of levels if we first
-subtracted out the effect of `C - D`. We can see this if we take the ART estimate for `C - D` in the lsmeans for `X2` above (`-123.13`) and the
+subtracted out the effect of `C - D`. We can see this if we take the ART estimate for `C - D` in the emmeans for `X2` above (`-123.13`) and the
 ART estimate for `A,C - A,D` (`125.12`) here, we can get approximate an estimate of the difference (`-123.13 + 125.12 == 1.99`)
 that is consistent with the expected 0 (given the SE here).
 
@@ -203,7 +203,7 @@ If we first combine the factors before aligning-and-ranking, we can get an estim
 #DO NOT DO THIS WITHOUT READING THE NOTE BELOW
 df$X = with(df, X1:X2)
 m.art.12 = art(Y ~ X, data=df)
-contrast(lsmeans(artlm(m.art.12, "X"), ~ X), method="pairwise")
+contrast(emmeans(artlm(m.art.12, "X"), ~ X), method="pairwise")
 ```
 
 Note that the above table is not in the same order as the previous ones, but does have similar t values to the corresponding effects
@@ -216,7 +216,7 @@ can't recommended this approach in the general case (or at least, not without mo
 
 While tests of differences of combinations of levels between factors have issues in ART, we can test _differences of differences_; e.g., 
 for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`? We
-can test this using the `interaction` argument to the `contrast` function in the `lsmeans` package.
+can test this using the `interaction` argument to the `contrast` function in the `emmeans` package.
 
 Before we test, let's try to visualize what's going on in just this interaction:
 
@@ -233,7 +233,7 @@ plot_interaction_for_X2_levels = function(...) {
         geom_point(pch="-", size=4) +
         stat_summary(fun.y=mean, geom="point", size=4) + 
         stat_summary(fun.y=mean, geom="line", size=1, mapping=aes(group=X2), linetype="dashed") +
-        geom_errorbar(aes(x=2.2, ymin=A, ymax=B, y=0), 
+        geom_errorbar(aes(x=2.2, ymin=A, ymax=B, y=NULL),  
             data=X1_in_X2, width=.19, size=0.8, color="black") +
         geom_text(aes(x=2.35, y=(A + B)/2, label=paste("A - B |", X2)), 
             data=X1_in_X2, hjust=0, size=5, color="black") +
@@ -254,7 +254,7 @@ it to be by looking at the above plot.
 We can get the estimate of this "difference of a difference" from the linear model by adding `interaction=TRUE` to the same call to `contrast` we made previously:
 
 ```{r}
-contrast(lsmeans(m.linear, ~ X1:X2), method="pairwise", interaction=TRUE)
+contrast(emmeans(m.linear, ~ X1:X2), method="pairwise", interaction=TRUE)
 ```
 
 Here we can interpret the row `A - B    C - D` as the difference between (`A - B | C`) and (`A - B | D`), which
@@ -280,7 +280,7 @@ plot_interaction_for_X2_levels("D", "E")
 Now we look at these differences of differences in art:
 
 ```{r}
-contrast(lsmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise", interaction=TRUE)
+contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise", interaction=TRUE)
 ```
 
 And we see t values consistent with the linear model, and consistent estimates (given the SE). 
@@ -289,13 +289,13 @@ effects (see the description of these tests in `vignette("phia")`),
 thus are consistent even when we've stripped out the main effects.
 
 If you prefer the `phia` package, the code to run the equivalent tests using the `testInteractions` 
-function in `phia` instead of using `lsmeans` is:
+function in `phia` instead of using `emmeans` is:
 
 ```{r}
 testInteractions(artlm(m.art, "X1:X2"), pairwise=c("X1","X2"))
 ```
 
-While `lsmeans` uses _t_ tests in this case, `testInteractions` gives the result of equivalent
+While `emmeans` uses _t_ tests in this case, `testInteractions` gives the result of equivalent
 _F_ tests with one numerator degree of freedom (an _F_ test with $F(1,\nu) = f$ is equivalent to a two-sided 
 _t_ test with $t(\nu) = \sqrt{f}$). I prefer the _t_ test in this case because the _t_ value preserves
 the direction of the effect (its sign) and is more amenable to calculating interpretable (ish)

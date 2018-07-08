@@ -1,18 +1,18 @@
 # art function and some basic generic function implementations for art objects
-# 
+#
 # Author: mjskay
 ###############################################################################
 
 
 #' Per-Term Linear Model from Aligned Rank Transformed Data
-#' 
+#'
 #' Build a linear model for ART data with response aligned or aligned and
 #' ranked by the specified term from the model.
-#' 
+#'
 #' This function is used primarily for post-hoc tests. To run an ANOVA, it does
 #' not need to be called directly; instead, use \code{\link{anova.art}}, which
 #' calls this function as needed.
-#' 
+#'
 #' @param m An object of class \code{\link{art}}.
 #' @param term An object of type \code{"character"} indicating the effect term
 #' in the transformed data in \code{m} to use as the aligned or art response.
@@ -35,37 +35,37 @@
 #' @seealso See \code{\link{art}} for an example. See also
 #' \code{\link{anova.art}}, which makes use of this function.
 #' @keywords nonparametric
-#' 
+#'
 #' @importFrom stats lm update aov
 #' @importFrom lme4 lmer
 #' @export
-artlm = function(m, term, 
+artlm = function(m, term,
     response=c("art", "aligned"),
     factor.contrasts="contr.sum",
 	...
 ) {
 	#match enum arguments
     response = match.arg(response)
-    
+
     #for the duration of this function, switch to the supplied contrast types
     original.contrasts = getOption("contrasts")
     tryCatch({
         options(contrasts=c(factor.contrasts, original.contrasts[-1]))
-            
+
         #place the transformed (aligned or aligned and ranked) version of y
         #into the data frame as the dummy response ".y"
         df = m$data
-        df$.y = switch(response, 
-            aligned=m$aligned[[term]], 
+        df$.y = switch(response,
+            aligned=m$aligned[[term]],
             art=m$aligned.ranks[[term]])
-        
+
         #modify formula to use dummy response name ".y"
         f = update(m$formula, .y ~ .)
-        
+
         #reassign the environment of the model formula to this frame so that the data can be correctly recreated
-        #by other functions (e.g. lsmeans:::recover.data) that use the function call and environment
+        #by other functions (e.g. emmeans:::recover.data) that use the function call and environment
         environment(f) = sys.frame(sys.nframe())
-        
+
         #run linear model
         if (m$n.grouping.terms > 0) {       #grouping terms => REML
             m = lmer(f, data=df, ...)
@@ -74,7 +74,7 @@ artlm = function(m, term,
         } else {	                        #no grouping or error terms => OLS
             m = lm(f, data=df, ...)
         }
-        
+
         attr(m, "term") = term
         attr(m, "response") = response
         m

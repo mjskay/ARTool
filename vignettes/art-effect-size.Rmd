@@ -41,7 +41,7 @@ pander::panderOptions("table.style", "rmarkdown")   #table style that's supporte
 
 ```{r message=FALSE}
 library(dplyr)      #%>%
-library(lsmeans)    #lsmeans
+library(emmeans)    #emmeans
 library(DescTools)  #EtaSq
 library(car)        #sigmaHat
 library(ARTool)     #art, artlm
@@ -114,7 +114,7 @@ As a comparison, let's first derive pairwise contrasts for
 all levels of X2 in the linear model:
 
 ```{r}
-x2.contrasts = summary(pairs(lsmeans(m.linear, ~ X2)))
+x2.contrasts = summary(pairs(emmeans(m.linear, ~ X2)))
 ```
 
 Then divide these estimates by the residual standard deviation to get an estimate of _d_:
@@ -133,7 +133,7 @@ We can follow the same procedure on the ART model for factor X2:
 
 ```{r}
 m.art.x2 = artlm(m.art, "X2")
-x2.contrasts.art = summary(pairs(lsmeans(m.art.x2, ~ X2)))
+x2.contrasts.art = summary(pairs(emmeans(m.art.x2, ~ X2)))
 x2.contrasts.art$d = x2.contrasts.art$estimate / sigmaHat(m.art.x2)
 x2.contrasts.art
 ```
@@ -146,7 +146,7 @@ quite similar to the estimates of _d_ from the linear model above.
 We can also derive confidence intervals on these effect sizes. From the linear model:
 
 ```{r}
-x2.contrasts.ci = confint(pairs(lsmeans(m.linear, ~ X2)))
+x2.contrasts.ci = confint(pairs(emmeans(m.linear, ~ X2)))
 x2.contrasts.ci = within(x2.contrasts.ci, {
     d.upper.CL = upper.CL / sigmaHat(m.linear)
     d.lower.CL = lower.CL / sigmaHat(m.linear)
@@ -158,7 +158,7 @@ x2.contrasts.ci
 And from the ART model:
 
 ```{r}
-x2.contrasts.art.ci = confint(pairs(lsmeans(m.art.x2, ~ X2)))
+x2.contrasts.art.ci = confint(pairs(emmeans(m.art.x2, ~ X2)))
 x2.contrasts.art.ci = within(x2.contrasts.art.ci, {
     d.upper.CL = upper.CL / sigmaHat(m.art.x2)
     d.lower.CL = lower.CL / sigmaHat(m.art.x2)

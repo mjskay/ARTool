@@ -1,5 +1,5 @@
 # Tests for art
-# 
+#
 # Author: mjskay
 ###############################################################################
 
@@ -14,22 +14,22 @@ test_that("art does not allow factors as responses", {
 
 test_that("art allows numeric responses", {
     m = art(y ~ a, data=data.frame(y=c(rep(1, 10), rep(2, 10)), a=factor(rep(1:2, 10))))
-    
-    expect_equal(anova(m)$F, 0) 
+
+    expect_equal(anova(m)$F, 0)
     expect_equal(nrow(anova(m, response="aligned")), 0)
 })
 
 test_that("art allows logical responses", {
     m = art(y ~ a, data=data.frame(y=c(rep(TRUE, 10), rep(FALSE, 10)), a=factor(rep(1:2, 10))))
-    
-    expect_equal(anova(m)$F, 0) 
+
+    expect_equal(anova(m)$F, 0)
     expect_equal(nrow(anova(m, response="aligned")), 0)
 })
 
 test_that("art allows ordinal responses", {
     m = art(y ~ a, data=data.frame(y=ordered(c(rep(1, 10), rep(2, 10))), a=factor(rep(1:2, 10))))
-    
-    expect_equal(anova(m)$F, 0) 
+
+    expect_equal(anova(m)$F, 0)
     expect_equal(nrow(anova(m, response="aligned")), 0)
 })
 
@@ -39,8 +39,8 @@ test_that("art does not allow fixed effects that are numeric", {
 
 test_that("art allows logical fixed effect terms", {
     m = art(y ~ a, data=data.frame(y=c(rep(1, 10), rep(2, 10)), a=rep(c(FALSE,TRUE), 10)))
-    
-    expect_equal(anova(m)$F, 0) 
+
+    expect_equal(anova(m)$F, 0)
     expect_equal(nrow(anova(m, response="aligned")), 0)
 })
 
@@ -52,26 +52,26 @@ test_that("art does not allow incomplete cases in fixed effects", {
 test_that("art allows models with only one fixed effect", {
     df = data.frame(y=1:20, a=factor(rep(c(1,2),10)))
     m = art(y ~ a, data=df)
-    
+
     #neither of the following anovas should throw an error
-    expect_equal(anova(m)$F, 0.13636363636363636) 
+    expect_equal(anova(m)$F, 0.13636363636363636)
     expect_equal(nrow(anova(m, response="aligned")), 0)	#only one fixed effect => aligned anova table has no rows
 })
 
 test_that("art allows models with missing data in the grouping terms", {
     df = data.frame(y=1:20, a=factor(rep(c(1,2),10)), b=factor(rep(c(1,2,3,NA,5),4)))
     m = art(y ~ a + (a|b), data=df)
-    
+
     #neither of the following anovas should throw an error
     expect_equal(anova(m)$F, 0.6862745)
-    expect_equal(nrow(anova(m, response="aligned")), 0) 
+    expect_equal(nrow(anova(m, response="aligned")), 0)
 })
 
 test_that("art correctly interprets formulas with expressions on the right-hand side", {
     df = data.frame(y=rep(c(1,2,0,3),5), a=c(1,2), fa=factor(c(1,2)))
     m1 = art(y ~ factor(a), data=df)
     m2 = art(y ~ fa, data=df)
-    
+
     #neither of the following anovas should throw an error
     expect_equal(m1$aligned.ranks$`factor(a)`, m2$aligned.ranks$fa)
 })
@@ -80,7 +80,7 @@ test_that("art correctly interprets formulas with expressions on the left-hand s
     df = data.frame(y=rep(c("1","2","0","3"),5), ny=rep(c(1,2,0,3),5), a=factor(c(1,2)), stringsAsFactors=FALSE)
     m1 = art(as.numeric(y) ~ a, data=df)
     m2 = art(ny ~ a, data=df)
-    
+
     #neither of the following anovas should throw an error
     expect_equal(m1$aligned.ranks$`factor(a)`, m2$aligned.ranks$fa)
 })
@@ -88,7 +88,7 @@ test_that("art correctly interprets formulas with expressions on the left-hand s
 test_that("art does not allow Error terms that aren't factors by default", {
     data(Higgins1990Table5, package="ARTool")
     Higgins1990Table5$nt = as.numeric(Higgins1990Table5$Tray)
-    
+
     expect_error(art(DryMatter ~ Moisture*Fertilizer + Error(nt), data=Higgins1990Table5), "The following Error terms are not factors")
     art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
     art(DryMatter ~ Moisture*Fertilizer + Error(factor(nt)), data=Higgins1990Table5)
@@ -96,20 +96,20 @@ test_that("art does not allow Error terms that aren't factors by default", {
 
 test_that("art of Higgins1990Table5 matches results of the original ARTool", {
     data(Higgins1990Table5, Higgins1990Table5.art, package="ARTool")
-    
+
     #run art on original data
     m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
-    
+
     #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
     expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
-    aligned.anova = anova(m, response="aligned")
+    aligned.anova = suppressWarnings(anova(m, response="aligned"))
     expect_equal(round(aligned.anova$F, digits=25), rep(0, nrow(aligned.anova)), check.names=FALSE)
-    
+
     #verify that aligned responses were all calculated correctly
     expect_equal(m$aligned$Moisture, Higgins1990Table5.art$aligned.DryMatter..for.Moisture)
     expect_equal(m$aligned$Fertilizer, Higgins1990Table5.art$aligned.DryMatter..for.Fertilizer)
     expect_equal(m$aligned$`Moisture:Fertilizer`, Higgins1990Table5.art$aligned.DryMatter..for.Moisture.Fertilizer)
-    
+
     #verify that ART responses were all calculated correctly
     expect_equal(m$aligned.ranks$Moisture, Higgins1990Table5.art$ART.DryMatter..for.Moisture)
     expect_equal(m$aligned.ranks$Fertilizer, Higgins1990Table5.art$ART.DryMatter..for.Fertilizer)
@@ -118,20 +118,20 @@ test_that("art of Higgins1990Table5 matches results of the original ARTool", {
 
 test_that("art of Higgins1990Table1 matches results of the original ARTool", {
     data(Higgins1990Table1, Higgins1990Table1.art, package="ARTool")
-    
+
     #run art on original data
     m = art(Response ~ Row*Column, data=Higgins1990Table1)
-    
+
     #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
     expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
-    aligned.anova = anova(m, response="aligned")
+    aligned.anova = suppressWarnings(anova(m, response="aligned"))
     expect_equal(round(aligned.anova$F, digits=25), rep(0, nrow(aligned.anova)), check.names=FALSE)
-    
+
     #verify that aligned responses were all calculated correctly
     expect_equal(m$aligned$Row, Higgins1990Table1.art$aligned.Response..for.Row)
     expect_equal(m$aligned$Column, Higgins1990Table1.art$aligned.Response..for.Column)
     expect_equal(m$aligned$`Row:Column`, Higgins1990Table1.art$aligned.Response..for.Row.Column)
-    
+
     #verify that ART responses were all calculated correctly
     expect_equal(m$aligned.ranks$Row, Higgins1990Table1.art$ART.Response..for.Row)
     expect_equal(m$aligned.ranks$Column, Higgins1990Table1.art$ART.Response..for.Column)
@@ -140,15 +140,15 @@ test_that("art of Higgins1990Table1 matches results of the original ARTool", {
 
 test_that("art of HigginsABC matches results of the original ARTool", {
     data(HigginsABC, HigginsABC.art, package="ARTool")
-    
+
     #run art on original data
     m = art(Y ~ A*B*C + Error(Subject), data=HigginsABC)
-    
+
     #verify column sums on aligned columns and F scores on aligned columns not of interest are all 0
     expect_equal(colSums(m$aligned), rep(0, ncol(m$aligned)), check.names=FALSE)
     aligned.anova = anova(m, response="aligned")
     expect_equal(round(aligned.anova$F, digits=25), rep(0, nrow(aligned.anova)), check.names=FALSE)
-    
+
     #verify that aligned responses were all calculated correctly
     expect_equal(m$aligned$A, HigginsABC.art$aligned.Y..for.A)
     expect_equal(m$aligned$B, HigginsABC.art$aligned.Y..for.B)
@@ -157,7 +157,7 @@ test_that("art of HigginsABC matches results of the original ARTool", {
     expect_equal(m$aligned$`A:C`, HigginsABC.art$aligned.Y..for.A.C)
     expect_equal(m$aligned$`B:C`, HigginsABC.art$aligned.Y..for.B.C)
     expect_equal(m$aligned$`A:B:C`, HigginsABC.art$aligned.Y..for.A.B.C)
-    
+
     #verify that ART responses were all calculated correctly
     expect_equal(m$aligned.ranks$A, HigginsABC.art$ART.Y..for.A)
     expect_equal(m$aligned.ranks$B, HigginsABC.art$ART.Y..for.B)
@@ -165,5 +165,5 @@ test_that("art of HigginsABC matches results of the original ARTool", {
     expect_equal(m$aligned.ranks$`A:B`, HigginsABC.art$ART.Y..for.A.B)
     expect_equal(m$aligned.ranks$`A:C`, HigginsABC.art$ART.Y..for.A.C)
     expect_equal(m$aligned.ranks$`B:C`, HigginsABC.art$ART.Y..for.B.C)
-    expect_equal(m$aligned.ranks$`A:B:C`, HigginsABC.art$ART.Y..for.A.B.C)	
+    expect_equal(m$aligned.ranks$`A:B:C`, HigginsABC.art$ART.Y..for.A.B.C)
 })

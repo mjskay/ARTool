@@ -95,10 +95,10 @@ m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 
 ## see summary data to ensure aligned rank transform is appropriate for this data
 summary(m)
-## looks good (aligned effects sum to 0 and F values on aligned responses 
+## looks good (aligned effects sum to 0 and F values on aligned responses
 ## not of interest are all ~0)
 
-## we can always look at the anova of aligned data if we want more detail 
+## we can always look at the anova of aligned data if we want more detail
 ## to assess the appropriateness of ART.  F values in this anova should all
 ## be approx 0.
 anova(m, response="aligned")
@@ -108,13 +108,13 @@ anova(m)
 
 ## if we want post-hoc tests, artlm(m, term) returns the linear model for the
 ## given term
-## which we can then examine using our preferred method (lsmeans, glht, etc)
+## which we can then examine using our preferred method (emmeans, glht, etc)
 ## e.g., pairwise contrasts on Moisture:
-library(lsmeans)
-lsmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
+library(emmeans)
+emmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
 
 ## pairwise contrasts on Fertilizer:
-lsmeans(artlm(m, "Fertilizer"), pairwise ~ Fertilizer)
+emmeans(artlm(m, "Fertilizer"), pairwise ~ Fertilizer)
 
 ## N.B. The above types of contrasts ARE NOT valid for interactions.
 ## Instead, use testInteractions from the phia package. For example:
