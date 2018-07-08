@@ -143,39 +143,38 @@ quite similar to the estimates of _d_ from the linear model above.
 
 ## Confidence intervals
 
-We can also derive confidence intervals on these effect sizes. From the linear model:
+We can also derive confidence intervals on these effect sizes. To do that, we'll use the `d.ci` function from the `psych` package, which also requires us to indicate how many observations were in each group for each contrast. That is easy in this case, as each group has 100 observations. Thus:
 
 ```{r}
-x2.contrasts.ci = confint(pairs(emmeans(m.linear, ~ X2)))
-x2.contrasts.ci = within(x2.contrasts.ci, {
-    d.upper.CL = upper.CL / sigmaHat(m.linear)
-    d.lower.CL = lower.CL / sigmaHat(m.linear)
-    d = estimate / sigmaHat(m.linear)
-})
+x2.contrasts.ci = confint(pairs(emmeans(m.linear, ~ X2))) %>%
+    mutate(d = estimate / sigmaHat(m.linear)) %>%
+    cbind(d = plyr::ldply(.$d, psych::d.ci, n1 = 100, n2 = 100))
+
 x2.contrasts.ci
 ```
 
 And from the ART model:
 
 ```{r}
-x2.contrasts.art.ci = confint(pairs(emmeans(m.art.x2, ~ X2)))
-x2.contrasts.art.ci = within(x2.contrasts.art.ci, {
-    d.upper.CL = upper.CL / sigmaHat(m.art.x2)
-    d.lower.CL = lower.CL / sigmaHat(m.art.x2)
-    d = estimate / sigmaHat(m.art.x2)
-})
+x2.contrasts.art.ci = confint(pairs(emmeans(m.art.x2, ~ X2))) %>%
+    mutate(d = estimate / sigmaHat(m.art.x2)) %>%
+    cbind(d = plyr::ldply(.$d, psych::d.ci, n1 = 100, n2 = 100)) 
+
 x2.contrasts.art.ci
 ```
 
-And plotting both, to compare:
+And plotting both, to compare (red dashed line is the true effect):
 
 ```{r cohens-d-comparison}
 rbind(
         cbind(x2.contrasts.ci, model="linear"), 
         cbind(x2.contrasts.art.ci, model="ART")
     ) %>%
-    ggplot(aes(x=model, y=d, ymin=d.lower.CL, ymax=d.upper.CL)) +
+    ggplot(aes(x=model, y=d, ymin=d.lower, ymax=d.upper)) +
     geom_pointrange() +
+    geom_hline(aes(yintercept = true_effect), 
+      data = data.frame(true_effect = c(-2, -2, 0), contrast = c("C - D", "C - E", "D - E")), 
+      linetype = "dashed", color = "red") +
     facet_grid(contrast ~ .) + 
     coord_flip()
 ```    

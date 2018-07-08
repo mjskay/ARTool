@@ -32,6 +32,7 @@ Suggests:
     cluster,
     phia,
     survival,
+    psych,
     DescTools
 License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
