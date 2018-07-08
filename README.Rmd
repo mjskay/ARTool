@@ -150,7 +150,7 @@ reproduce the issue.
 
 Kay M and Wobbrock J (`r format(Sys.Date(), "%Y")`). _ARTool: Aligned Rank Transform for
 Nonparametric Factorial ANOVAs_. R package version `r getNamespaceVersion("ARTool")`, <https://github.com/mjskay/ARTool>.
-DOI: [10.5281/zenodo.48543](http://dx.doi.org/10.5281/zenodo.48543).
+DOI: [10.5281/zenodo.594511](http://dx.doi.org/10.5281/zenodo.594511).
 
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
