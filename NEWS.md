@@ -1,3 +1,11 @@
+# ARTool 0.10.5
+
+Minor changes:
+
+* Replace `lsmeans` with `emmeans` in code and docs due to lsmeans being deprecated
+* Use `psych::d.ci` for Cohen's _d_ CIs in effect size vignette
+
+
 # ARTool 0.10.4
 
 Minor changes:
