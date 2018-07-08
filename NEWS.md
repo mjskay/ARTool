@@ -1,5 +1,4 @@
-ARTool 0.10.4
-=============
+# ARTool 0.10.4
 
 Minor changes:
 
@@ -14,8 +13,7 @@ test requires some additional packages only declared as "suggests" in lsmeans, s
 we "suggest" them as well).
 
 
-ARTool 0.10.1
-=============
+# ARTool 0.10.1
 
 New features:
 
@@ -27,8 +25,7 @@ Bugfixes:
 * Require R >= 3.2 and lsmeans >= 2.22 to fix some bugs in earlier versions
 
 
-ARTool 0.10.0
-=============
+# ARTool 0.10.0
 
 New features:
 
@@ -42,14 +39,12 @@ Bugfixes:
 * Formulas now correctly support arbitrary expressions as terms (rather than just column names).
 
 
-ARTool 0.9.5
-============
+# ARTool 0.9.5
 
 Testing fix for changes in upcoming version of lsmeans: round lsmeans p value tests to 5 decimal places to accommodate changes to Tukey adjustment
 
 
-ARTool 0.9.4
-============
+# ARTool 0.9.4
 
 Minor changes to testing based on updated version of testthat (0.10.0):
 
