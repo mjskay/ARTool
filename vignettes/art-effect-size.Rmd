@@ -31,7 +31,6 @@ procedure destroys the information necessary to calculate simple effect sizes.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(  #default code chunk options
-    dev = "CairoPNG",      #nicer PNG figures
     fig.width = 6,
     fig.height = 4
 )           

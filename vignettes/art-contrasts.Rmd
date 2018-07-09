@@ -32,10 +32,9 @@ appropriate on aligned-rank-transformed (ART) data, what are not, and why.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(  #default code chunk options
-    dev = "CairoPNG",      #nicer PNG figures
     fig.width = 6,
     fig.height = 4
-)           
+)
 pander::panderOptions("table.split.table", Inf)     #don't split wide tables in output
 pander::panderOptions("table.style", "rmarkdown")   #table style that's supported by github
 ```
