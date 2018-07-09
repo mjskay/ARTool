@@ -41,9 +41,9 @@
 #' terms (but not both). Should be a formula with a single response variable
 #' (left-hand side) and one or more terms with all interactions on the
 #' right-hand side, e.g. \code{y ~ x} or \code{y ~ a*b*c} or \code{y ~ a + b +
-#' b:c}. If you want to run a mixed effects Anova on the transformed data using
+#' b:c}. If you want to run a mixed effects ANOVA on the transformed data using
 #' \code{\link{lmer}}, you can include grouping terms, as in \code{y ~ a*b*c +
-#' (1|d)}.  If you want to run a repeated measures Anova using
+#' (1|d)}.  If you want to run a repeated measures ANOVA using
 #' \code{\link{aov}}, you can include error terms, as in \code{y ~ a*b*c +
 #' Error(d)}. See 'Details'.
 #' @param data An optional data frame containing the variables in the model.

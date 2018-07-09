@@ -46,9 +46,9 @@ of \code{response}.}
 
 \item{x}{An object of class \code{\link{art}}.}
 
-\item{verbose}{When \code{TRUE}, sums of squares and reisdual sum of squares
-in addition to degrees of freedom are printed in some Anova types (e.g.
-repeated measures Anovas). Default \code{FALSE}, for brevity.}
+\item{verbose}{When \code{TRUE}, sums of squares and residual sum of squares
+in addition to degrees of freedom are printed in some ANOVA types (e.g.
+repeated measures ANOVAs). Default \code{FALSE}, for brevity.}
 
 \item{digits}{Digits of output in printed table; see \code{\link{print}}.}
 }
