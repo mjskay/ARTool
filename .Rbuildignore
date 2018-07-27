@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^TODO$
-^[^/]*\.md$
+^\.Rhistory$
+^\.RData$
 ^[^/]*\.Rmd$
 ^[^/]*\.html$
 ^[^/]*\.txt$
@@ -12,3 +12,4 @@
 ^\.travis\.yml$
 ^figure$
 ^cache$
+^cran-comments.md$
