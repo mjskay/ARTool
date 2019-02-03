@@ -3,12 +3,11 @@
 \name{anova.art}
 \alias{anova.art}
 \alias{print.anova.art}
-\alias{print.anova.art}
 \title{Aligned Rank Transform Analysis of Variance}
 \usage{
-\method{anova}{art}(object, response = c("art", "aligned"), type = c("III",
-  "II", "I", 3, 2, 1), factor.contrasts = "contr.sum", test = c("F",
-  "Chisq"), all.rows = FALSE, ...)
+\method{anova}{art}(object, response = c("art", "aligned"),
+  type = c("III", "II", "I", 3, 2, 1), factor.contrasts = "contr.sum",
+  test = c("F", "Chisq"), all.rows = FALSE, ...)
 
 \method{print}{anova.art}(x, verbose = FALSE, digits = 5, ...)
 }

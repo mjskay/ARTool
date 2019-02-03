@@ -1,7 +1,7 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.10.5.9000
-Date: 2018-07-08
+Version: 0.10.6
+Date: 2019-02-03
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@umich.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
@@ -38,4 +38,5 @@ License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
+Encoding: UTF-8

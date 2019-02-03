@@ -3,7 +3,7 @@ ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANO
 
 [![Build
 Status](https://travis-ci.org/mjskay/ARTool.png?branch=master)](https://travis-ci.org/mjskay/ARTool)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ARTool)](http://cran.r-project.org/web/packages/ARTool)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
 [![GPL &gt;=
 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool)
@@ -161,9 +161,9 @@ anova(m)
     ## Response: art(DryMatter)
     ## 
     ##                             F Df Df.res     Pr(>F)    
-    ## 1 Moisture             23.833  3      8 0.00024199 ***
+    ## 1 Moisture             23.832  3      8 0.00024200 ***
     ## 2 Fertilizer          122.402  3     24 1.1124e-14 ***
-    ## 3 Moisture:Fertilizer   5.118  9     24 0.00064665 ***
+    ## 3 Moisture:Fertilizer   5.118  9     24 0.00064664 ***
     ## ---
     ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -204,7 +204,7 @@ vignette("art-contrasts")
 ```
 
 This vignette is also available
-[here](https://cran.r-project.org/web/packages/ARTool/vignettes/art-contrasts.html).
+[here](https://cran.r-project.org/package=ARTool/vignettes/art-contrasts.html).
 
 Problems
 --------
@@ -217,8 +217,8 @@ reproduce the issue.
 Citations
 ---------
 
-Kay M and Wobbrock J (2018). *ARTool: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs*. R package version 0.10.5.9000,
+Kay M and Wobbrock J (2019). *ARTool: Aligned Rank Transform for
+Nonparametric Factorial ANOVAs*. R package version 0.10.6,
 <https://github.com/mjskay/ARTool>. DOI:
 [10.5281/zenodo.594511](http://dx.doi.org/10.5281/zenodo.594511).
 

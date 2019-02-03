@@ -1,3 +1,10 @@
+# ARTool 0.10.6
+
+Minor changes:
+
+* Minor changes to ensure tests pass due to changes in output from `lme4::lmer`
+
+
 # ARTool 0.10.5
 
 Minor changes:
