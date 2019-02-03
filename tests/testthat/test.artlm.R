@@ -19,8 +19,9 @@ test_that("artlm returns models whose data can be recovered by emmeans", {
     #emmeans:::recover.data, which will only work if artlm
     #correctly sets the environment of the returned model
     expect_equal(
-        round(summary(pairs(emmeans::emmeans(artlm(m, "Moisture"), "Moisture")))$t, 5),
-        c(-7.40049, -10.82022, -4.86242, -3.41972, 2.53808, 5.95780)
+      summary(pairs(emmeans::emmeans(artlm(m, "Moisture"), "Moisture")))$t,
+      c(-7.40049, -10.82022, -4.86242, -3.41972, 2.53808, 5.95780),
+      tolerance = 0.0001
     )
 
 
@@ -29,8 +30,9 @@ test_that("artlm returns models whose data can be recovered by emmeans", {
 
     #will only work if emmeans can recover data (see comment above)
     expect_equal(
-        round(summary(pairs(emmeans::emmeans(artlm(m, "Moisture"), "Moisture")))$t, 5),
-        c(-5.60684, -8.19773, -3.68392, -2.59089, 1.92292, 4.51381)
+      summary(pairs(emmeans::emmeans(artlm(m, "Moisture"), "Moisture")))$t,
+      c(-5.60684, -8.19773, -3.68392, -2.59089, 1.92292, 4.51381),
+      tolerance = 0.0001
     )
 
 
@@ -39,7 +41,8 @@ test_that("artlm returns models whose data can be recovered by emmeans", {
 
     #will only work if emmeans can recover data (see comment above)
     expect_equal(
-        round(summary(pairs(emmeans::emmeans(artlm(m, "Moisture"), "Moisture")))$t, 5),
-        c(-5.60684, -8.19773, -3.68392, -2.59089, 1.92292, 4.51381)
+      summary(pairs(emmeans::emmeans(artlm(m, "Moisture"), "Moisture")))$t,
+      c(-5.60684, -8.19773, -3.68392, -2.59089, 1.92292, 4.51381),
+      tolerance = 0.0001
     )
 })

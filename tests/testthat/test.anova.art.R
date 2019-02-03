@@ -42,12 +42,12 @@ test_that("anova.art of Higgins1990Table5 matches results of the original ARTool
     #run art using repeated measures anova
     m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
     a = comparable.anova(m, include.error=TRUE)
-    expect_equal(a, ref)
+    expect_equal(a, ref, tolerance = 0.0001)
 
     #run art using mixed effects model
     m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
     a = comparable.anova(m)
-    expect_equal(a, ref[-2]) #no Error col
+    expect_equal(a, ref[-2], tolerance = 0.0001) #no Error col
 })
 
 test_that("anova.art of Higgins1990Table1 matches results of the original ARTool", {
