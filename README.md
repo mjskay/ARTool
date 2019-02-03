@@ -218,7 +218,7 @@ Citations
 ---------
 
 Kay M and Wobbrock J (2019). *ARTool: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs*. R package version 0.10.6,
+Nonparametric Factorial ANOVAs*. R package version 0.10.6.9000,
 <https://github.com/mjskay/ARTool>. DOI:
 [10.5281/zenodo.594511](http://dx.doi.org/10.5281/zenodo.594511).
 
