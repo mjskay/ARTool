@@ -1,15 +1,15 @@
 ## Submission comments
 
-This submission is primarily to change this package from being
-dependent on lsmeans to being dependent on emmeans (as lsmeans
-has been deprecated). This involved mostly minor changes to tests
-and documentation.
+This submission is to fix minor bugs in two tests in this package
+that would fail under an upcoming version of `lme4`. The new tests
+pass under both the current and future version of `lme4`.
 
 ## Test environments
-* local Windows install, R-release 3.5.1
-* local Windows install, R-devel 2018-07-01 r74950
-* Debian Linux (rhub debian-gcc-release), R-release 3.5.1
-* Ubuntu 14.04.5 LTS (on travis-ci), R 3.5.0
+* local Windows install, R-release 3.5.2
+* local Windows install, R-devel 2019-02-02 r76050
+* win-builder Windows install, R-release
+* win-builder Windows install, R-devel
+* travis-ci Linux install, R-release 3.5.2
 
 ## R CMD check results
 There were no ERRORS, WARNINGs, or NOTEs.
