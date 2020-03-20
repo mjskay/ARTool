@@ -5,13 +5,15 @@
 \alias{Higgins1990Table5}
 \title{Split-plot Experiment Examining Effect of Moisture and Fertilizer on Dry
 Matter in Peat Pots}
-\format{A data frame with 48 observations on the following 4 variables.
-\describe{ 
+\format{
+A data frame with 48 observations on the following 4 variables.
+\describe{
      \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
      \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
-     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
-     \item{DryMatter}{a numeric vector} 
-}}
+     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}}
+     \item{DryMatter}{a numeric vector}
+}
+}
 \source{
 Milliken, G.A., Johnson, D.E. (1984). \emph{Analysis of Messy Data
 Vol I: Designed Experiments}. Van Nostrand Reinhold Company, New York.
@@ -30,7 +32,7 @@ from Higgins \emph{et al.} (1990).
 \examples{
 
 data(Higgins1990Table5)
-		
+
 ## run aligned-rank transform and ANOVA on the data
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 anova(m)

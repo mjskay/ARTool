@@ -35,8 +35,9 @@ Suggests:
     stringi,
     DescTools
 License: GPL (>= 2)
+Language: en-US
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Encoding: UTF-8

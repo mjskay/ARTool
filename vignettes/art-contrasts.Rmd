@@ -192,7 +192,7 @@ which if we interpret in the same way as the linear model is obviously incorrect
 
 The key here is to understand that ART is reporting differences with the main effects subtracted out.
 That is, the `A,C - A,D` effect is something like the difference between this combination of levels if we first
-subtracted out the effect of `C - D`. We can see this if we take the ART estimate for `C - D` in the emmeans for `X2` above (`-123.13`) and the
+subtracted out the effect of `C - D`. We can see this if we take the ART estimate for `C - D` in the `emmeans` output for `X2` above (`-123.13`) and the
 ART estimate for `A,C - A,D` (`125.12`) here, we can get approximate an estimate of the difference (`-123.13 + 125.12 == 1.99`)
 that is consistent with the expected 0 (given the SE here).
 

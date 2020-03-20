@@ -4,19 +4,21 @@
 \name{Higgins1990Table5.art}
 \alias{Higgins1990Table5.art}
 \title{Aligned Rank Transformed Version of Higgins1990Table5}
-\format{A data frame with 48 observations on the following 10 variables.
+\format{
+A data frame with 48 observations on the following 10 variables.
 \describe{
      \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
      \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
-     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
+     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}}
      \item{DryMatter}{a numeric vector}
      \item{aligned.DryMatter..for.Moisture}{a numeric vector}
      \item{aligned.DryMatter..for.Fertilizer}{a numeric vector}
      \item{aligned.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
      \item{ART.DryMatter..for.Moisture}{a numeric vector}
      \item{ART.DryMatter..for.Fertilizer}{a numeric vector}
-     \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector} 
-}}
+     \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
+}
+}
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.

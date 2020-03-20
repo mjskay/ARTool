@@ -53,7 +53,7 @@ devtools::install_github("mjskay/ARTool")
 
 The general approach to using ART is to transform your data using `art` , verify
 the ART procedure is appropriate to the dataset using `summary` , and then run an
-anova on the transformed data using `anova` .
+ANOVA on the transformed data using `anova` .
 
 First, let us load some example data:
 
@@ -155,6 +155,6 @@ DOI: [10.5281/zenodo.594511](http://dx.doi.org/10.5281/zenodo.594511).
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
 Procedures." In _Proceedings of the ACM Conference on Human Factors in
-Computing Systems (CHI '11)_, Vancouver, British Columbia (May 7-12, 2011). 
+Computing Systems (CHI 2011)_, Vancouver, British Columbia (May 7-12, 2011). 
 New York: ACM Press, pp. 143-146. <http://depts.washington.edu/aimgroup/proj/art/>.
 DOI: [10.1145/1978942.1978963](http://dx.doi.org/10.1145/1978942.1978963).

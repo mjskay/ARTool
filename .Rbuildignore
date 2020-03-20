@@ -14,3 +14,4 @@
 ^figure$
 ^cache$
 ^cran-comments.md$
+^inst/WORDLIST$
