@@ -1,5 +1,9 @@
-# ARTool 0.10.6.9000
+# ARTool 0.10.7
 
+Minor changes:
+
+* Forward-compatible fix for tests needed for when `stringsAsFactors` default
+  becomes `FALSE` (in R 4).
 * Fix for a bug in alignment that occurs with high-order interactions (4+)
   (thanks to Hidekazu Kaneko).
 
