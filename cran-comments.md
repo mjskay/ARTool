@@ -1,18 +1,17 @@
 ## Submission comments
 
-This submission is to fix minor bugs in two tests in this package
-that would fail under an upcoming version of `lme4`. The new tests
-pass under both the current and future version of `lme4`.
+This submission is to fix forward-compatibility issues with R 4; specifically,
+minor fixes due to changes in the stringsAsFactors default.
 
 ## Test environments
-* local Windows install, R-release 3.5.2
-* local Windows install, R-devel 2019-02-02 r76050
+* local Windows install, R-release 3.6.3
+* local Windows install, R-devel 2020-03-16 r77936
 * win-builder Windows install, R-release
 * win-builder Windows install, R-devel
-* travis-ci Linux install, R-release 3.5.2
+* travis-ci Linux install, R-release 3.6.2
 
 ## R CMD check results
-There were no ERRORS, WARNINGs, or NOTEs.
+0 errors | 0 warnings | 0 notes
 
 ## Downstream dependencies
 There are no downstream dependencies for this package.
