@@ -30,8 +30,8 @@ test_that("anova.art of Higgins1990Table5 matches results of the original ARTool
 
     #reference result
     ref = data.frame(
-        Term = c("Moisture", "Fertilizer", "Moisture:Fertilizer"),
-        Error = c("Tray", "Within", "Within"),
+        Term = factor(c("Moisture", "Fertilizer", "Moisture:Fertilizer")),
+        Error = factor(c("Tray", "Within", "Within")),
         Df = c(3, 3, 9),
         Df.res = c(8, 24, 24),
         "F" = c(23.8326,  122.4017, 5.1180),
@@ -55,7 +55,7 @@ test_that("anova.art of Higgins1990Table1 matches results of the original ARTool
 
     #reference result
     ref = data.frame(
-        Term = c("Row", "Column", "Row:Column"),
+        Term = factor(c("Row", "Column", "Row:Column")),
         Df = c(2,  2, 4),
         Df.res = c(27, 27, 27),
         "F" = c(29.9925, 77.8668, 0.6417),
@@ -74,8 +74,8 @@ test_that("anova.art of HigginsABC matches results of the original ARTool", {
 
     #reference result
     ref = data.frame(
-        Term = c("A", "B", "C", "A:B", "A:C", "B:C", "A:B:C" ),
-        Error = c("Subject", "Subject", "Within", "Subject", "Within",  "Within", "Within"),
+        Term = factor(c("A", "B", "C", "A:B", "A:C", "B:C", "A:B:C")),
+        Error = factor(c("Subject", "Subject", "Within", "Subject", "Within",  "Within", "Within")),
         Df = c(1, 1, 1, 1, 1, 1, 1),
         Df.res = c(4,  4, 4, 4, 4, 4, 4),
         F = c(120.4706, 120.4706, 14.3217, 81.92,  0.1259, 0.2319, 0.9715),

@@ -1,3 +1,9 @@
+# ARTool 0.10.6.9000
+
+* Fix for a bug in alignment that occurs with high-order interactions (4+)
+  (thanks to Hidekazu Kaneko).
+
+
 # ARTool 0.10.6
 
 Minor changes:
