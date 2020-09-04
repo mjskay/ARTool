@@ -4,7 +4,8 @@
 \name{Higgins1990Table1.art}
 \alias{Higgins1990Table1.art}
 \title{Aligned Rank Transformed Version of Higgins1990Table1}
-\format{A data frame with 36 observations on the following 10 variables.
+\format{
+A data frame with 36 observations on the following 10 variables.
 \describe{
      \item{Subject}{a factor with levels \code{"s1"} .. \code{"s36"}}
      \item{Row}{a factor with levels \code{"r1"} .. \code{"r3"}}
@@ -16,7 +17,8 @@
      \item{ART.Response..for.Row}{a numeric vector}
      \item{ART.Response..for.Column}{a numeric vector}
      \item{ART.Response..for.Row.Column}{a numeric vector}
-}}
+}
+}
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.

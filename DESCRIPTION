@@ -4,6 +4,8 @@ Version: 0.10.6.9000
 Date: 2019-02-03
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@umich.edu"),
+    person("Lisa A.", "Elkin", role = "aut",
+    email = "lelkin@cs.washington.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
 Maintainer: Matthew Kay <mjskay@umich.edu>
@@ -18,25 +20,27 @@ Imports:
     car (>= 2.0-24),
     plyr,
     magrittr,
-    dplyr
+    dplyr,
+    pryr,
+    emmeans,
+    stringi,
+    tidyr,
+    stringr
 Suggests:
     testthat (>= 0.10.0),
-    emmeans,
     knitr,
     rmarkdown,
     ggplot2,
-    tidyr,
     pander,
     lmerTest,
     cluster,
     phia,
     survival,
     psych,
-    stringi,
     DescTools
 License: GPL (>= 2)
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool
 VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Encoding: UTF-8

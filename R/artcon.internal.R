@@ -21,9 +21,8 @@ do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, 
 ### interaction.term.labels: quoted interaction term label (e.g. "a:b:c")
 ### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats terms
-#' @importFrom pryr substitude_q
+#' @importFrom pryr substitute_q
 #' @importFrom stringr str_replace
-
 # validate and parse formulas of the of "a:b:c"
 parse.art.con.string.formula = function(f.orig){
   
@@ -68,7 +67,8 @@ parse.art.con.string.formula = function(f.orig){
 }
 
 # f.orig can be ~ a*b*c or "a:b:c"
-
+#' @importFrom stats as.formula
+#' @importFrom plyr is.formula
 parse.art.con.formula = function(f.orig){
   
   # looking for ~ a*b*c
@@ -184,7 +184,7 @@ parse.art.model.formula = function(m.f, f.parsed){
 # m.formula is the original formula used to create the ART model
 # df is the data frame used to creat the ART model
 # formula is the contrast formula
-#' @importFrom tidyr unite
+#' @importFrom tidyr unite_
 generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
   
   # concatenate columns of data frame whose columns names are the variables in f.parsed.interaction.variables
@@ -239,7 +239,7 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
   # e.g. list(Error(g), Error(h)) -> "Error(g) + Error(h)"
   # note: empty list coerced to empty vector i.e list() -> character(0)
   m.f.error.str = if(length(m.f.error.variables) == 0) character() else paste(m.f.error.variables, collapse = "+")
-  # assemle concatenated art formula
+  # assemble concatenated art formula
   art.concatenated.formula.rhs.str = stri_join(m.f.fixed.str, m.f.grouping.str, m.f.error.str, sep="+", ignore_null= TRUE)
   art.concatenated.formula = as.formula(paste(m.f.response, art.concatenated.formula.rhs.str, sep=" ~ "))
   # make art concatenated model

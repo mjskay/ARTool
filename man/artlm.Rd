@@ -4,8 +4,13 @@
 \alias{artlm}
 \title{Per-Term Linear Model from Aligned Rank Transformed Data}
 \usage{
-artlm(m, term, response = c("art", "aligned"),
-  factor.contrasts = "contr.sum", ...)
+artlm(
+  m,
+  term,
+  response = c("art", "aligned"),
+  factor.contrasts = "contr.sum",
+  ...
+)
 }
 \arguments{
 \item{m}{An object of class \code{\link{art}}.}

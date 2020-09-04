@@ -4,9 +4,12 @@
 \alias{art}
 \title{Aligned Rank Transform}
 \usage{
-art(formula, data,
+art(
+  formula,
+  data,
   rank.comparison.digits = -floor(log10(.Machine$double.eps^0.5)),
-  check.errors.are.factors = TRUE)
+  check.errors.are.factors = TRUE
+)
 }
 \arguments{
 \item{formula}{A factorial formula with optional grouping terms or error
