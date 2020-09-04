@@ -163,3 +163,23 @@ test_that("artcon returns same result as ARTool.exe + JMP: with error term, two-
     tolerance = 0.0001
   )
 })
+
+test_that("artcon character format and formula format are equivalent", {
+  data(Higgins1990Table5, package="ARTool")
+  
+  #run with grouping term to force lmer
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  
+  # single-factor contrasts
+  expect_equal(
+    summary(artcon(m, "Moisture")),
+    summary(artcon(m, ~Moisture))
+  )
+  
+  # two-factor contrasts
+  # compare "m1,f1 - m1,f2", "m1,f1 - m2,f1", and "m1,f1, m2,f2" to results from JMP.
+  expect_equal(
+    summary(artcon(m, "Moisture:Fertilizer")),
+    summary(artcon(m, ~Moisture*Fertilizer))
+  )
+})
