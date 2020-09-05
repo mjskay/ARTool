@@ -39,7 +39,7 @@
 #'   in \code{f}, and then removes the originals. When specifying the effect
 #'   terms on which to conduct contrasts, use the concatenation of the effects
 #'   specified in \code{f} instead of the original variables. This is demonstrated
-#'   in the examples below.
+#'   in the example below.
 #' @seealso See also \code{\link{artcon}}, which makes use of this function.
 
 #' 
@@ -51,9 +51,27 @@
 #' @examples
 #' \dontrun{
 #' 
+#' ## create an art model
+#' m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+#' 
+#' ## use emmeans to conduct pariwise contrasts on "Moisture"
+#' contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
+#' 
+#' ## use emmeans to conduct pairwise contrasts on "Moisture:Fertilizer"
+#' ## N.B. internally, artlm.con concatenates the factors Moisture and Fertilizer
+#' ## to create MoistureFertilizer. If you try to use any of Moisture, Fertilizer,
+#' ## Moisture:Fertilizer, or Moisture*Fertilizer in the RHS of the formula
+#' ## passed to emmeans, you will get an error because the factors Moisture and Fertilizer
+#' ## do not exist in the model returned by artlm.con.
+#' contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
+#' 
+#' ## Note: artcon uses emmeans internally and the above examples are equivalent to
+#' artcon(m, "Moisture")
+#' artcon(m, "Moisture:Fertilizer")
+#' 
 #' }
 #' 
-#' syntax: contrast(emmeans(artlm.con(m, "X1:X2"), ~ X1X2), method="pairwise")
+# syntax: contrast(emmeans(artlm.con(m, "X1:X2"), ~ X1X2), method="pairwise")
 artlm.con = function(m, f, response="art", factor.contrasts="contr.sum", ...)
 {
   f.parsed = parse.art.con.string.formula(f)

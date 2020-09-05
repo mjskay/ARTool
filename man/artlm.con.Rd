@@ -50,10 +50,28 @@ Internally, the ART-C procedure concatenates the variables specified
   in \code{f}, and then removes the originals. When specifying the effect
   terms on which to conduct contrasts, use the concatenation of the effects
   specified in \code{f} instead of the original variables. This is demonstrated
-  in the examples below.
+  in the example below.
 }
 \examples{
 \dontrun{
+
+## create an art model
+m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+
+## use emmeans to conduct pariwise contrasts on "Moisture"
+contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
+
+## use emmeans to conduct pairwise contrasts on "Moisture:Fertilizer"
+## N.B. internally, artlm.con concatenates the factors Moisture and Fertilizer
+## to create MoistureFertilizer. If you try to use any of Moisture, Fertilizer,
+## Moisture:Fertilizer, or Moisture*Fertilizer in the RHS of the formula
+## passed to emmeans, you will get an error because the factors Moisture and Fertilizer
+## do not exist in the model returned by artlm.con.
+contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
+
+## Note: artcon uses emmeans internally and the above examples are equivalent to
+artcon(m, "Moisture")
+artcon(m, "Moisture:Fertilizer")
 
 }
 

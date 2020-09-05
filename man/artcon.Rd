@@ -11,37 +11,47 @@ artcon(
   factor.contrasts = "contr.sum",
   method = "pairwise",
   interaction = FALSE,
-  adjust
+  adjust,
+  ...
 )
 }
 \arguments{
 \item{m}{An object of class \code{\link{art}}.}
 
 \item{f}{Either an object of type \code{"character"} or type
-\code{"formula"}, specifying the factors whose levels will be compared. See
-"Formula" section below.}
+\code{"formula"}, specifying the fixed effects whose levels will be
+compared. See "Formula" section below.}
 
 \item{response}{Which response to use: the aligned (with ART-C) response
-(\code{"aligned"}) or the aligned and ranked (with ART-C) response
-(\code{"art"}).}
+(\code{"aligned"}) or the aligned-and-ranked (with ART-C) response
+(\code{"art"}). Default is "art". This argument is passed to artlm.con.}
 
 \item{factor.contrasts}{The name of the contrast-generating function to be
 applied by default to fixed effect factors. Sets the the first element of
 \code{\link{options}("contrasts")} for the duration of this function. The
 default is to use \code{"contr.sum"}, i.e. sum-to-zero contrasts, which is
 appropriate for Type III ANOVAs (the default ANOVA type for
-\code{\link{anova.art}}).}
+\code{\link{anova.art}}). This argument is passed to artlm.con.}
 
 \item{method}{Contrast method argument passed to \code{\link{contrast}}.
 Note: default is \code{"pairwise"} but \code{\link{contrast}} default is
 \code{"eff"}.}
 
-\item{interaction}{Logical value. If TRUE, conducts interactions contrasts
-directly on \code{\link{art}} model m (i.e., does not align and rank with
-ART-C procedure). See “Interaction contrasts” section in
-\code{\link{contrast}}.}
+\item{interaction}{Logical value. Default is FALSE. If TRUE, conducts
+interactions contrasts directly on \code{\link{art}} model m (i.e., does
+not align and rank with ART-C procedure). See “Interaction contrasts”
+section in \code{\link{contrast}}.}
 
-\item{adjust}{TODO. I think it says the running example markdown file.}
+\item{adjust}{Character: adjustment method (e.g., "bonferroni") – passed to
+\code{\link{contrast}}. If not provided, \code{\link{contrast}} will use
+its default ("tukey" at the time of publication).}
+
+\item{\dots}{Additional arguments passed to \code{\link{lm}} or
+\code{\link{lmer}}.}
+}
+\value{
+An object of class \code{emmGrid}. See \code{\link{contrast}}
+  for details.
 }
 \description{
 A nonparametric method to conduct contrasts on data aligned-and-ranked using
@@ -89,36 +99,28 @@ anova(m)
 ## We can conduct contrasts comparing levels of Moisture using the ART-C procedure.
 ## If conducting contrasts as a post hoc test, this would follow a significant effect
 ## of Moisture on DryMatter.
-## Note: Since the ART-C procedure is mathematically equivalent to the ART procedure
-## in the single-factor case, this is the same as 
-## emmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
 
 ## Using the "character" format for f
 artcon(m, "Moisture")
 ## Or using the "formula" format for f
-artcon(m, Moisture)
+artcon(m, ~ Moisture)
+
+## Note: Since the ART-C procedure is mathematically equivalent to the ART procedure
+## in the single-factor case, this is the same as
+## emmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
 
 ## We can conduct contrasts comparing combinations of levels
 ## of Moisture and Fertilizer using the ART-C procedure.
 ## If conducting contrasts as a post hoc test, this would follow
-## a significant Moisture X Fertlizer interaction effect on Drymatter.
+## a significant Moisture:Fertlizer interaction effect on Drymatter.
 
 ## Using the "character" format for f
 artcon(m, "Moisture:Fertilizer")
 ## Using the "formula" format for f
-artcon(m, Moisture*Fertilizer)
+artcon(m, ~ Moisture*Fertilizer)
 
-##INTERACTION CONTRASTS TODO
-## N.B. The above types of contrasts ARE NOT valid for interactions.
-## Instead, use testInteractions from the phia package. For example:
-library(phia)
-testInteractions(artlm(m, "Moisture:Fertilizer"), pairwise=c("Moisture", "Fertilizer"))
-## For a more in-depth explanation and example, see this vignette:
-vignette("art-contrasts")
-
-## TODO
-## talk about optional params.
-## adjust is optional. if missing, will propogate to do.art.contrast and then contrast
+## We can also conduct interaction contrasts (comparing differences of differences)
+artcon(m, "Moisture:Fertilizer", interaction = TRUE)
 
 }
 }

@@ -108,20 +108,24 @@
 #' ## then we can run an anova on the ART responses (equivalent to anova(m, response="art"))
 #' anova(m)
 #'
-#' ## if we want post-hoc tests, artlm(m, term) returns the linear model for the
-#' ## given term
-#' ## which we can then examine using our preferred method (emmeans, glht, etc)
+#' ## if we want post-hoc tests, we can use artcon
+#' e.g., pairwise contrasts on Moisture:
+#' artcon(m, "Moisture")
+#' e.g., pairwise contrasts on Moisture:Fertilizer:
+#' artcon(m, "Moisture:Fertilizer")
+#' 
+#' ## if we want to use a specific method for post-hoc tests, artlm.con(m, term)
+#' ## returns the linear model for the given term which we can then examine
+#' ## using our preferred method (emmeans, glht, etc)
 #' ## e.g., pairwise contrasts on Moisture:
 #' library(emmeans)
-#' emmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
+#' contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
+#' 
+#' ## e.g. pairwise contrasts on Moisture:Fertilizer:
+#' ## See artlm.con documentation for more details on the syntax, specifically
+#' ## the formula passed to emmeans.
+#' contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
 #'
-#' ## pairwise contrasts on Fertilizer:
-#' emmeans(artlm(m, "Fertilizer"), pairwise ~ Fertilizer)
-#'
-#' ## N.B. The above types of contrasts ARE NOT valid for interactions.
-#' ## Instead, use testInteractions from the phia package. For example:
-#' library(phia)
-#' testInteractions(artlm(m, "Moisture:Fertilizer"), pairwise=c("Moisture", "Fertilizer"))
 #' ## For a more in-depth explanation and example, see this vignette:
 #' vignette("art-contrasts")
 #'

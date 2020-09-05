@@ -207,6 +207,57 @@ NULL
 #' }
 NULL
 
+#' Synthetic 2x2 Within-Subjects Experiment
+#' 
+#' Synthetic data from an experiment with two within-\code{Subject}s factors
+#' (\code{A} and \code{B}) having two levels each.
+#' 
+#' @name ElkinAB
+#' @docType data
+#' @format A data frame with 32 observations on the following 4 variables.
+#' \describe{ 
+#'      \item{S}{a factor with levels \code{"1"} .. \code{"8"}} 
+#'      \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
+#'      \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
+#'      \item{Y}{a numeric vector} 
+#' }
+#' @keywords datasets
+#' @examples
+#' \dontrun{
+#' data(ElkinAB, package="ARTool")
+#' 
+#' ## run contrast using the ART-C procedure on the data.
+#' m <- art(Y ~ A*B + (1|S), data=ElkinAB)
+#' artcon(m, "A:B")
+#' }
+NULL
+
+#' Synthetic 2x2x2 Within-Subjects Experiment
+#' 
+#' Synthetic data from an experiment with three within-\code{Subject}s factors
+#' (\code{A}, \code{B}, and \code{C}) having two levels each.
+#' 
+#' @name ElkinABC
+#' @docType data
+#' @format A data frame with 64 observations on the following 5 variables.
+#' \describe{ 
+#'      \item{S}{a factor with levels \code{"1"} .. \code{"8"}} 
+#'      \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
+#'      \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
+#'      \item{C}{a factor with levels \code{"c1"} \code{"c2"}} 
+#'      \item{Y}{a numeric vector} 
+#' }
+#' @keywords datasets
+#' @examples
+#' \dontrun{
+#' data(ElkinABC, package="ARTool")
+#' 
+#' ## run contrast using the ART-C procedure on the data.
+#' m <- art(Y ~ A*B*C + (1|S), data=ElkinAB)
+#' artcon(m, "A:B:C")
+#' }
+NULL
+
 
 #' Synthetic Data Used in the Contrast Test Vignette
 #' 

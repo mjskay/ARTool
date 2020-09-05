@@ -183,3 +183,22 @@ test_that("artcon character format and formula format are equivalent", {
     summary(artcon(m, ~Moisture*Fertilizer))
   )
 })
+
+test_that("artcon interaction contrasts equivalent to artlm interaction contrasts",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  
+  expect_equal(
+    summary(artcon(m, "Moisture:Fertilizer", interaction=TRUE)),
+    summary(contrast(emmeans(artlm(m, "Moisture:Fertilizer"), ~ Moisture:Fertilizer), method="pairwise", interaction=TRUE))
+  )
+  
+  data("ElkinABC")
+  
+  m = art(Y ~ A*B*C, data=ElkinABC)
+  expect_equal(
+    summary(artcon(m, "A:B:C", interaction=TRUE)),
+    summary(contrast(emmeans(artlm(m, "A:B:C"), ~ A:B:C), method="pairwise", interaction=TRUE))
+  )
+})

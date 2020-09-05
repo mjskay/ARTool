@@ -1,21 +1,6 @@
 
-
-do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, method, adjust){
-  # e.g. list("a", "b", "c")
-  interaction.variables = f.parsed$interaction.variables
-  # e.g. list("a", "b", "c") -> "a:b:c". will be passed to artlm
-  interaction.string.term = paste(interaction.variables, collapse=":")
-  # e.g. list("a", "b", "c") -> "~ a*b*c". will be passed to emmeans
-  interaction.string.formula = paste("~", paste(interaction.variables, collapse="*"), sep = "")
-  interaction.formula = as.formula(interaction.string.formula)
-  
-  contrast(emmeans(artlm(m, interaction.string.term, response = response, factor.contrasts = factor.contrasts),
-                   interaction.formula), method=method, adjust=adjust, interaction=TRUE)
-}
-
-### Parses and validates model formula for art contrast. 
+### Parses and validates contrast formula of form  "a:b:c"
 ### Raises exception if formula does not validate.
-### Given a formula like pairwise ~ a*b*c
 ### returns list with:
 ### interaction.variables: list of fixed variables (of type name) in interaction (e.g., list(a, b, c)).
 ### interaction.term.labels: quoted interaction term label (e.g. "a:b:c")
@@ -23,7 +8,6 @@ do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, 
 #' @importFrom stats terms
 #' @importFrom pryr substitute_q
 #' @importFrom stringr str_replace
-# validate and parse formulas of the of "a:b:c"
 parse.art.con.string.formula = function(f.orig){
   
   # check if f.orig is a single string (as opposed to a vector of multiple strings)
@@ -66,7 +50,15 @@ parse.art.con.string.formula = function(f.orig){
   )
 }
 
-# f.orig can be ~ a*b*c or "a:b:c"
+### parses f.orig which is formula or term (f) passed to artcon or artlm.con
+### f.orig can be of form ~ a*b*c or "a:b:c"
+### if f.orig is of "formula" form (i.e., ~ a*b*c),
+### converts it to "string" form (i.e., "a:b:c")
+### returns: result of parse.art.con.string.formula when passed "string" version of f.orig
+### list with
+### interaction.variables: list of fixed variables (of type name) in interaction (e.g., list(a, b, c)).
+### interaction.term.labels: quoted interaction term label (e.g. "a:b:c")
+### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats as.formula
 #' @importFrom plyr is.formula
 parse.art.con.formula = function(f.orig){
@@ -150,7 +142,6 @@ parse.art.model.formula = function(m.f, f.parsed){
   is.interaction.term = grepl(f.interaction.term.label, m.f.term.labels)
   
   # if interaction term from f is not in model formula, error
-  # TODO FIX
   if(!any(is.interaction.term)){
     stop("Term or formula passed to artcon or artlm.con must contain a single interaction term and no other terms, and the interaction term must be in art model formula.")
   }
@@ -178,12 +169,12 @@ parse.art.model.formula = function(m.f, f.parsed){
   )
 }
 
-# creates new data frame which is a copy of df except
-#   adds a new column by concatenated columns of df whose names are the interaction variables in f
-#   removes columns whose names are the interaction variables in f
-# m.formula is the original formula used to create the ART model
-# df is the data frame used to creat the ART model
-# formula is the contrast formula
+### creates new data frame which is a copy of df except
+###   adds a new column by concatenated columns of df whose names are the interaction variables in f
+###   removes columns whose names are the interaction variables in f
+### m.formula is the original formula used to create the ART model
+### df is the data frame used to creat the ART model
+### formula is the contrast formula
 #' @importFrom tidyr unite_
 generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
   
@@ -198,10 +189,11 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
   art.con.df
 }
 
-# removes variables from the model formula (m.f) that are in the contrast formula (f)
-# replaces them with the new concatenated (the concatenation of all variables in the contrast formula)
-# note: this is not the same as using the full factorial model of all columns in df
-#       there can be columns in df that are not used in the model.
+### removes variables from the model formula (m.f) that are in the contrast formula (f)
+### replaces them with the new concatenated (the concatenation of all variables in the contrast formula)
+### creates and returns art model on art.concatenated.df using the created formula
+### note: this is not the same as using the full factorial model of all columns in df
+###       there can be columns in df that are not used in the model.
 #' @importFrom stringi stri_join
 generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df, f.parsed){
   
@@ -247,8 +239,21 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
   m
 }
 
-# TODO COMMENTS
-# ... only allowed from artlm.con not artcon.
+### called internally from artlm.con.
+### aligns-and-ranks data in m with ART-C procedure
+### creates linear model, linear mixed model, or aov model depending on grouping terms in m.f
+### and returns resulting model
+### m: art model passed into artcon
+### f.parsed: parsed contrast formula
+### response: "aligned" for compare aligned responses or "art" for compare aligned-and-ranked responses
+### factor.contrasts: e.g. contr.sum passed to artlm.
+### ...: extra parameter passed to artlm and subsequently lm or lmer
+### returns: An object of class lm if m.f does not
+### contain grouping or error terms, an object of class merMod
+###  (i.e. a model fit by lmer) if it contains grouping terms, or
+###  an object of class aovlist (i.e. a model fit by aov) if
+###  it contains error terms.
+### Note: only allowed from artlm.con not artcon.
 artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
   # make sure m is an art model
   if(class(m) != "art"){
@@ -269,14 +274,45 @@ artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
   artlm.con.internal
 }
 
-# TODO COMMENTS
-# contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise")
-# We currently only use contrast "contr.sum" for this
+### called internally from artcon iff interaction = TRUE
+### m: art model passed into artcon
+### f.parsed: parsed contrast formula
+### response: "aligned" for compare aligned responses or "art" for compare aligned-and-ranked responses
+### factor.contrasts: e.g. contr.sum passed to artlm.
+### method: e.g. pairwise. passed to contrast
+### adjust: e.g. tukey. passed to contrast
+### ...: extra parameter passed to artlm and subsequently lm or lmer
+### returns: result of conducting interaction contrasts on terms specified in f.parsed
+###          (object of class emmGrid)
+do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, method, adjust, ...){
+  # e.g. list("a", "b", "c")
+  interaction.variables = f.parsed$interaction.variables
+  # e.g. list("a", "b", "c") -> "a:b:c". will be passed to artlm
+  interaction.string.term = paste(interaction.variables, collapse=":")
+  # e.g. list("a", "b", "c") -> "~ a*b*c". will be passed to emmeans
+  interaction.string.formula = paste("~", paste(interaction.variables, collapse="*"), sep = "")
+  interaction.formula = as.formula(interaction.string.formula)
+  
+  contrast(emmeans(artlm(m, interaction.string.term, response = response, factor.contrasts = factor.contrasts, ...),
+                   interaction.formula), method=method, adjust=adjust, interaction=TRUE)
+}
+
+### conducts contrasts given model returned by artlm.con
+### f.parsed: parsed contrast formula
+### artlm.con: model returned by artlm.con given the original inputs to artcon
+### method: contrast method propogated to contrast
+### adjust: adjustment method propogated to contrast
+### returns: result of conducting contrasts on artlm.con model (object of class emmGrid)
+### syntax: m = art(Y ~ X1*X2, data = df)
+###         artcon(m, "X1") or artcon(m, ~X1)
+###         artcon(m, "X1:X2") or artcon(m, ~ X1*X2)
+### Note: called internally from artcon iff interaction = FALSE
 #' @importFrom stats p.adjust p.adjust.methods
 #' @importFrom emmeans emmeans contrast
 do.art.contrast = function(f.parsed, artlm.con, method, adjust){
-  # TODO add example comment
+  # e.g. f.parsed$concat.interaction.variable = X1X2 -> "~ X1X2"
   emmeans.str = paste(" ~ ", toString(f.parsed$concat.interaction.variable))
+  # e.g. "~ X1X2" -> ~ X1X2
   emmeans.formula = as.formula(emmeans.str)
   art.con.emmeans = emmeans(artlm.con, emmeans.formula)
   art.con = contrast(art.con.emmeans, method, adjust=adjust)
