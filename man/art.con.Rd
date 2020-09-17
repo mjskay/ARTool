@@ -44,7 +44,8 @@ section in \code{\link{contrast}}.}
 
 \item{adjust}{Character: adjustment method (e.g., "bonferroni") – passed to
 \code{\link{contrast}}. If not provided, \code{\link{contrast}} will use
-its default ("tukey" at the time of publication).}
+its default ("tukey" at the time of publication). All available options are listed
+in \code{\link{summary.emmGrid}} in \code{P-value adjustments} section.}
 
 \item{\dots}{Additional arguments passed to \code{\link{lm}} or
 \code{\link{lmer}}.}

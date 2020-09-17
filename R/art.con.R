@@ -45,7 +45,8 @@
 #'   section in \code{\link{contrast}}.
 #' @param adjust Character: adjustment method (e.g., "bonferroni") – passed to
 #'   \code{\link{contrast}}. If not provided, \code{\link{contrast}} will use
-#'   its default ("tukey" at the time of publication).
+#'   its default ("tukey" at the time of publication). All available options are listed
+#'   in \code{\link{summary.emmGrid}} in \code{P-value adjustments} section.
 #' @param \dots Additional arguments passed to \code{\link{lm}} or
 #'   \code{\link{lmer}}.
 #' @return An object of class \code{emmGrid}. See \code{\link{contrast}}
