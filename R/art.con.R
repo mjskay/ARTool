@@ -1,4 +1,4 @@
-# artcon function for both "normal" contrasts and interaction contrasts
+# art.con function for both "normal" contrasts and interaction contrasts
 #
 # Author: lelkin
 ###############################################################################
@@ -83,9 +83,9 @@
 #' ## of Moisture on DryMatter.
 #'
 #' ## Using the "character" format for f
-#' artcon(m, "Moisture")
+#' art.con(m, "Moisture")
 #' ## Or using the "formula" format for f
-#' artcon(m, ~ Moisture)
+#' art.con(m, ~ Moisture)
 #'
 #' ## Note: Since the ART-C procedure is mathematically equivalent to the ART procedure
 #' ## in the single-factor case, this is the same as
@@ -97,17 +97,17 @@
 #' ## a significant Moisture:Fertlizer interaction effect on Drymatter.
 #'
 #' ## Using the "character" format for f
-#' artcon(m, "Moisture:Fertilizer")
+#' art.con(m, "Moisture:Fertilizer")
 #' ## Using the "formula" format for f
-#' artcon(m, ~ Moisture*Fertilizer)
+#' art.con(m, ~ Moisture*Fertilizer)
 #'
 #' ## We can also conduct interaction contrasts (comparing differences of differences)
-#' artcon(m, "Moisture:Fertilizer", interaction = TRUE)
+#' art.con(m, "Moisture:Fertilizer", interaction = TRUE)
 #'
 #' }
 
 
-artcon = function(m, f, response = "art", factor.contrasts="contr.sum", method = "pairwise", 
+art.con = function(m, f, response = "art", factor.contrasts="contr.sum", method = "pairwise", 
                   interaction = FALSE, adjust, ...)
 {
   f.parsed = parse.art.con.formula(f)

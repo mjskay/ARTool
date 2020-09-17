@@ -109,11 +109,11 @@ anova(m, response="aligned")
 ## then we can run an anova on the ART responses (equivalent to anova(m, response="art"))
 anova(m)
 
-## if we want post-hoc tests, we can use artcon
+## if we want post-hoc tests, we can use art.con
 e.g., pairwise contrasts on Moisture:
-artcon(m, "Moisture")
+art.con(m, "Moisture")
 e.g., pairwise contrasts on Moisture:Fertilizer:
-artcon(m, "Moisture:Fertilizer")
+art.con(m, "Moisture:Fertilizer")
 
 ## if we want to use a specific method for post-hoc tests, artlm.con(m, term)
 ## returns the linear model for the given term which we can then examine

@@ -228,7 +228,7 @@ NULL
 #' 
 #' ## run contrast using the ART-C procedure on the data.
 #' m <- art(Y ~ A*B + (1|S), data=ElkinAB)
-#' artcon(m, "A:B")
+#' art.con(m, "A:B")
 #' }
 NULL
 
@@ -254,7 +254,7 @@ NULL
 #' 
 #' ## run contrast using the ART-C procedure on the data.
 #' m <- art(Y ~ A*B*C + (1|S), data=ElkinAB)
-#' artcon(m, "A:B:C")
+#' art.con(m, "A:B:C")
 #' }
 NULL
 

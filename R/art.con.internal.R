@@ -50,7 +50,7 @@ parse.art.con.string.formula = function(f.orig){
   )
 }
 
-### parses f.orig which is formula or term (f) passed to artcon or artlm.con
+### parses f.orig which is formula or term (f) passed to art.con or artlm.con
 ### f.orig can be of form ~ a*b*c or "a:b:c"
 ### if f.orig is of "formula" form (i.e., ~ a*b*c),
 ### converts it to "string" form (i.e., "a:b:c")
@@ -143,7 +143,7 @@ parse.art.model.formula = function(m.f, f.parsed){
   
   # if interaction term from f is not in model formula, error
   if(!any(is.interaction.term)){
-    stop("Term or formula passed to artcon or artlm.con must contain a single interaction term and no other terms, and the interaction term must be in art model formula.")
+    stop("Term or formula passed to art.con or artlm.con must contain a single interaction term and no other terms, and the interaction term must be in art model formula.")
   }
   
   # response ~ a*b*c*d + (1|d) + Error(g) -> list(response, a, b, c, d, 1|d, Error(g))
@@ -243,7 +243,7 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
 ### aligns-and-ranks data in m with ART-C procedure
 ### creates linear model, linear mixed model, or aov model depending on grouping terms in m.f
 ### and returns resulting model
-### m: art model passed into artcon
+### m: art model passed into art.con
 ### f.parsed: parsed contrast formula
 ### response: "aligned" for compare aligned responses or "art" for compare aligned-and-ranked responses
 ### factor.contrasts: e.g. contr.sum passed to artlm.
@@ -253,7 +253,7 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
 ###  (i.e. a model fit by lmer) if it contains grouping terms, or
 ###  an object of class aovlist (i.e. a model fit by aov) if
 ###  it contains error terms.
-### Note: only allowed from artlm.con not artcon.
+### Note: only allowed from artlm.con not art.con.
 artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
   # make sure m is an art model
   if(class(m) != "art"){
@@ -274,8 +274,8 @@ artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
   artlm.con.internal
 }
 
-### called internally from artcon iff interaction = TRUE
-### m: art model passed into artcon
+### called internally from art.con iff interaction = TRUE
+### m: art model passed into art.con
 ### f.parsed: parsed contrast formula
 ### response: "aligned" for compare aligned responses or "art" for compare aligned-and-ranked responses
 ### factor.contrasts: e.g. contr.sum passed to artlm.
@@ -299,14 +299,14 @@ do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, 
 
 ### conducts contrasts given model returned by artlm.con
 ### f.parsed: parsed contrast formula
-### artlm.con: model returned by artlm.con given the original inputs to artcon
+### artlm.con: model returned by artlm.con given the original inputs to art.con
 ### method: contrast method propogated to contrast
 ### adjust: adjustment method propogated to contrast
 ### returns: result of conducting contrasts on artlm.con model (object of class emmGrid)
 ### syntax: m = art(Y ~ X1*X2, data = df)
-###         artcon(m, "X1") or artcon(m, ~X1)
-###         artcon(m, "X1:X2") or artcon(m, ~ X1*X2)
-### Note: called internally from artcon iff interaction = FALSE
+###         art.con(m, "X1") or art.con(m, ~X1)
+###         art.con(m, "X1:X2") or art.con(m, ~ X1*X2)
+### Note: called internally from art.con iff interaction = FALSE
 #' @importFrom stats p.adjust p.adjust.methods
 #' @importFrom emmeans emmeans contrast
 do.art.contrast = function(f.parsed, artlm.con, method, adjust){

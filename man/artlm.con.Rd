@@ -42,7 +42,7 @@ the model.
 \details{
 This function is used primarily to conduct contrasts on data
 aligned-and-ranked using the ART-C procedure using a different contrast test
-than provided by \code{\link{artcon}}, which uses (\code{\link{contrast}}).
+than provided by \code{\link{art.con}}, which uses (\code{\link{contrast}}).
 It is not necessary to use this function directly to conduct contrasts using
 the ART-C procedure.
 
@@ -69,9 +69,9 @@ contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
 ## do not exist in the model returned by artlm.con.
 contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
 
-## Note: artcon uses emmeans internally and the above examples are equivalent to
-artcon(m, "Moisture")
-artcon(m, "Moisture:Fertilizer")
+## Note: art.con uses emmeans internally and the above examples are equivalent to
+art.con(m, "Moisture")
+art.con(m, "Moisture:Fertilizer")
 
 }
 
@@ -81,7 +81,7 @@ Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
 Under review (CHI 2021).
 }
 \seealso{
-See also \code{\link{artcon}}, which makes use of this function.
+See also \code{\link{art.con}}, which makes use of this function.
 }
 \author{
 Lisa A. Elkin
