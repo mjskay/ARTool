@@ -1,6 +1,6 @@
 ---
 title: "Contrast tests with ART"
-author: "Matthew Kay"
+author: "Matthew Kay, Lisa A. Elkin"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -14,19 +14,17 @@ vignette: >
 The aligned-rank transform (ART) allows for non-parametric analyses of variance. 
 But how should we do contrast tests with ART? 
 
-**Within a single factor**, contrasts in ART are straightforward: simply conduct contrasts on the linear model containing the response aligned for that factor.
+Contrasts involving levels of **any number of factors** can be conducted using the ART-C method.
 
-**For interactions**, which necessarily involve effects across factors, what types of contrasts are valid may not be immediately obvious. This page explains what types of interaction contrasts are 
-appropriate on aligned-rank-transformed (ART) data, what are not, and why.
+This page explains when and why a separate aligning-and-ranking procedure is needed to conduct contrasts and demonstrates how to conduct contrasts within the ART paradigm.
 
 ## Contents
 
 1. [Test Dataset](#test-dataset): Description of the test data we will use to compare a linear model against ART
 2. [Contrast tests of main effects](#contrast-tests-of-main-effects): Demo of conducting contrasts within a single factor (no interaction)
 3. [Tests of differences in pairwise combinations of levels between factors in interactions](#tests-of-differences-in-pairwise-combinations-of-levels-between-factors-in-interactions):
-   Interaction contrasts that **are not valid** in ART 
+   Interaction contrasts must be conducted with ART-C as they **are not valid** in ART
 4. [Tests of differences of differences in interactions](#tests-of-differences-of-differences-in-interactions):
-   Interaction contrasts that **are valid** in ART
 
 ## Libraries needed for this
 
@@ -68,7 +66,7 @@ df = data_frame(
 )
 ```
 
-This is normally-distributed error with the same variance at all levels, so we can compare the results of ART to a linear model,
+This is normally-distributed error with the same variance at all levels, so we can compare the results of ART and ART-C to a linear model,
 which will correctly estimate the effects.
 
 I pre-ran the above code and saved it as `InteractionTestData` so that the text here is consistent:
@@ -152,6 +150,15 @@ This is about right (effects in the same direction, the estimates aren't
 the same because they are on the scale of ranks and not the data, but the t values are similar to the linear model, as we should hope). 
 Contrast tests of main effects seem to be consistent then.
 
+Now from ART-C
+
+```{r, message=FALSE}
+art.con(m.art, "X1")
+art.con(m.art, "X2")
+```
+
+**Within a single factor** ART and ART-C are mathematically equivalent, so we would expect the contrast tests for ART and ART-C to have the same results, and they do.
+
 ### Tests of differences in pairwise combinations of levels between factors in interactions
 
 Now let's look at tests of differences in combinations of levels between factors:
@@ -160,7 +167,7 @@ Now let's look at tests of differences in combinations of levels between factors
 contrast(emmeans(m.linear, ~ X1:X2), method="pairwise")
 ```
 
-And for ART:
+Now for ART:
 
 ```{r}
 #DO NOT DO THIS!
@@ -196,26 +203,22 @@ subtracted out the effect of `C - D`. We can see this if we take the ART estimat
 ART estimate for `A,C - A,D` (`125.12`) here, we can get approximate an estimate of the difference (`-123.13 + 125.12 == 1.99`)
 that is consistent with the expected 0 (given the SE here).
 
-If we first combine the factors before aligning-and-ranking, we can get an estimate of these effects:
+The ART-C procedure however, was developed to align and rank data specifically for contrasts involving levels from any number of factors.
 
 ```{r}
-#DO NOT DO THIS WITHOUT READING THE NOTE BELOW
-df$X = with(df, X1:X2)
-m.art.12 = art(Y ~ X, data=df)
-contrast(emmeans(artlm(m.art.12, "X"), ~ X), method="pairwise")
+art.con(m.art, "X1:X2")
 ```
 
-Note that the above table is not in the same order as the previous ones, but does have similar t values to the corresponding effects
-from the linear model. __However, it is not clear this will generalize.__ In this case there aren't any other factors except these two, 
-so this is equivalent to just ranking the response before fitting the model, and in the general case it can incorrectly estimate 
-interactions (see issues with using the plain-old rank transform in the ART literature, specifically Higgins' papers). Thus, I 
-can't recommended this approach in the general case (or at least, not without more investigation).
+Like the linear model, art.con  correctly estimates the difference between `A,C - A,D` as `~0`. In fact, its results agree with the linear model for all contrasts conducted. (Note that the art.con and linear model results appear in a different order; specifically A C - A D appears second for the linear model and first for art.con)
+
+The syntax used above is consistent with *term* syntax used by artlm. art.con also accepts the *formula* syntax accepted by emmeans. We can conduct the same contrasts as above using the following syntax:
+```{r}
+art.con(m.art, ~X1*X2)
+```
 
 ### Tests of _differences of differences_ in interactions
 
-While tests of differences of combinations of levels between factors have issues in ART, we can test _differences of differences_; e.g., 
-for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`? We
-can test this using the `interaction` argument to the `contrast` function in the `emmeans` package.
+Before ART-C was created and added to this package, the only way to conduct multifactor contrasts within the ART paradigm was to test _differences of differences_; e.g., for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`?. We can still test this using the `interaction` argument to art.con. Note that when the `interaction` argument is supplied to art.con, differences of differences are tested on data that has been aligned-and-ranked using the **original** ART method (i.e., the data is **not** aligned-and-ranked using the ART-C method).
 
 Before we test, let's try to visualize what's going on in just this interaction:
 
@@ -276,8 +279,12 @@ A similar visual analysis finds the estimate for row `A - B    D - E` (~ -4.2) a
 plot_interaction_for_X2_levels("D", "E")
 ```
 
-Now we look at these differences of differences in art:
+Now we look at these differences of differences in ART, using art.con:
+```{r}
+art.con(m.art, "X1:X2", interaction=TRUE)
+```
 
+This is equivalent to:
 ```{r}
 contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise", interaction=TRUE)
 ```
