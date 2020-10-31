@@ -15,3 +15,4 @@
 ^cache$
 ^cran-comments.md$
 ^inst/WORDLIST$
+^\.github$
