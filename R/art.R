@@ -35,7 +35,7 @@
 #' model when ANOVAs are conducted, see \code{\link{anova.art}}.
 #'
 #' For details on the transformation itself, see Wobbrock \emph{et al.} (2011)
-#' or the ARTool website: \url{http://depts.washington.edu/aimgroup/proj/art/}.
+#' or the ARTool website: \url{https://depts.washington.edu/acelab/proj/art/}.
 #'
 #' @param formula A factorial formula with optional grouping terms or error
 #' terms (but not both). Should be a formula with a single response variable
@@ -80,7 +80,7 @@
 #' @seealso \code{\link{summary.art}}, \code{\link{anova.art}},
 #' \code{\link{artlm}}.
 #' @references Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-#' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+#' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #'
 #' Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J. (2011). The
 #' Aligned Rank Transform for nonparametric factorial analyses using only ANOVA

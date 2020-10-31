@@ -27,7 +27,7 @@
 #' }
 #' @seealso \code{\link{Higgins1990Table1}}, \code{\link{art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-#' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+#' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #' @keywords datasets internal
 NULL
 
@@ -92,7 +92,7 @@ NULL
 #' }
 #' @seealso \code{\link{Higgins1990Table5}}, \code{\link{art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-#' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+#' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #' @keywords datasets internal
 NULL
 
@@ -171,7 +171,7 @@ NULL
 #' }
 #' @seealso \code{\link{HigginsABC}}, \code{\link{art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-#' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+#' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #' @keywords datasets internal
 NULL
 
@@ -195,7 +195,7 @@ NULL
 #' }
 #' @seealso \code{\link{art}}, \code{\link{anova.art}}.
 #' @source Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-#' \emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+#' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #' @keywords datasets
 #' @examples
 #' \dontrun{
