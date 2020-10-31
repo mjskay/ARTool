@@ -1,12 +1,12 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.10.7
-Date: 2020-03-19
+Version: 0.10.7.9000
+Date: 2020-10-30
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
-    email = "mjskay@umich.edu"),
+    email = "mjskay@northwestern.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
-Maintainer: Matthew Kay <mjskay@umich.edu>
+Maintainer: Matthew Kay <mjskay@northwestern.edu>
 Description: The Aligned Rank Transform for nonparametric
     factorial ANOVAs as described by J. O. Wobbrock,
     L. Findlater, D. Gergle, & J. J. Higgins, "The Aligned
@@ -37,7 +37,7 @@ Suggests:
 License: GPL (>= 2)
 Language: en-US
 BugReports: https://github.com/mjskay/ARTool/issues/new
-URL: https://github.com/mjskay/ARTool
+URL: https://github.com/mjskay/ARTool/
 VignetteBuilder: knitr
 RoxygenNote: 7.1.0
 Encoding: UTF-8
