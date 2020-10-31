@@ -1,24 +1,24 @@
-ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs
-===================================================================================
 
-[![Build
-Status](https://travis-ci.org/mjskay/ARTool.png?branch=master)](https://travis-ci.org/mjskay/ARTool)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
-[![GPL \>=
-2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
+# ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs
+
+[![R build
+status](https://github.com/mjskay/ARTool/workflows/R-CMD-check/badge.svg)](https://github.com/mjskay/ARTool/actions)
+[![Coverage
+status](https://codecov.io/gh/mjskay/ARTool/branch/master/graph/badge.svg)](https://codecov.io/github/mjskay/ARTool?branch=master)
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
+[![GPL
+\>= 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool)
-[![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](http://dx.doi.org/10.1145/1978942.1978963)
+[![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](https://dx.doi.org/10.1145/1978942.1978963)
 
-*Matthew Kay, University of Washington
-<a href="mailto:mjskay@umich.edu" class="email">mjskay@umich.edu</a>*<br>
-*Jacob O. Wobbrock, University of Washington
-<a href="mailto:wobbrock@uw.edu" class="email">wobbrock@uw.edu</a>*
+*Matthew Kay, Northwestern University <mjskay@northwestern.edu>*<br>
+*Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>*
 
 ARTool is an R package implementing the Aligned Rank Transform for
 conducting nonparametric analyses of variance on factorial models. This
 implementation is based on the ART procedure as used in the original
 implementation of
-[ARTool](http://depts.washington.edu/aimgroup/proj/art/) by Wobbrock et
+[ARTool](https://depts.washington.edu/acelab/proj/art/) by Wobbrock et
 al.
 
 The package automates the Aligning-and-Ranking process using the `art`
@@ -31,12 +31,11 @@ used is determined by the formula passed to `art`.
 **Note**: The documentation of this package assumes some level of
 familiarity with when and why you may want to use the aligned rank
 transform; the [ARTool
-page](http://depts.washington.edu/aimgroup/proj/art/) provides a more
+page](https://depts.washington.edu/acelab/proj/art/) provides a more
 in-depth (and highly approachable) introduction to the aligned rank
 transform and the motivation for its use.
 
-Installation
-------------
+## Installation
 
 You can install the latest released version from CRAN with this R
 command:
@@ -53,8 +52,7 @@ install.packages("devtools")
 devtools::install_github("mjskay/ARTool")
 ```
 
-Example
--------
+## Example
 
 The general approach to using ART is to transform your data using `art`
 , verify the ART procedure is appropriate to the dataset using `summary`
@@ -102,9 +100,9 @@ head(Higgins1990Table5, n=8)
 To analyze this data using the aligned rank transform, we first
 transform the data using `art` . We specify the response variable
 (`DryMatter` ), the fixed effects and all of their interactions
-(`Moisture*Fertilizer`, or equivalently
-`Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms
-if present (here, `(1|Tray)` ).
+(`Moisture*Fertilizer`, or equivalently `Moisture + Fertilizer +
+Moisture:Fertilizer`), and any grouping terms if present (here,
+`(1|Tray)` ).
 
 While `(1|Tray)` has no effect on the results of the aligned rank
 transformation, it will be used by `anova` to determine the type of
@@ -163,9 +161,9 @@ anova(m)
     ## Response: art(DryMatter)
     ## 
     ##                             F Df Df.res     Pr(>F)    
-    ## 1 Moisture             23.832  3      8 0.00024200 ***
+    ## 1 Moisture             23.833  3      8 0.00024199 ***
     ## 2 Fertilizer          122.402  3     24 1.1124e-14 ***
-    ## 3 Moisture:Fertilizer   5.118  9     24 0.00064664 ***
+    ## 3 Moisture:Fertilizer   5.118  9     24 0.00064665 ***
     ## ---
     ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -195,8 +193,7 @@ anova(m)
     ## ---
     ## Signif. codes:   0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Contrast tests
---------------
+## Contrast tests
 
 For an example of how to run contrast tests on an `art` model, see this
 vignette:
@@ -208,28 +205,24 @@ vignette("art-contrasts")
 This vignette is also available
 [here](https://cran.r-project.org/package=ARTool/vignettes/art-contrasts.html).
 
-Problems
---------
+## Problems
 
 Should you encounter any issues with this package, contact Matthew Kay
-(<a href="mailto:mjskay@umich.edu" class="email">mjskay@umich.edu</a>).
-If you have found a bug, please file it
+(<mjskay@northwestern.edu>). If you have found a bug, please file it
 [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to
 reproduce the issue.
 
-Citations
----------
+## Citations
 
 Kay M and Wobbrock J (2020). *ARTool: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs*. R package version 0.10.7,
-<a href="https://github.com/mjskay/ARTool" class="uri">https://github.com/mjskay/ARTool</a>.
-DOI: [10.5281/zenodo.594511](http://dx.doi.org/10.5281/zenodo.594511).
+Nonparametric Factorial ANOVAs*. R package version 0.10.8,
+<https://github.com/mjskay/ARTool>. DOI:
+[10.5281/zenodo.594511](https://dx.doi.org/10.5281/zenodo.594511).
 
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). “The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
 Procedures.” In *Proceedings of the ACM Conference on Human Factors in
 Computing Systems (CHI 2011)*, Vancouver, British Columbia (May 7-12,
 2011). New York: ACM Press, pp. 143-146.
-<a href="http://depts.washington.edu/aimgroup/proj/art/" class="uri">http://depts.washington.edu/aimgroup/proj/art/</a>.
-DOI:
-[10.1145/1978942.1978963](http://dx.doi.org/10.1145/1978942.1978963).
+<https://depts.washington.edu/acelab/proj/art/>. DOI:
+[10.1145/1978942.1978963](https://dx.doi.org/10.1145/1978942.1978963).
