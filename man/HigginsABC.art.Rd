@@ -30,7 +30,7 @@ A data frame with 16 observations on the following 19 variables.
 }
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-\emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+\emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 }
 \description{
 The ART version of \code{\link{HigginsABC}} as produced by the original

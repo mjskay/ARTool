@@ -1,3 +1,8 @@
+# ARTool 0.10.8
+
+Minor release to update maintainer email address.
+
+
 # ARTool 0.10.7
 
 Minor changes:

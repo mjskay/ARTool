@@ -21,7 +21,7 @@ A data frame with 48 observations on the following 10 variables.
 }
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-\emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+\emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 }
 \description{
 The ART version of \code{\link{Higgins1990Table5}} as produced by the

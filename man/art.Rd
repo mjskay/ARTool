@@ -87,7 +87,7 @@ error terms are not involved in the transformation, but are included in the
 model when ANOVAs are conducted, see \code{\link{anova.art}}.
 
 For details on the transformation itself, see Wobbrock \emph{et al.} (2011)
-or the ARTool website: \url{http://depts.washington.edu/aimgroup/proj/art/}.
+or the ARTool website: \url{https://depts.washington.edu/acelab/proj/art/}.
 }
 \examples{
 \dontrun{
@@ -131,7 +131,7 @@ vignette("art-contrasts")
 }
 \references{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-\emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+\emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J. (2011). The
 Aligned Rank Transform for nonparametric factorial analyses using only ANOVA

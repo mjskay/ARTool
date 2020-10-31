@@ -1,6 +1,6 @@
 Package: ARTool
 Title: Aligned Rank Transform
-Version: 0.10.7.9000
+Version: 0.10.8
 Date: 2020-10-30
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@northwestern.edu"),
@@ -33,11 +33,12 @@ Suggests:
     survival,
     psych,
     stringi,
-    DescTools
+    DescTools,
+    covr
 License: GPL (>= 2)
 Language: en-US
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool/
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
