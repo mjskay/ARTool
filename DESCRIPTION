@@ -37,9 +37,8 @@ Suggests:
     phia,
     survival,
     psych,
-    DescTools
-    stringi,
     DescTools,
+    stringi,
     covr
 >>>>>>> 0473441ea22c12fce48c3a90a5f704d83a2239fb
 License: GPL (>= 2)
