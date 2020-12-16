@@ -6,10 +6,10 @@
 \title{Aligned Rank Transformed Version of HigginsABC}
 \format{
 A data frame with 16 observations on the following 19 variables.
-\describe{ 
-     \item{Subject}{a factor with levels \code{"s1"} .. \code{"s8"}} 
-     \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
-     \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
+\describe{
+     \item{Subject}{a factor with levels \code{"s1"} .. \code{"s8"}}
+     \item{A}{a factor with levels \code{"a1"} \code{"a2"}}
+     \item{B}{a factor with levels \code{"b1"} \code{"b2"}}
      \item{C}{a factor with levels \code{"c1"} \code{"c2"}}
      \item{Y}{a numeric vector}
      \item{aligned.Y..for.A}{a numeric vector}
@@ -19,8 +19,8 @@ A data frame with 16 observations on the following 19 variables.
      \item{aligned.Y..for.A.C}{a numeric vector}
      \item{aligned.Y..for.B.C}{a numeric vector}
      \item{aligned.Y..for.A.B.C}{a numeric vector}
-     \item{ART.Y..for.A}{a numeric vector} 
-     \item{ART.Y..for.B}{a numeric vector} 
+     \item{ART.Y..for.A}{a numeric vector}
+     \item{ART.Y..for.B}{a numeric vector}
      \item{ART.Y..for.A.B}{a numeric vector}
      \item{ART.Y..for.C}{a numeric vector}
      \item{ART.Y..for.A.C}{a numeric vector}
@@ -30,7 +30,7 @@ A data frame with 16 observations on the following 19 variables.
 }
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-\emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+\emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 }
 \description{
 The ART version of \code{\link{HigginsABC}} as produced by the original

@@ -9,19 +9,20 @@ A data frame with 48 observations on the following 10 variables.
 \describe{
      \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
      \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
-     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
+     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}}
      \item{DryMatter}{a numeric vector}
      \item{aligned.DryMatter..for.Moisture}{a numeric vector}
      \item{aligned.DryMatter..for.Fertilizer}{a numeric vector}
      \item{aligned.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
      \item{ART.DryMatter..for.Moisture}{a numeric vector}
      \item{ART.DryMatter..for.Fertilizer}{a numeric vector}
-     \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector} 
+     \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
+>>>>>>> 0473441ea22c12fce48c3a90a5f704d83a2239fb
 }
 }
 \source{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-\emph{ARTool}. \url{http://depts.washington.edu/aimgroup/proj/art/}.
+\emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 }
 \description{
 The ART version of \code{\link{Higgins1990Table5}} as produced by the

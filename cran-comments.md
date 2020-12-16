@@ -1,18 +1,34 @@
 ## Submission comments
+This submission is primarily to update the maintainer email address from
+mjskay@umich.edu to mjskay@northwestern.edu as I have moved institutions.
+Unfortunately this can't be verified by emailing mjskay@umich.edu because
+my umich email address has already been deactivated. However, the change is
+reflected on both my Github page (https://github.com/mjskay) and my personal 
+website (http://mjskay.com) and I am happy to provide other proof if needed.
 
-This submission is to fix minor bugs in two tests in this package
-that would fail under an upcoming version of `lme4`. The new tests
-pass under both the current and future version of `lme4`.
 
 ## Test environments
-* local Windows install, R-release 3.5.2
-* local Windows install, R-devel 2019-02-02 r76050
-* win-builder Windows install, R-release
-* win-builder Windows install, R-devel
-* travis-ci Linux install, R-release 3.5.2
+* local Windows install, R-release 4.0.2
+* MacOS (Github), R-release 4.0.3
+* MacOS (Github), R-devel 2020-10-29 r79387
+* Linux (Github), R-release 4.0.3
+* win-builder Windows install, R-devel 2020-10-29 r79387
+* win-builder Windows install, R-release 4.0.3
+
 
 ## R CMD check results
-There were no ERRORS, WARNINGs, or NOTEs.
+0 errors | 0 warnings | 1 note
+
+> checking CRAN incoming feasibility ... NOTE
+  Maintainer: 'Matthew Kay <mjskay@northwestern.edu>'
+  
+  New maintainer:
+    Matthew Kay <mjskay@northwestern.edu>
+  Old maintainer(s):
+    Matthew Kay <mjskay@umich.edu>
+
+See comment above: my email address has changed.
+
 
 ## Downstream dependencies
 There are no downstream dependencies for this package.
