@@ -37,9 +37,7 @@ Suggests:
     phia,
     survival,
     psych,
-<<<<<<< HEAD
     DescTools
-=======
     stringi,
     DescTools,
     covr
