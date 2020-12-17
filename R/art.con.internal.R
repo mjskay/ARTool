@@ -10,7 +10,10 @@
 #' @importFrom stringr str_replace
 parse.art.con.string.formula = function(f.orig){
   
-  # check if f.orig is a single string (as opposed to a vector of multiple strings)
+  # make sure f.orig is a single string (as opposed to a vector of multiple strings)
+  # don't think this is actually needed. seems to get caught earlier by 
+  # "Contrast must either be formula of form ~ X1*X2*X3 or
+  # term of form \"X1:X2:X3\")" error below
   if(!is.character(f.orig) || length(f.orig) != 1){
     stop("Contrast must be string term of form \"X1:X2\")")
   }

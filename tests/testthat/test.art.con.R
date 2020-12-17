@@ -210,3 +210,46 @@ test_that("art.con interaction contrasts equivalent to artlm interaction contras
     summary(contrast(emmeans(artlm(m, "A:B:C"), ~ A:B:C), method="pairwise", interaction=TRUE))
   )
 })
+
+# NEW DECEMBER 2020
+test_that("throws error if vector of strings used",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  expect_error(art.con(m, c("Moisture:Fertilizer", "Moisture")))
+})
+
+test_that("throws error if contrast string term has a space in it",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  expect_error(art.con(m, "Moisture: Fertilizer"))
+  expect_error(art.con(m, "Moisture :Fertilizer"))
+  expect_error(art.con(m, " Moisture:Fertilizer"))
+})
+
+test_that("throws error if there is a grouping or error term in string contrast formula",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  expect_error(art.con(m, "Moisture: Fertilizer + (1|Tray)"))
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
+  expect_error(art.con(m, "Moisture: Fertilizer + Error(Tray)"))
+})
+
+test_that("throws error if try to use : in formula version (i.e., not with string version)",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  expect_error(art.con(m, ~ Moisture:Fertilizer))
+})
+
+test_that("throws error if dependent variables in contrast formula",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+  expect_error(art.con(m, ~ DryMatter))
+  expect_error(art.con(m, DryMatter ~Moisture*Fertilize))
+})
+
