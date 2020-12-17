@@ -17,7 +17,6 @@ A data frame with 48 observations on the following 10 variables.
      \item{ART.DryMatter..for.Moisture}{a numeric vector}
      \item{ART.DryMatter..for.Fertilizer}{a numeric vector}
      \item{ART.DryMatter..for.Moisture.Fertilizer}{a numeric vector}
->>>>>>> 0473441ea22c12fce48c3a90a5f704d83a2239fb
 }
 }
 \source{

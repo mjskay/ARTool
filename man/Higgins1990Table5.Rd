@@ -7,11 +7,11 @@
 Matter in Peat Pots}
 \format{
 A data frame with 48 observations on the following 4 variables.
-\describe{ 
+\describe{
      \item{Tray}{a factor with levels \code{"t1"} .. \code{"t12"}}
      \item{Moisture}{a factor with levels \code{"m1"} .. \code{"m4"}}
-     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}} 
-     \item{DryMatter}{a numeric vector} 
+     \item{Fertilizer}{a factor with levels \code{"f1"} .. \code{"f4"}}
+     \item{DryMatter}{a numeric vector}
 }
 }
 \source{

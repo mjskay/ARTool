@@ -40,7 +40,6 @@ Suggests:
     DescTools,
     stringi,
     covr
->>>>>>> 0473441ea22c12fce48c3a90a5f704d83a2239fb
 License: GPL (>= 2)
 Language: en-US
 BugReports: https://github.com/mjskay/ARTool/issues/new
