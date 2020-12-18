@@ -232,10 +232,11 @@ test_that("throws error if there is a grouping or error term in string contrast 
   data(Higgins1990Table5, package="ARTool")
   
   m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
-  expect_error(art.con(m, "Moisture: Fertilizer + (1|Tray)"))
+  expect_error(art.con(m, "Moisture:Fertilizer+(1|Tray)"))
+  expect_error(art.con(m, ~ Moisture*Fertilizer + (1|Tray)))
   
   m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
-  expect_error(art.con(m, "Moisture: Fertilizer + Error(Tray)"))
+  expect_error(art.con(m, "Moisture:Fertilizer+Error(Tray)"))
 })
 
 test_that("throws error if try to use : in formula version (i.e., not with string version)",{
@@ -253,3 +254,9 @@ test_that("throws error if dependent variables in contrast formula",{
   expect_error(art.con(m, DryMatter ~Moisture*Fertilize))
 })
 
+test_that("throws error if model is not an ART model",{
+  data(Higgins1990Table5, package="ARTool")
+  
+  m = aov(DryMatter ~ Moisture*Fertilizer, data=Higgins1990Table5)
+  expect_error(art.con(m, ~ Moisture*Fertilize))
+})

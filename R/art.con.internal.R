@@ -74,7 +74,7 @@ parse.art.con.formula = function(f.orig){
     
     if(f.orig.has.colon){
       stop("Formula cannot contain : Did you mean ", as.formula(str_replace(f.orig.str, ':', ' * ')), 
-           " or ", str_replace(f.orig.str, '~', ''),"?")
+           " or \"", str_replace(f.orig.str, '~', ''),"\"?")
     }
     
     # Replace * with :
@@ -102,6 +102,10 @@ parse.art.con.formula = function(f.orig){
     # e.g. ~ a:b:c -> c("a:b:c"))
     term.labels = attr(f.terms, "term.labels")
     
+    # don't think we need this.
+    # I think it gets caught by 
+    # "Term or formula passed to art.con or artlm.con must contain a single 
+    # interaction term and no other terms, and the interaction term must be in art model formula."
     if (length(term.labels) != 1) {
       stop("Model must have exactly one interaction and no other terms (" ,
            length(term.labels), " terms given)")
