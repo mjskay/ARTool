@@ -21,11 +21,8 @@ Imports:
     plyr,
     magrittr,
     dplyr,
-    pryr,
     emmeans,
-    stringi,
-    tidyr,
-    stringr
+    stringi
 Suggests:
     testthat (>= 0.10.0),
     knitr,

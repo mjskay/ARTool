@@ -251,12 +251,12 @@ test_that("throws error if dependent variables in contrast formula",{
   
   m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
   expect_error(art.con(m, ~ DryMatter))
-  expect_error(art.con(m, DryMatter ~Moisture*Fertilize))
+  expect_error(art.con(m, DryMatter ~Moisture*Fertilizer))
 })
 
 test_that("throws error if model is not an ART model",{
   data(Higgins1990Table5, package="ARTool")
   
   m = aov(DryMatter ~ Moisture*Fertilizer, data=Higgins1990Table5)
-  expect_error(art.con(m, ~ Moisture*Fertilize))
+  expect_error(art.con(m, ~ Moisture*Fertilizer))
 })

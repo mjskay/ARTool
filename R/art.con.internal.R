@@ -6,8 +6,6 @@
 ### interaction.term.labels: quoted interaction term label (e.g. "a:b:c")
 ### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats terms
-#' @importFrom pryr substitute_q
-#' @importFrom stringr str_replace
 parse.art.con.string.formula = function(f.orig){
   
   # make sure f.orig is a single string (as opposed to a vector of multiple strings)
@@ -68,18 +66,23 @@ parse.art.con.formula = function(f.orig){
   
   # looking for ~ a*b*c
   if(is.formula(f.orig)){
-    # make sure : not in original formula
+    # make sure : not in o  riginal formula
     f.orig.str = deparse(f.orig)
     f.orig.has.colon = grepl(':', f.orig.str, fixed=TRUE)
     
     if(f.orig.has.colon){
-      stop("Formula cannot contain : Did you mean ", as.formula(str_replace(f.orig.str, ':', ' * ')), 
-           " or \"", str_replace(f.orig.str, '~', ''),"\"?")
+      # OLD used stringr::str_replace
+      # NEW
+      stop("Formula cannot contain \":\" Did you mean ", as.formula(gsub(':', ' * ', f.orig.str)), 
+            " or \"", gsub('~', '', f.orig.str),"\"?")
     }
     
     # Replace * with :
     # e.g.  ~ a*b*c ->  ~ a:b:c
-    f = as.formula(pryr::substitute_q(f.orig, list('*' = as.name(':'))))
+    # OLD
+    #f = as.formula(pryr::substitute_q(f.orig, list('*' = as.name(':'))))
+    # NEW
+    f = as.formula(eval(substitute(substitute(f.orig, list('*' = as.name(':'))), list(f.orig = f.orig))))
     
     # extract terms from formula
     f.terms = terms(f)
@@ -94,8 +97,10 @@ parse.art.con.formula = function(f.orig){
     # if there was lhs: e.g. pairwise ~ a:b:c -> 1
     f.response = attr(f.terms, "response")
     if (f.response != 0) {
+      # OLD used stringr::str_replace
+      # NEW
       stop("Formula must not have any variables on LHS (got ", variables[[1]], ").\n",
-           "Did you mean ", str_replace(f.orig.str, toString((variables[[1]])), ''))
+           "Did you mean ", gsub(toString((variables[[1]])), '', f.orig.str))
     }
     
     # char vector of names of rhs terms and their interactions
@@ -132,7 +137,7 @@ parse.art.con.formula = function(f.orig){
 ### Given a formula like response ~ a*b*c + (1|d) + Error(g)
 ### returns list with:
 ### response: response (type name) (e.g. response)
-### fixed.variables: list of named fixed variables (of type name) (e.g. list(a, b, c)
+### fixed.variables: list of named fixed variables (of type name) (e.g. list(a, b, c))
 ### grouping.variables: list of grouping variables (of type name) (e.g. list(1|d))
 ### error.variables: list of error variables (of type name) (e.g. list(Error(g)))
 #' @importFrom plyr laply
@@ -190,7 +195,19 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
   f.concatenated.variable = f.parsed$concat.interaction.variable
   # e.g. list(a, b, c)
   f.interaction.variables = f.parsed$interaction.variables
-  art.con.df = unite_(df, f.concatenated.variable, f.interaction.variables, sep = ",", remove = TRUE) # concat columns and remove originals
+  # OLD
+  # art.con.df = unite_(df, f.concatenated.variable, f.interaction.variables, sep = ",", remove = TRUE) # concat columns and remove originals
+  # NEW
+  # turn list of names to vector of strings. e.g, aa = as.name("a"), bb = as.name("b"), list(aa, bb) -> c("a","b")
+  art.con.df = df
+  # unname throws error when only one interaction variable and we don't need to concatenate in that case
+  # this is easier than debugging it
+  if(length(f.interaction.variables) > 1){
+    f.interaction.variables.string.vec = sapply(f.interaction.variables,deparse)
+    art.con.df[[f.concatenated.variable]] = do.call(paste, c(unname(art.con.df[,f.interaction.variables.string.vec]), sep = ","))
+    art.con.df[,f.interaction.variables.string.vec] = NULL
+  }
+  # END NEW
   # note: when m was created would have thrown error if a fixed var column in df was not a factor
   art.con.df[[f.concatenated.variable]] = factor(art.con.df[[f.concatenated.variable]])
   art.con.df
