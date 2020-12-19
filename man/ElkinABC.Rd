@@ -7,7 +7,7 @@
 \format{
 A data frame with 64 observations on the following 5 variables.
 \describe{ 
-     \item{S}{a factor with levels \code{"1"} .. \code{"8"}} 
+     \item{S}{a factor with levels \code{"s1"} .. \code{"s8"}} 
      \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
      \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
      \item{C}{a factor with levels \code{"c1"} \code{"c2"}} 

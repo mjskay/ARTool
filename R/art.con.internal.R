@@ -66,7 +66,7 @@ parse.art.con.formula = function(f.orig){
   
   # looking for ~ a*b*c
   if(is.formula(f.orig)){
-    # make sure : not in o  riginal formula
+    # make sure : not in original formula
     f.orig.str = deparse(f.orig)
     f.orig.has.colon = grepl(':', f.orig.str, fixed=TRUE)
     
