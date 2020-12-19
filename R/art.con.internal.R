@@ -140,7 +140,6 @@ parse.art.con.formula = function(f.orig){
 ### fixed.variables: list of named fixed variables (of type name) (e.g. list(a, b, c))
 ### grouping.variables: list of grouping variables (of type name) (e.g. list(1|d))
 ### error.variables: list of error variables (of type name) (e.g. list(Error(g)))
-#' @importFrom plyr laply
 parse.art.model.formula = function(m.f, f.parsed){
   
   # get model formula terms
@@ -164,8 +163,12 @@ parse.art.model.formula = function(m.f, f.parsed){
   m.f.variables = m.f.variables.all[c(-1)]
   
   #determine which variables on the rhs are grouping variables, error variables, or fixed variables
-  is.grouping.variable = laply(m.f.variables, function(term) as.list(term)[[1]] == quote(`|`))
-  is.error.variable = laply(m.f.variables, function(term) as.list(term)[[1]] == quote(`Error`))
+  # OLD
+  # is.grouping.variable = laply(m.f.variables, function(term) as.list(term)[[1]] == quote(`|`))
+  # is.error.variable = laply(m.f.variables, function(term) as.list(term)[[1]] == quote(`Error`))
+  # NEW
+  is.grouping.variable = sapply(m.f.variables, function(term) as.list(term)[[1]] == quote(`|`))
+  is.error.variable = sapply(m.f.variables, function(term) as.list(term)[[1]] == quote(`Error`))
   #all other variables that aren't grouping or error variables must be fixed variables
   is.fixed.variable = !(is.grouping.variable | is.error.variable)
   
