@@ -187,13 +187,12 @@ parse.art.model.formula = function(m.f, f.parsed){
 ### m.formula is the original formula used to create the ART model
 ### df is the data frame used to creat the ART model
 ### formula is the contrast formula
-#' @importFrom tidyr unite_
 generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
   
   # concatenate columns of data frame whose columns names are the variables in f.parsed.interaction.variables
   # e.g. abc
   f.concatenated.variable = f.parsed$concat.interaction.variable
-  # e.g. list(a, b, c)
+  # e.g. list(a, b, c) 
   f.interaction.variables = f.parsed$interaction.variables
   # OLD
   # art.con.df = unite_(df, f.concatenated.variable, f.interaction.variables, sep = ",", remove = TRUE) # concat columns and remove originals
@@ -218,7 +217,6 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
 ### creates and returns art model on art.concatenated.df using the created formula
 ### note: this is not the same as using the full factorial model of all columns in df
 ###       there can be columns in df that are not used in the model.
-#' @importFrom stringi stri_join
 generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df, f.parsed){
   
   # fixed variables in model formula
@@ -256,7 +254,14 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
   # note: empty list coerced to empty vector i.e list() -> character(0)
   m.f.error.str = if(length(m.f.error.variables) == 0) character() else paste(m.f.error.variables, collapse = "+")
   # assemble concatenated art formula
-  art.concatenated.formula.rhs.str = stri_join(m.f.fixed.str, m.f.grouping.str, m.f.error.str, sep="+", ignore_null= TRUE)
+  # OLD
+  #art.concatenated.formula.rhs.str = stri_join(m.f.fixed.str, m.f.grouping.str, m.f.error.str, sep="+", ignore_null= TRUE)
+  # NEW
+  # some terms may be missing (e.g., no goruping term). remove those from vector
+  # because weird things happen when pasting multiple strings together and one is empty
+  strings.to.join = c(m.f.fixed.str, m.f.grouping.str, m.f.error.str)
+  nonempty.strings.to.join = Filter(function(x) x!="", strings.to.join)
+  art.concatenated.formula.rhs.str = paste(nonempty.strings.to.join, collapse="+")
   art.concatenated.formula = as.formula(paste(m.f.response, art.concatenated.formula.rhs.str, sep=" ~ "))
   # make art concatenated model
   m = art(art.concatenated.formula, data=art.concatenated.df)

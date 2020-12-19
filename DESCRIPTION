@@ -21,8 +21,7 @@ Imports:
     plyr,
     magrittr,
     dplyr,
-    emmeans,
-    stringi
+    emmeans
 Suggests:
     testthat (>= 0.10.0),
     knitr,
