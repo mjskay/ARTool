@@ -96,32 +96,58 @@ parse.art.con.string.formula = function(f.orig){
 parse.art.con.formula = function(f.orig){
   
   # looking for ~ a*b*c
-  # TODO Jan 2021. Does this have the same issue as has space?
   if(is.formula(f.orig)){
-    # make sure : not in original formula
-    f.orig.str = deparse(f.orig)
-    f.orig.has.colon = grepl(':', f.orig.str, fixed=TRUE)
+    # NEW
+    # TODO double check this part with Matt. Can a valid contrast formula of an rhs operator other than *?
     
-    if(f.orig.has.colon){
-      # OLD used stringr::str_replace
-      # NEW
-      stop("Formula cannot contain \":\" Did you mean ", as.formula(gsub(':', ' * ', f.orig.str)), 
-            " or \"", gsub('~', '', f.orig.str),"\"?")
+    # make sure only operator on rhs of original formula is "*"
+    # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~ and f.orig[[2]] = a*b*c
+    
+    # if rhs is not ~, error
+    if(f.orig[[1]] != "~"){
+      stop("Right hand side of formula must be ~.")
     }
     
-    # Replace * with :
-    # e.g.  ~ a*b*c ->  ~ a:b:c
-    # OLD
-    #f = as.formula(pryr::substitute_q(f.orig, list('*' = as.name(':'))))
-    # NEW
-    f = as.formula(eval(substitute(substitute(f.orig, list('*' = as.name(':'))), list(f.orig = f.orig))))
+    # get formula variables (i.e., individual variables on lhs), and ensure "*" is the only LHS operator.
+    f.orig.expr = f.orig[[2]]
+    variables = get.variables(f.orig.expr, "*")
+    # paste variables back together with ~ on LHS and : operator between each variable.
+    # e.g. variables = c(a,b,c) -> "a:b:c"
+    pasted.variables = paste(variables, collapse=":")
+    # add "~" to lhs and turn into formula
+    # e.g., pasted varialbes = "a:b:c" -> ~a:b:c
+    f = as.formula(paste("~", pasted.variables, sep=""))
+    # END NEW
     
+    # # OLD outer
+    # # make sure : not in original formula
+    # f.orig.str = deparse(f.orig)
+    # f.orig.has.colon = grepl(':', f.orig.str, fixed=TRUE)
+    # 
+    # if(f.orig.has.colon){
+    #   # OLD used stringr::str_replace
+    #   # NEW
+    #   stop("Formula cannot contain \":\" Did you mean ", as.formula(gsub(':', ' * ', f.orig.str)), 
+    #         " or \"", gsub('~', '', f.orig.str),"\"?")
+    # }
+    # 
+    # # Replace * with :
+    # # e.g.  ~ a*b*c ->  ~ a:b:c
+    # # NOTE: We do this because a*b*c is really a, b, c, a:b, a:c,...,a:b:c but we know that in 
+    # # contrast methods a*b*c is used interchangeably with a:b:c.
+    # # OLD inner
+    # #f = as.formula(pryr::substitute_q(f.orig, list('*' = as.name(':'))))
+    # # NEW
+    # f = as.formula(eval(substitute(substitute(f.orig, list('*' = as.name(':'))), list(f.orig = f.orig))))
+    # # END OLD outer
+    # 
     # extract terms from formula
     f.terms = terms(f)
     
-    # unique variables in the formula as list of names
-    #e.g. ~ a:b:c -> list(a, b, c)
-    variables = as.list(attr(f.terms, "variables"))[c(-1)]
+    # unique variables in the formula as vetor of names
+    # e.g. ~ a:b:c -> c(a, b, c)
+    # OLD. Don't need this already parsed formula above to get variables
+    # variables = as.list(attr(f.terms, "variables"))[c(-1)]
     
     # ensure no dependent variable
     # the index of the variable (in variables) of the response. Zero if there is no response.
