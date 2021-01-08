@@ -11,13 +11,9 @@ get.variables = function(spec, op) {
         c(get.variables(spec[[2]], op), get.variables(spec[[3]], op))
     } else if (is.name(spec)) {
         # base case: this is a variable
-        # if spec was a single variable to begin with, need to return it inside a vector
-        if(!is.vector(spec)){
-            c(spec)
-        }
-        else{
-            spec
-        }
+        # if recursive case is never called, need to make sure we still return a vector
+        # if recursive case is called, it's fine, c(c(1), c(2)) = c(1,2)
+        c(spec)
     } else {
         stop(paste("Contrast term can only contain variables and ", op, ".", sep="" ))
     }
