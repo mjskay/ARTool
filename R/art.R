@@ -109,9 +109,9 @@
 #' anova(m)
 #'
 #' ## if we want post-hoc tests, we can use art.con
-#' e.g., pairwise contrasts on Moisture:
+#' ## e.g., pairwise contrasts on Moisture:
 #' art.con(m, "Moisture")
-#' e.g., pairwise contrasts on Moisture:Fertilizer:
+#' ## e.g., pairwise contrasts on Moisture:Fertilizer:
 #' art.con(m, "Moisture:Fertilizer")
 #' 
 #' ## if we want to use a specific method for post-hoc tests, artlm.con(m, term)
