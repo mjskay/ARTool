@@ -209,9 +209,9 @@ The ART-C procedure however, was developed to align and rank data specifically f
 art.con(m.art, "X1:X2")
 ```
 
-Like the linear model, art.con  correctly estimates the difference between `A,C - A,D` as `~0`. In fact, its results agree with the linear model for all contrasts conducted. (Note that the art.con and linear model results appear in a different order; specifically A C - A D appears second for the linear model and first for art.con)
+Like the linear model, art.con  correctly estimates the difference between `A,C - A,D` as `~0`. In fact, its results agree with the linear model for all contrasts conducted. (Note that the art.con and linear model results appear in a different order; specifically `A C - A D` appears second for the linear model and first for art.con)
 
-The syntax used above is consistent with *term* syntax used by artlm. art.con also accepts the *formula* syntax accepted by emmeans. We can conduct the same contrasts as above using the following syntax:
+The syntax used above is consistent with *term* syntax used by artlm. `art.con()` also accepts the *formula* syntax accepted by emmeans. We can conduct the same contrasts as above using the following syntax:
 ```{r}
 art.con(m.art, ~X1*X2)
 ```

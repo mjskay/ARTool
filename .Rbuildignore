@@ -16,3 +16,5 @@
 ^cran-comments.md$
 ^inst/WORDLIST$
 ^\.github$
+^doc$
+^Meta$
