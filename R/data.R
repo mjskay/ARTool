@@ -225,7 +225,7 @@ NULL
 #' @examples
 #' \dontrun{
 #' data(ElkinAB, package="ARTool")
-#' 
+#'  
 #' ## run contrast using the ART-C procedure on the data.
 #' m <- art(Y ~ A*B + (1|S), data=ElkinAB)
 #' art.con(m, "A:B")

@@ -1,3 +1,28 @@
+### Gets variables from spec
+### Makes sure op is the only operator in spec. Throws error if not.
+### Returns vector containing all variables in spec
+### spec is an expression (e.g., a:b:`var with spaces and : in it`)
+### op is a string representation of the allowed operation (e.g., ":")
+### Note: for our current purposes, we only have one validation operator for each situation
+###   we would use this function in. Obviously, it would have to be re-written to accomodate more.
+get.variables = function(spec, op) {
+  if (is.call(spec) && spec[[1]] == op) {
+    # recursive case: get variables from children
+    c(get.variables(spec[[2]], op), get.variables(spec[[3]], op))
+  } else if (is.name(spec)) {
+    # base case: this is a variable
+    # if spec was a single variable to begin with, need to return it inside a vector
+    if(!is.vector(spec)){
+      c(spec)
+    }
+    else{
+      spec
+    }
+  } else {
+    stop(paste("Contrast term can only contain variables and ", op, ".", sep="" ))
+  }
+}
+
 
 ### Parses and validates contrast formula of form  "a:b:c"
 ### Raises exception if formula does not validate.
@@ -17,15 +42,21 @@ parse.art.con.string.formula = function(f.orig){
   }
   
   # don't allow spaces. must be "a:b", otherwise hard to parse
-  f.orig.has.space = grepl(' ', f.orig, fixed=TRUE)
-  if(f.orig.has.space){
-    stop("Contrast term cannot have a space in it.")
-  }
-  
-  # e.g. "a:b:c" -> list("a", "b", "c")
-  variables.str = strsplit(f.orig, ":")[[1]]
-  # e.g. list("a", "b", "c") -> list (a, b, c)
-  variables = lapply(variables.str, function(term) as.name(term))
+  # NEW Jan 7, 2021
+  # parse spec into an expression
+  f.orig.expr = parse(text = f.orig, keep.source = FALSE)[[1]]
+  variables = get.variables(f.orig.expr, ":")
+  # END NEW
+  # OLD
+  # f.orig.has.space = grepl(' ', f.orig, fixed=TRUE)
+  # if(f.orig.has.space){
+  #   stop("Contrast term cannot have a space in it.")
+  # }
+  # # e.g. "a:b:c" -> list("a", "b", "c")
+  # variables.str = strsplit(f.orig, ":")[[1]]
+  # # e.g. list("a", "b", "c") -> list (a, b, c)
+  # variables = lapply(variables.str, function(term) as.name(term))
+  # END OLD
   
   term.labels = f.orig
   
@@ -65,6 +96,7 @@ parse.art.con.string.formula = function(f.orig){
 parse.art.con.formula = function(f.orig){
   
   # looking for ~ a*b*c
+  # TODO Jan 2021. Does this have the same issue as has space?
   if(is.formula(f.orig)){
     # make sure : not in original formula
     f.orig.str = deparse(f.orig)
