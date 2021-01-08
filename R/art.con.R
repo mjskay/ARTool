@@ -109,7 +109,7 @@
 
 
 art.con = function(m, f, response = "art", factor.contrasts="contr.sum", method = "pairwise", 
-                  interaction = FALSE, adjust, ...)
+                   interaction = FALSE, adjust, ...)
 {
   f.parsed = parse.art.con.formula(f)
   # syntax handled differently for interaction contrasts.
