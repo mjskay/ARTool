@@ -94,17 +94,24 @@ parse.art.con.formula = function(f.orig){
     # looking for ~ a*b*c
     if(is.formula(f.orig)){
         # NEW
-        # TODO double check this part with Matt. Can a valid contrast formula of an rhs operator other than *?
         
         # make sure only operator on rhs of original formula is "*"
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~ and f.orig[[2]] = a*b*c
-        
-        # if rhs is not ~, error
         if(f.orig[[1]] != "~"){
-            stop("Right hand side of formula must be ~.")
+            stop("Left hand side of formula must be ~.")
+        }
+        
+        # if there is a dependent variable (i.e., variable on lhs of ~), then f.orig will have length 3
+        # otherwise, f.orig will have length 2
+        # e.g., f.orig = Y ~ a*b*c -> f.orig[[1]] = ~, f.orig[[2]] = Y, f.orig[[3]] = a*b*c
+        # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~, f.orig[[2]] = a*b*c
+        if (length(f.orig) > 2) {
+            stop("Formula must not have any variables on LHS (got ", f.orig[[2]], "). ",
+                 "Did you mean ", gsub(pattern = toString(f.orig[[2]]), x = deparse(f.orig), replacement = ''), "?")
         }
         
         # get formula variables (i.e., individual variables on lhs), and ensure "*" is the only LHS operator.
+        # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = `~`, f.orig[[2]] = a*b*c
         f.orig.expr = f.orig[[2]]
         variables = get.variables(f.orig.expr, "*")
         # paste variables back together with ~ on LHS and : operator between each variable.
@@ -145,17 +152,19 @@ parse.art.con.formula = function(f.orig){
         # OLD. Don't need this already parsed formula above to get variables
         # variables = as.list(attr(f.terms, "variables"))[c(-1)]
         
-        # ensure no dependent variable
-        # the index of the variable (in variables) of the response. Zero if there is no response.
-        # e.g. ~ a:b:c -> 0
-        # if there was lhs: e.g. pairwise ~ a:b:c -> 1
-        f.response = attr(f.terms, "response")
-        if (f.response != 0) {
-            # OLD used stringr::str_replace
-            # NEW
-            stop("Formula must not have any variables on LHS (got ", variables[[1]], ").\n",
-                 "Did you mean ", gsub(toString((variables[[1]])), '', f.orig.str))
-        }
+        # OLD
+        # # ensure no dependent variable
+        # # the index of the variable (in variables) of the response. Zero if there is no response.
+        # # e.g. ~ a:b:c -> 0
+        # # if there was lhs: e.g. pairwise ~ a:b:c -> 1
+        # f.response = attr(f.terms, "response")
+        # if (f.response != 0) {
+        #     # OLD used stringr::str_replace
+        #     # NEW
+        #     stop("Formula must not have any variables on LHS (got ", variables[[1]], ").\n",
+        #          "Did you mean ", gsub(toString((variables[[1]])), '', f.orig.str))
+        # }
+        # END OLD
         
         # char vector of names of rhs terms and their interactions
         # e.g. ~ a:b:c -> c("a:b:c"))
@@ -189,6 +198,9 @@ parse.art.con.formula = function(f.orig){
 ### Validates that interaction term from f is in model formula
 ### Does not validate model formula itself since model formula was validated when model was created
 ### Given a formula like response ~ a*b*c + (1|d) + Error(g)
+### input:
+### m.f is the formula for the original art model
+### f.parsed is the already parsed contrast formula
 ### returns list with:
 ### response: response (type name) (e.g. response)
 ### fixed.variables: list of named fixed variables (of type name) (e.g. list(a, b, c))
@@ -205,6 +217,13 @@ parse.art.model.formula = function(m.f, f.parsed){
     # check if interaction term from f is in model formula
     f.interaction.term.label = f.parsed$interaction.term.label # f.parsed always has exactly one interaction
     is.interaction.term = grepl(f.interaction.term.label, m.f.term.labels)
+    
+    # TEST
+    print("f.parsed")
+    print(f.parsed)
+    print("m.f")
+    print(m.f.term.labels)
+    # END TEST
     
     # if interaction term from f is not in model formula, error
     if(!any(is.interaction.term)){
