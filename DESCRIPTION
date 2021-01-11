@@ -27,6 +27,7 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
+    tidyr,
     pander,
     lmerTest,
     cluster,
