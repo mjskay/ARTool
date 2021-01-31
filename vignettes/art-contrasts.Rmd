@@ -4,34 +4,34 @@ author: "Matthew Kay, Lisa A. Elkin"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{Interaction Contrasts with ART}
+  %\VignetteIndexEntry{Interaction Contrasts with ART}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  ---
-  
-  ## Introduction
-  
-  The aligned-rank transform (ART) allows for non-parametric analyses of variance. 
-  But how should we do contrast tests with ART? 
-  
-  Contrasts involving levels of **any number of factors** can be conducted using the ART-C method.
-  
-  This page explains when and why a separate aligning-and-ranking procedure is needed to conduct contrasts and demonstrates how to conduct contrasts within the ART paradigm.
-  
-  ## Contents
-  
-  1. [Test Dataset](#test-dataset): Description of the test data we will use to compare a linear model against ART
-  2. [Contrast tests of main effects](#contrast-tests-of-main-effects): Demo of conducting contrasts within a single factor (no interaction)
-  3. [Tests of differences in pairwise combinations of levels between factors in interactions](#tests-of-differences-in-pairwise-combinations-of-levels-between-factors-in-interactions):
-  Interaction contrasts must be conducted with ART-C as they **are not valid** in ART
-  4. [Tests of differences of differences in interactions](#tests-of-differences-of-differences-in-interactions):
-  
-  ## Libraries needed for this
-  
-  ```{r setup, include=FALSE}
+---
+
+## Introduction
+
+The aligned-rank transform (ART) allows for non-parametric analyses of variance. 
+But how should we do contrast tests with ART? 
+
+Contrasts involving levels of **any number of factors** can be conducted using the ART-C method.
+
+This page explains when and why a separate aligning-and-ranking procedure is needed to conduct contrasts and demonstrates how to conduct contrasts within the ART paradigm.
+
+## Contents
+
+1. [Test Dataset](#test-dataset): Description of the test data we will use to compare a linear model against ART
+2. [Contrast tests of main effects](#contrast-tests-of-main-effects): Demo of conducting contrasts within a single factor (no interaction)
+3. [Tests of differences in pairwise combinations of levels between factors in interactions](#tests-of-differences-in-pairwise-combinations-of-levels-between-factors-in-interactions):
+Interaction contrasts must be conducted with ART-C as they **are not valid** in ART
+4. [Tests of differences of differences in interactions](#tests-of-differences-of-differences-in-interactions):
+
+## Libraries needed for this
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(  #default code chunk options
-fig.width = 6,
-fig.height = 4
+  fig.width = 6,
+  fig.height = 4
 )
 pander::panderOptions("table.split.table", Inf)     #don't split wide tables in output
 pander::panderOptions("table.style", "rmarkdown")   #table style that's supported by github
@@ -55,14 +55,16 @@ Let's generate some test data where we actually know what the effects are. Speci
 ```{r}
 n_per_group = 150
 df = data_frame(
-    X1 = factor(c(rep("A", n_per_group), rep("B", n_per_group))),
-    X2 = factor(rep(c("C","D","E"), n_per_group*2/3)),
-    Y = rnorm(n_per_group*2, 
-              (X1 == "B")
-              + 2* (X2 == "D")
-              + 2 * (X1 == "B" & X2 == "D")
-              - 2 * (X1 == "A" & X2 == "D")
-              + 2 * (X2 == "E")) 
+  X1 = factor(c(rep("A", n_per_group), rep("B", n_per_group))),
+  X2 = factor(rep(c("C","D","E"), n_per_group * 2/3)),
+  Y = rnorm(
+    n_per_group * 2, 
+    (X1 == "B")
+    + 2* (X2 == "D")
+    + 2 * (X1 == "B" & X2 == "D")
+    - 2 * (X1 == "A" & X2 == "D")
+    + 2 * (X2 == "E")
+  ) 
 )
 ```
 
@@ -89,18 +91,22 @@ The "true" means from the model look like this:
 Which we can see pretty well:
 
 ```{r interaction_plot, fig.cap=""}
+# variant of the Dark2 colorbrewer scale with specific name mappings (so 
+# we can keep color -> name mapping consistent throughout this document)
 palette = c("#1b9e77", "#d95f02", "#7570b3")
 names(palette) = c("C", "D", "E")
-ggplot(df, aes(x=X1, y=Y, color=X2)) + 
-    geom_violin(trim=FALSE, adjust=1.5) + 
-    geom_point(pch="-", size=4) +
-    stat_summary(fun.y=mean, geom="point", size=4) + 
-    stat_summary(fun.y=mean, geom="line", size=1, mapping=aes(group=X2)) +
-    stat_summary(fun.y=mean, geom="point", size=9, mapping=aes(x=1.5, group=NA), pch="+") +
-    scale_y_continuous(breaks=seq(-6,10,by=2), minor_breaks=-6:10) +
-    scale_color_manual(guide=FALSE, values=palette) +
-    coord_cartesian(ylim=c(-6,10)) + 
-    facet_grid(. ~ X2)
+
+df %>%
+  ggplot(aes(x = X1, y = Y, color = X2)) +
+  geom_violin(trim = FALSE, adjust = 1.5) +
+  geom_point(pch = "-", size = 4) +
+  stat_summary(fun = mean, geom = "point", size = 4) +
+  stat_summary(aes(group = X2), fun = mean, geom = "line", size = 1) +
+  stat_summary(aes(x = 1.5, group = NA), fun = mean, geom = "point", size = 9, pch = "+") +
+  scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
+  scale_color_manual(guide = FALSE, values = palette) +
+  coord_cartesian(ylim = c(-6, 10)) +
+  facet_grid(. ~ X2)
 ```
 
 And "true" means for each level (averaging over the levels of the other factor):
@@ -116,14 +122,14 @@ And "true" means for each level (averaging over the levels of the other factor):
 Let's fit a linear model:
 
 ```{r}
-m.linear = lm(Y ~ X1*X2, data=df)
+m.linear = lm(Y ~ X1*X2, data = df)
 anova(m.linear)
 ```
 
 Now with ART:
 
 ```{r}
-m.art = art(Y ~ X1*X2, data=df)
+m.art = art(Y ~ X1*X2, data = df)
 anova(m.art)
 ```
 
@@ -135,15 +141,15 @@ The real question is whether/what kind of contrast tests make sense.
 For the main effects, let's look at contrast tests for the linear model:
 
 ```{r, message=FALSE}
-contrast(emmeans(m.linear, ~ X1), method="pairwise")
-contrast(emmeans(m.linear, ~ X2), method="pairwise")
+contrast(emmeans(m.linear, ~ X1), method = "pairwise")
+contrast(emmeans(m.linear, ~ X2), method = "pairwise")
 ```
 
 These are about right: The "true" effect for `A - B` is `-2.3333`, for `C - D` and `C - E` is `-2`, and for `D - E` is `0` (see table above). From ART:
 
 ```{r, message=FALSE}
-contrast(emmeans(artlm(m.art, "X1"), ~ X1), method="pairwise")
-contrast(emmeans(artlm(m.art, "X2"), ~ X2), method="pairwise")
+contrast(emmeans(artlm(m.art, "X1"), ~ X1), method = "pairwise")
+contrast(emmeans(artlm(m.art, "X2"), ~ X2), method = "pairwise")
 ```
 
 This is about right (effects in the same direction, the estimates aren't
@@ -164,14 +170,14 @@ art.con(m.art, "X2")
 Now let's look at tests of differences in combinations of levels between factors:
 
 ```{r}
-contrast(emmeans(m.linear, ~ X1:X2), method="pairwise")
+contrast(emmeans(m.linear, ~ X1:X2), method = "pairwise")
 ```
 
 Now for ART:
 
 ```{r}
 #DO NOT DO THIS!
-contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise")
+contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method = "pairwise")
 ```
 
 Very different results. 
@@ -183,14 +189,14 @@ The ART results are more difficult to interpret. Take `A,C - A,D`, which looks l
 
 ```{r interaction_plot_AC_AD, fig.cap="", fig.width=3}
 df %>%
-    filter(X1 == "A", X2 %in% c("C", "D")) %>%
-    ggplot(aes(x=X1:X2, y=Y, color=X2)) + 
-    geom_violin(trim=FALSE, adjust=1.5) + 
-    geom_point(pch="-", size=4) +
-    stat_summary(fun.y=mean, geom="point", size=4) + 
-    scale_y_continuous(breaks=seq(-6,10,by=2), minor_breaks=-6:10) +
-    scale_color_manual(guide=FALSE, values=palette) +
-    coord_cartesian(ylim=c(-6,10)) 
+  filter(X1 == "A", X2 %in% c("C", "D")) %>%
+  ggplot(aes(x = X1:X2, y = Y, color = X2)) +
+  geom_violin(trim = FALSE, adjust = 1.5) +
+  geom_point(pch = "-", size = 4) +
+  stat_summary(fun = mean, geom = "point", size = 4) +
+  scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
+  scale_color_manual(guide = FALSE, values = palette) +
+  coord_cartesian(ylim=c(-6,10)) 
 ```
 
 The linear model correctly estimates this difference as `~0`, which is both the true effect and what we should expect from a visual
@@ -213,7 +219,7 @@ Like the linear model, art.con  correctly estimates the difference between `A,C 
 
 The syntax used above is consistent with *term* syntax used by artlm(). `art.con()` also accepts the *formula* syntax accepted by emmeans::emmeans()    . We can conduct the same contrasts as above using the following syntax:
 ```{r}
-art.con(m.art, ~X1*X2)
+art.con(m.art, ~ X1*X2)
 ```
 
 ### Tests of _differences of differences_ in interactions
@@ -224,25 +230,33 @@ Before we test, let's try to visualize what's going on in just this interaction:
 
 ```{r, interaction_plot_C_D, fig.cap=""}
 plot_interaction_for_X2_levels = function(...) {
-    x2_levels = c(...)
-    df. = filter(df, X2 %in% x2_levels)
-    X1_in_X2 = df. %>%
-        group_by(X1, X2) %>%
-        summarise(Y = mean(Y)) %>%
-        spread(X1, Y)
-    print(ggplot(df., aes(x=X1, y=Y, color=X2)) +  
-              geom_violin(trim=FALSE, adjust=1.5) + 
-              geom_point(pch="-", size=4) +
-              stat_summary(fun.y=mean, geom="point", size=4) + 
-              stat_summary(fun.y=mean, geom="line", size=1, mapping=aes(group=X2), linetype="dashed") +
-              geom_errorbar(aes(x=2.2, ymin=A, ymax=B, y=NULL),  
-                            data=X1_in_X2, width=.19, size=0.8, color="black") +
-              geom_text(aes(x=2.35, y=(A + B)/2, label=paste("A - B |", X2)), 
-                        data=X1_in_X2, hjust=0, size=5, color="black") +
-              scale_y_continuous(breaks=seq(-6,10,by=2), minor_breaks=-6:10) +
-              scale_color_manual(guide=FALSE, values=palette[x2_levels]) + 
-              coord_cartesian(xlim=c(0, 3.5), ylim=c(-6,10)) +
-              facet_grid(. ~ X2))
+  x2_levels = c(...)
+  df. = filter(df, X2 %in% x2_levels)
+  
+  X1_in_X2 = df. %>%
+    group_by(X1, X2) %>%
+    summarise(Y = mean(Y), .groups = "drop") %>%
+    spread(X1, Y)
+  
+  print(
+    ggplot(df., aes(x = X1, y = Y, color = X2)) +  
+      geom_violin(trim = FALSE, adjust = 1.5) + 
+      geom_point(pch = "-", size = 4) +
+      stat_summary(fun = mean, geom = "point", size = 4) + 
+      stat_summary(aes(group = X2), fun = mean, geom = "line", size = 1, linetype = "dashed") +
+      geom_errorbar(
+        aes(x = 2.2, ymin = A, ymax = B, y = NULL),  
+        data = X1_in_X2, width = .19, size = 0.8, color = "black"
+      ) +
+      geom_text(
+        aes(x = 2.35, y = (A + B)/2, label = paste("A - B |", X2)), 
+        data = X1_in_X2, hjust = 0, size = 5, color = "black"
+      ) +
+      scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
+      scale_color_manual(guide = FALSE, values = palette[x2_levels]) +
+      coord_cartesian(xlim = c(0, 3.5), ylim = c(-6,10)) +
+      facet_grid(. ~ X2)
+  )
 }
 plot_interaction_for_X2_levels("C", "D")
 ```
@@ -256,7 +270,7 @@ it to be by looking at the above plot.
 We can get the estimate of this "difference of a difference" from the linear model by adding `interaction=TRUE` to the same call to `contrast` we made previously:
 
 ```{r}
-contrast(emmeans(m.linear, ~ X1:X2), method="pairwise", interaction=TRUE)
+contrast(emmeans(m.linear, ~ X1:X2), method = "pairwise", interaction = TRUE)
 ```
 
 Here we can interpret the row `A - B    C - D` as the difference between (`A - B | C`) and (`A - B | D`), which
@@ -281,12 +295,12 @@ plot_interaction_for_X2_levels("D", "E")
 
 Now we look at these differences of differences in ART, using art.con():
 ```{r}
-art.con(m.art, "X1:X2", interaction=TRUE)
+art.con(m.art, "X1:X2", interaction = TRUE)
 ```
 
 This is equivalent to:
 ```{r}
-contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method="pairwise", interaction=TRUE)
+contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method = "pairwise", interaction = TRUE)
 ```
 
 And we see t values consistent with the linear model, and consistent estimates (given the SE). 
@@ -298,7 +312,7 @@ If you prefer the `phia` package, the code to run the equivalent tests using the
 function in `phia` instead of using `emmeans` is:
 
 ```{r}
-testInteractions(artlm(m.art, "X1:X2"), pairwise=c("X1","X2"))
+testInteractions(artlm(m.art, "X1:X2"), pairwise = c("X1","X2"))
 ```
 
 While `emmeans` uses _t_ tests in this case, `testInteractions` gives the result of equivalent
@@ -306,4 +320,4 @@ _F_ tests with one numerator degree of freedom (an _F_ test with $F(1,\nu) = f$ 
 _t_ test with $t(\nu) = \sqrt{f}$). I prefer the _t_ test in this case because the _t_ value preserves
 the direction of the effect (its sign) and is more amenable to calculating interpretable (ish)
 effect sizes like Cohen's _d_. For an example of the latter, see 
-<code>[vignette("art-effect-size")](art-effect-size.html)</code>.
+`vignette("art-effect-size")`.
