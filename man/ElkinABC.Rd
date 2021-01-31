@@ -6,16 +6,16 @@
 \title{Synthetic 2x2x2 Within-Subjects Experiment}
 \format{
 A data frame with 64 observations on the following 5 variables.
-\describe{ 
-     \item{S}{a factor with levels \code{"s1"} .. \code{"s8"}} 
-     \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
-     \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
-     \item{C}{a factor with levels \code{"c1"} \code{"c2"}} 
-     \item{Y}{a numeric vector} 
+\describe{
+     \item{S}{a factor representing subjects with levels \code{"s1"} .. \code{"s8"}}
+     \item{A}{a factor with levels \code{"a1"} \code{"a2"}}
+     \item{B}{a factor with levels \code{"b1"} \code{"b2"}}
+     \item{C}{a factor with levels \code{"c1"} \code{"c2"}}
+     \item{Y}{a numeric vector}
 }
 }
 \description{
-Synthetic data from an experiment with three within-\code{Subject}s factors
+Synthetic data from an experiment with three within-subjects factors
 (\code{A}, \code{B}, and \code{C}) having two levels each.
 }
 \examples{

@@ -6,21 +6,21 @@
 \title{Synthetic 2x2 Within-Subjects Experiment}
 \format{
 A data frame with 32 observations on the following 4 variables.
-\describe{ 
-     \item{S}{a factor with levels \code{"s1"} .. \code{"s8"}} 
-     \item{A}{a factor with levels \code{"a1"} \code{"a2"}} 
-     \item{B}{a factor with levels \code{"b1"} \code{"b2"}} 
-     \item{Y}{a numeric vector} 
+\describe{
+     \item{S}{a factor representing subjects with levels \code{"s1"} .. \code{"s8"}}
+     \item{A}{a factor with levels \code{"a1"} \code{"a2"}}
+     \item{B}{a factor with levels \code{"b1"} \code{"b2"}}
+     \item{Y}{a numeric vector}
 }
 }
 \description{
-Synthetic data from an experiment with two within-\code{Subject}s factors
+Synthetic data from an experiment with two within-subjects factors
 (\code{A} and \code{B}) having two levels each.
 }
 \examples{
 \dontrun{
 data(ElkinAB, package="ARTool")
- 
+
 ## run contrast using the ART-C procedure on the data.
 m <- art(Y ~ A*B + (1|S), data=ElkinAB)
 art.con(m, "A:B")
