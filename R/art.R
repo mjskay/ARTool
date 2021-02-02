@@ -78,7 +78,7 @@
 #' etc., in the above output, see Wobbrock \emph{et al.} (2011).
 #' @author Matthew Kay
 #' @seealso \code{\link{summary.art}}, \code{\link{anova.art}},
-#' \code{\link{artlm}}.
+#' \code{\link{artlm}}, \code{\link{artlm.con}}, \code{\link{art.con}}.
 #' @references Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #'
@@ -108,26 +108,37 @@
 #' ## then we can run an anova on the ART responses (equivalent to anova(m, response="art"))
 #' anova(m)
 #'
-#' ## if we want post-hoc tests, we can use art.con
+#'
+#' ## if we want contrast tests, we can use art.con()
 #' ## e.g., pairwise contrasts on Moisture:
 #' art.con(m, "Moisture")
 #' ## e.g., pairwise contrasts on Moisture:Fertilizer:
 #' art.con(m, "Moisture:Fertilizer")
-#' 
-#' ## if we want to use a specific method for post-hoc tests, artlm.con(m, term)
-#' ## returns the linear model for the given term which we can then examine
-#' ## using our preferred method (emmeans, glht, etc)
+#'
+#' ## art.con() extracts the appropriate linear model and conducts contrasts
+#' ## using emmeans(). If we want to use a specific method for post-hoc tests
+#' ## other than emmeans(), artlm.con(m, term) returns the linear model for the
+#' ## specified term which we can then examine using our preferred method
+#' ## (emmeans, glht, etc).
+#'
 #' ## e.g., pairwise contrasts on Moisture:
 #' library(emmeans)
 #' contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
-#' 
+#'
 #' ## e.g. pairwise contrasts on Moisture:Fertilizer:
-#' ## See artlm.con documentation for more details on the syntax, specifically
+#' ## See artlm.con() documentation for more details on the syntax, specifically
 #' ## the formula passed to emmeans.
 #' contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
 #'
-#' ## For a more in-depth explanation and example, see this vignette:
-#' vignette("art-contrasts")
+#' ## We can also conduct difference-of-difference tests across interactions
+#' ## by extracting the linear model for the interaction and passing it to
+#' ## testInteractions() from the phia package:
+#' if (require("phia", quietly = TRUE)) {
+#'   testInteractions(artlm(m, "Moisture:Fertilizer"), pairwise=c("Moisture", "Fertilizer"))
+#' }
+#'
+#' ## For a more in-depth explanation and example of contrasts with art and
+#' ## differences between interaction types, see vignette("art-contrasts")
 #'
 #' }
 #'
