@@ -99,12 +99,12 @@ parse.art.con.formula = function(f.orig){
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = `~`, f.orig[[2]] = a*b*c
         f.orig.expr = f.orig[[2]]
         variables = get.variables(f.orig.expr, "*")
-        # paste variables back together with ~ on LHS and : operator between each variable.
-        # e.g. variables = c(a,b,c) -> "a:b:c"
-        pasted.variables = paste(variables, collapse=":")
+        # stitch variables back together with : operator between each variable.
+        # e.g. variables = c(a,b,c) -> a:b:c
+        stiched.variables = Reduce(function(x, y) call(":", x, y), variables)
         # add "~" to lhs and turn into formula
-        # e.g., pasted varialbes = "a:b:c" -> ~a:b:c
-        f = as.formula(paste("~", pasted.variables, sep=""))
+        # e.g., stiched.variables = a:b:c -> ~a:b:c
+        f = as.formula(call("~", stiched.variables))
 
         # extract terms from formula
         f.terms = terms(f)
