@@ -180,14 +180,13 @@ art = function(formula, data,
     #verify that all fixed effects are factors #TODO: can these be ordered factors?
     non.factor.terms = Filter(function (col) !is.factor(df[,col]) && !is.logical(df[,col]), 2:ncol(df))
     if (any(non.factor.terms)) {
-        stop(paste0(
+        stop(
             "All fixed effect terms must be factors or logical (e.g. not numeric).\n",
             "  The following terms are not factors or logical:\n    ",
             paste0(names(df)[non.factor.terms], collapse = "\n    "),
             "\n  If these terms are intended to represent categorical data, you may\n  ",
             "want to convert them into factors using factor()."
-            ))
-
+        )
     }
     #coerce fixed effects to numeric for processing
     for (j in 2:ncol(df)) {
@@ -199,7 +198,7 @@ art = function(formula, data,
         error.term.df = model.frame(f$error.terms, data)
         non.factor.error.terms = Filter(function (col) !is.factor(error.term.df[,col]), 1:ncol(error.term.df))
         if (any(non.factor.error.terms)) {
-            stop(paste0(
+            stop(
                 "The following Error terms are not factors:\n    ",
                 paste0(names(error.term.df)[non.factor.error.terms], collapse = "\n    "),
                 "\n  If these terms are intended to represent categorical data, such as subjects in a \n",
@@ -207,7 +206,7 @@ art = function(formula, data,
                 "  \n",
                 "  If you know what you are doing and still want Error terms that are not factors, use\n",
                 "  check.errors.are.factors = FALSE."
-                ))
+            )
         }
     }
 

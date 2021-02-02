@@ -15,7 +15,7 @@ get.variables = function(spec, op) {
         # if recursive case is called, it's fine, c(c(1), c(2)) = c(1,2)
         c(spec)
     } else {
-        stop(paste("Contrast term can only contain variables and ", op, ".", sep = ""))
+        stop("Contrast term can only contain variables and `", op, "`.")
     }
 }
 
@@ -45,8 +45,10 @@ parse.art.con.string.formula = function(f.orig) {
 
     # ensure we have exactly one interaction and no other terms
     if (length(term.labels) != 1) {
-        stop("Model must have exactly one interaction and no other terms (" ,
-             length(term.labels), " terms given)")
+        stop(
+            "Model must have exactly one interaction and no other terms (" ,
+            length(term.labels), " terms given)"
+        )
     }
 
     # Setup return list
@@ -83,7 +85,7 @@ parse.art.con.formula = function(f.orig) {
         # make sure only operator on rhs of original formula is "*"
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~ and f.orig[[2]] = a*b*c
         if (f.orig[[1]] != "~") {
-            stop("Left hand side of formula must be ~.")
+            stop("Left hand side of formula must be `~`.")
         }
 
         # if there is a dependent variable (i.e., variable on lhs of ~), then f.orig will have length 3
@@ -91,8 +93,10 @@ parse.art.con.formula = function(f.orig) {
         # e.g., f.orig = Y ~ a*b*c -> f.orig[[1]] = ~, f.orig[[2]] = Y, f.orig[[3]] = a*b*c
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~, f.orig[[2]] = a*b*c
         if (length(f.orig) > 2) {
-            stop("Formula must not have any variables on LHS (got ", f.orig[[2]], "). ",
-                 "Did you mean ", gsub(pattern = toString(f.orig[[2]]), x = deparse(f.orig), replacement = ''), "?")
+            stop(
+                "Formula must not have any variables on LHS (got ", f.orig[[2]], "). ",
+                "Did you mean ", gsub(pattern = toString(f.orig[[2]]), x = deparse(f.orig), replacement = ''), "?"
+            )
         }
 
         # get formula variables (i.e., individual variables on lhs), and ensure "*" is the only RHS operator.
@@ -118,8 +122,10 @@ parse.art.con.formula = function(f.orig) {
         # "Term or formula passed to art.con or artlm.con must contain a single
         # interaction term and no other terms, and the interaction term must be in art model formula."
         if (length(term.labels) != 1) {
-            stop("Model must have exactly one interaction and no other terms (" ,
-                 length(term.labels), " terms given)")
+            stop(
+                "Model must have exactly one interaction and no other terms (" ,
+                length(term.labels), " terms given)"
+            )
         }
 
         return(parse.art.con.string.formula(term.labels[[1]]))
@@ -132,8 +138,7 @@ parse.art.con.formula = function(f.orig) {
 
     # Error if f is not formula or string
     else {
-        stop("Contrast must either be formula of form ~ X1*X2*X3 or
-         term of form \"X1:X2:X3\")")
+        stop("Contrast must either be formula of form `~ X1*X2*X3` or term of form \"X1:X2:X3\")")
     }
 }
 
@@ -163,7 +168,10 @@ parse.art.model.formula = function(m.f, f.parsed) {
 
     # if interaction term from f is not in model formula, error
     if (!any(is.interaction.term)) {
-        stop("Term or formula passed to art.con or artlm.con must contain a single interaction term and no other terms, and the interaction term must be in art model formula.")
+        stop(
+            "Term or formula passed to art.con or artlm.con must contain a single interaction term\n",
+            "and no other terms, and the interaction term must be in art model formula."
+        )
     }
 
     # response ~ a*b*c*d + (1|d) + Error(g) -> list(response, a, b, c, d, 1|d, Error(g))
@@ -288,7 +296,7 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
 artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...) {
     # make sure m is an art model
     if (!inherits(m, "art")) {
-        stop("Model must be an art model, got ", deparse1(class(m)), ".")
+        stop("Model must be an art model; got ", deparse1(class(m)), ".")
     }
     # get model formula
     m.f = m$formula
