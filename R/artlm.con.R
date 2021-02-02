@@ -42,7 +42,7 @@
 #'   in the example below.
 #' @seealso See also \code{\link{art.con}}, which makes use of this function.
 
-#' 
+#'
 #' @author Lisa A. Elkin
 #' @references Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
 #' Under review (CHI 2021).
@@ -50,13 +50,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' ## create an art model
 #' m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
-#' 
+#'
 #' ## use emmeans to conduct pariwise contrasts on "Moisture"
 #' contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
-#' 
+#'
 #' ## use emmeans to conduct pairwise contrasts on "Moisture:Fertilizer"
 #' ## N.B. internally, artlm.con concatenates the factors Moisture and Fertilizer
 #' ## to create MoistureFertilizer. If you try to use any of Moisture, Fertilizer,
@@ -64,19 +64,18 @@
 #' ## passed to emmeans, you will get an error because the factors Moisture and Fertilizer
 #' ## do not exist in the model returned by artlm.con.
 #' contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
-#' 
+#'
 #' ## Note: art.con uses emmeans internally and the above examples are equivalent to
 #' art.con(m, "Moisture")
 #' art.con(m, "Moisture:Fertilizer")
-#' 
+#'
 #' }
-#' 
+#'
 # syntax: contrast(emmeans(artlm.con(m, "X1:X2"), ~ X1X2), method="pairwise")
-artlm.con = function(m, f, response="art", factor.contrasts="contr.sum", ...)
-{
+artlm.con = function(m, f, response="art", factor.contrasts="contr.sum", ...) {
     f.parsed = parse.art.con.string.formula(f)
-    
-    artlm.con = artlm.con.internal(m, f.parsed, response, factor.contrasts,...)
+
+    artlm.con = artlm.con.internal(m, f.parsed, response, factor.contrasts, ...)
     artlm.con
 }
 

@@ -15,7 +15,7 @@ get.variables = function(spec, op) {
         # if recursive case is called, it's fine, c(c(1), c(2)) = c(1,2)
         c(spec)
     } else {
-        stop(paste("Contrast term can only contain variables and ", op, ".", sep="" ))
+        stop(paste("Contrast term can only contain variables and ", op, ".", sep = ""))
     }
 }
 
@@ -27,13 +27,13 @@ get.variables = function(spec, op) {
 ### interaction.term.labels: quoted interaction term label (e.g. "a:b:c")
 ### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats terms
-parse.art.con.string.formula = function(f.orig){
+parse.art.con.string.formula = function(f.orig) {
 
     # make sure f.orig is a single string (as opposed to a vector of multiple strings)
     # don't think this is actually needed. seems to get caught earlier by
     # "Contrast must either be formula of form ~ X1*X2*X3 or
     # term of form \"X1:X2:X3\")" error below
-    if(!is.character(f.orig) || length(f.orig) != 1){
+    if (!is.character(f.orig) || length(f.orig) != 1) {
         stop("Contrast must be string term of form \"X1:X2\")")
     }
 
@@ -76,13 +76,13 @@ parse.art.con.string.formula = function(f.orig){
 ### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats as.formula
 #' @importFrom plyr is.formula
-parse.art.con.formula = function(f.orig){
+parse.art.con.formula = function(f.orig) {
 
     # looking for ~ a*b*c
-    if(is.formula(f.orig)){
+    if (is.formula(f.orig)) {
         # make sure only operator on rhs of original formula is "*"
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~ and f.orig[[2]] = a*b*c
-        if(f.orig[[1]] != "~"){
+        if (f.orig[[1]] != "~") {
             stop("Left hand side of formula must be ~.")
         }
 
@@ -126,12 +126,12 @@ parse.art.con.formula = function(f.orig){
     } # end f is formula
 
     # looking for "a:b:c"
-    else if(is.character(f.orig) & length(f.orig) == 1){
+    else if (is.character(f.orig) & length(f.orig) == 1) {
         return(parse.art.con.string.formula(f.orig))
     }
 
     # Error if f is not formula or string
-    else{
+    else {
         stop("Contrast must either be formula of form ~ X1*X2*X3 or
          term of form \"X1:X2:X3\")")
     }
@@ -149,7 +149,7 @@ parse.art.con.formula = function(f.orig){
 ### fixed.variables: list of named fixed variables (of type name) (e.g. list(a, b, c))
 ### grouping.variables: list of grouping variables (of type name) (e.g. list(1|d))
 ### error.variables: list of error variables (of type name) (e.g. list(Error(g)))
-parse.art.model.formula = function(m.f, f.parsed){
+parse.art.model.formula = function(m.f, f.parsed) {
 
     # get model formula terms
     m.f.terms = terms(m.f)
@@ -162,7 +162,7 @@ parse.art.model.formula = function(m.f, f.parsed){
     is.interaction.term = grepl(f.interaction.term.label, m.f.term.labels)
 
     # if interaction term from f is not in model formula, error
-    if(!any(is.interaction.term)){
+    if (!any(is.interaction.term)) {
         stop("Term or formula passed to art.con or artlm.con must contain a single interaction term and no other terms, and the interaction term must be in art model formula.")
     }
 
@@ -195,7 +195,7 @@ parse.art.model.formula = function(m.f, f.parsed){
 ### m.formula is the original formula used to create the ART model
 ### df is the data frame used to creat the ART model
 ### formula is the contrast formula
-generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
+generate.art.concatenated.df = function(m.f.parsed, df, f.parsed) {
 
     # concatenate columns of data frame whose columns names are the variables in f.parsed.interaction.variables
     # e.g. abc
@@ -206,7 +206,7 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
     art.con.df = df
     # unname throws error when only one interaction variable and we don't need to concatenate in that case
     # this is easier than debugging it
-    if(length(f.interaction.variables) > 1){
+    if (length(f.interaction.variables) > 1) {
         f.interaction.variables.string.vec = sapply(f.interaction.variables,deparse)
         art.con.df[[f.concatenated.variable]] = do.call(paste, c(unname(art.con.df[,f.interaction.variables.string.vec]), sep = ","))
         art.con.df[,f.interaction.variables.string.vec] = NULL
@@ -221,7 +221,7 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
 ### creates and returns art model on art.concatenated.df using the created formula
 ### note: this is not the same as using the full factorial model of all columns in df
 ###       there can be columns in df that are not used in the model.
-generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df, f.parsed){
+generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df, f.parsed) {
 
     # fixed variables in model formula
     m.f.fixed.variables = m.f.parsed$fixed.variables
@@ -251,22 +251,22 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
     # collapse grouping variables vector into string separated by +
     # e.g list(1|d, 1|e) -> "(1|d) + (1|e)"
     # note: empty list coerced to empty vector i.e list() -> character(0)
-    m.f.grouping.paren = if(length(m.f.grouping.variables) == 0) character() else paste("(", m.f.grouping.variables, ")", sep="")
-    m.f.grouping.str = if(length(m.f.grouping.paren) == 0) character() else paste(m.f.grouping.paren, collapse = "+")
+    m.f.grouping.paren = if (length(m.f.grouping.variables) == 0) character() else paste("(", m.f.grouping.variables, ")", sep="")
+    m.f.grouping.str = if (length(m.f.grouping.paren) == 0) character() else paste(m.f.grouping.paren, collapse = "+")
     # collaprse error variables vector into string separated by +
     # e.g. list(Error(g), Error(h)) -> "Error(g) + Error(h)"
     # note: empty list coerced to empty vector i.e list() -> character(0)
-    m.f.error.str = if(length(m.f.error.variables) == 0) character() else paste(m.f.error.variables, collapse = "+")
+    m.f.error.str = if (length(m.f.error.variables) == 0) character() else paste(m.f.error.variables, collapse = "+")
 
     # assemble concatenated art formula
-    # some terms may be missing (e.g., no goruping term). remove those from vector
+    # some terms may be missing (e.g., no grouping term). remove those from vector
     # because weird things happen when pasting multiple strings together and one is empty
     strings.to.join = c(m.f.fixed.str, m.f.grouping.str, m.f.error.str)
-    nonempty.strings.to.join = Filter(function(x) x!="", strings.to.join)
-    art.concatenated.formula.rhs.str = paste(nonempty.strings.to.join, collapse="+")
-    art.concatenated.formula = as.formula(paste(m.f.response, art.concatenated.formula.rhs.str, sep=" ~ "))
+    nonempty.strings.to.join = strings.to.join[strings.to.join != ""]
+    art.concatenated.formula.rhs.str = paste(nonempty.strings.to.join, collapse = "+")
+    art.concatenated.formula = as.formula(paste(m.f.response, "~", art.concatenated.formula.rhs.str))
     # make art concatenated model
-    m = art(art.concatenated.formula, data=art.concatenated.df)
+    m = art(art.concatenated.formula, data = art.concatenated.df)
     m
 }
 
@@ -285,7 +285,7 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
 ###  an object of class aovlist (i.e. a model fit by aov) if
 ###  it contains error terms.
 ### Note: only allowed from artlm.con not art.con.
-artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
+artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...) {
     # make sure m is an art model
     if (!inherits(m, "art")) {
         stop("Model must be an art model, got ", deparse1(class(m)), ".")
@@ -301,7 +301,13 @@ artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
     # concatenate terms in m.f correcsponding to interaction terms in f and create new art model
     art.concatenated.model = generate.art.concatenated.model(m.f, m.f.parsed, art.concatenated.df, f.parsed)
     # artlm with new art model
-    artlm.con.internal = artlm(art.concatenated.model, toString(f.parsed$concat.interaction.variable), response = response, factor.contrasts=factor.contrasts, ...)
+    artlm.con.internal = artlm(
+        art.concatenated.model,
+        toString(f.parsed$concat.interaction.variable),
+        response = response,
+        factor.contrasts = factor.contrasts,
+        ...
+    )
     artlm.con.internal
 }
 
@@ -315,17 +321,24 @@ artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...){
 ### ...: extra parameter passed to artlm and subsequently lm or lmer
 ### returns: result of conducting interaction contrasts on terms specified in f.parsed
 ###          (object of class emmGrid)
-do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, method, adjust, ...){
+do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, method, adjust, ...) {
     # e.g. list("a", "b", "c")
     interaction.variables = f.parsed$interaction.variables
     # e.g. list("a", "b", "c") -> "a:b:c". will be passed to artlm
     interaction.string.term = paste(interaction.variables, collapse=":")
     # e.g. list("a", "b", "c") -> "~ a*b*c". will be passed to emmeans
-    interaction.string.formula = paste("~", paste(interaction.variables, collapse="*"), sep = "")
-    interaction.formula = as.formula(interaction.string.formula)
+    interaction.expression = Reduce(function(x, y) call("*", x, y), interaction.variables)
+    interaction.formula = as.formula(call("~", interaction.expression))
 
-    contrast(emmeans(artlm(m, interaction.string.term, response = response, factor.contrasts = factor.contrasts, ...),
-                     interaction.formula), method=method, adjust=adjust, interaction=TRUE)
+    contrast(
+        emmeans(
+            artlm(m, interaction.string.term, response = response, factor.contrasts = factor.contrasts, ...),
+            interaction.formula
+        ),
+        method = method,
+        adjust = adjust,
+        interaction = TRUE
+    )
 }
 
 ### conducts contrasts given model returned by artlm.con
@@ -340,11 +353,9 @@ do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, 
 ### Note: called internally from art.con iff interaction = FALSE
 #' @importFrom stats p.adjust p.adjust.methods
 #' @importFrom emmeans emmeans contrast
-do.art.contrast = function(f.parsed, artlm.con, method, adjust){
-    # e.g. f.parsed$concat.interaction.variable = X1X2 -> "~ X1X2"
-    emmeans.str = paste(" ~ ", toString(f.parsed$concat.interaction.variable))
-    # e.g. "~ X1X2" -> ~ X1X2
-    emmeans.formula = as.formula(emmeans.str)
+do.art.contrast = function(f.parsed, artlm.con, method, adjust) {
+    # e.g. f.parsed$concat.interaction.variable = X1X2 -> ~ X1X2
+    emmeans.formula = as.formula(call("~", f.parsed$concat.interaction.variable))
     art.con.emmeans = emmeans(artlm.con, emmeans.formula)
     art.con = contrast(art.con.emmeans, method, adjust=adjust)
     art.con
