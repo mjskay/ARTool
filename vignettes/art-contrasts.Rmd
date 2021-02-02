@@ -320,4 +320,4 @@ _F_ tests with one numerator degree of freedom (an _F_ test with $F(1,\nu) = f$ 
 _t_ test with $t(\nu) = \sqrt{f}$). I prefer the _t_ test in this case because the _t_ value preserves
 the direction of the effect (its sign) and is more amenable to calculating interpretable (ish)
 effect sizes like Cohen's _d_. For an example of the latter, see 
-`vignette("art-effect-size")`.
+<code>[vignette("art-effect-size")](art-effect-size.html)</code>.
