@@ -77,11 +77,10 @@ parse.art.con.string.formula = function(f.orig) {
 ### interaction.term.labels: quoted interaction term label (e.g. "a:b:c")
 ### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats as.formula
-#' @importFrom plyr is.formula
 parse.art.con.formula = function(f.orig) {
 
     # looking for ~ a*b*c
-    if (is.formula(f.orig)) {
+    if (inherits(f.orig, "formula")) {
         # make sure only operator on rhs of original formula is "*"
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~ and f.orig[[2]] = a*b*c
         if (f.orig[[1]] != "~") {
