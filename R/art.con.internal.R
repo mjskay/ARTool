@@ -28,40 +28,27 @@ get.variables = function(spec, op) {
 ### concat.interaction.variable: concatenation (of type name) of all variables in interaction.variables (e.g., abc)
 #' @importFrom stats terms
 parse.art.con.string.formula = function(f.orig){
-    
+
     # make sure f.orig is a single string (as opposed to a vector of multiple strings)
-    # don't think this is actually needed. seems to get caught earlier by 
+    # don't think this is actually needed. seems to get caught earlier by
     # "Contrast must either be formula of form ~ X1*X2*X3 or
     # term of form \"X1:X2:X3\")" error below
     if(!is.character(f.orig) || length(f.orig) != 1){
         stop("Contrast must be string term of form \"X1:X2\")")
     }
-    
-    # don't allow spaces. must be "a:b", otherwise hard to parse
-    # NEW Jan 7, 2021
+
     # parse spec into an expression
     f.orig.expr = parse(text = f.orig, keep.source = FALSE)[[1]]
     variables = get.variables(f.orig.expr, ":")
-    # END NEW
-    # OLD
-    # f.orig.has.space = grepl(' ', f.orig, fixed=TRUE)
-    # if(f.orig.has.space){
-    #   stop("Contrast term cannot have a space in it.")
-    # }
-    # # e.g. "a:b:c" -> list("a", "b", "c")
-    # variables.str = strsplit(f.orig, ":")[[1]]
-    # # e.g. list("a", "b", "c") -> list (a, b, c)
-    # variables = lapply(variables.str, function(term) as.name(term))
-    # END OLD
-    
+
     term.labels = f.orig
-    
+
     # ensure we have exactly one interaction and no other terms
     if (length(term.labels) != 1) {
         stop("Model must have exactly one interaction and no other terms (" ,
              length(term.labels), " terms given)")
     }
-    
+
     # Setup return list
     # interaction.term.label: string name for interaction term label (e.g. "a:b:c")
     interaction.term.label = term.labels
@@ -70,7 +57,7 @@ parse.art.con.string.formula = function(f.orig){
     # concat.interaction.variable: string formula with all
     # interaction variables concatenated (e.g., abc)
     concat.interaction.variable = as.name(paste(interaction.variables, collapse=""))
-    
+
     list(
         interaction.term.label = interaction.term.label,
         interaction.variables = interaction.variables,
@@ -90,17 +77,15 @@ parse.art.con.string.formula = function(f.orig){
 #' @importFrom stats as.formula
 #' @importFrom plyr is.formula
 parse.art.con.formula = function(f.orig){
-    
+
     # looking for ~ a*b*c
     if(is.formula(f.orig)){
-        # NEW
-        
         # make sure only operator on rhs of original formula is "*"
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = ~ and f.orig[[2]] = a*b*c
         if(f.orig[[1]] != "~"){
             stop("Left hand side of formula must be ~.")
         }
-        
+
         # if there is a dependent variable (i.e., variable on lhs of ~), then f.orig will have length 3
         # otherwise, f.orig will have length 2
         # e.g., f.orig = Y ~ a*b*c -> f.orig[[1]] = ~, f.orig[[2]] = Y, f.orig[[3]] = a*b*c
@@ -109,8 +94,8 @@ parse.art.con.formula = function(f.orig){
             stop("Formula must not have any variables on LHS (got ", f.orig[[2]], "). ",
                  "Did you mean ", gsub(pattern = toString(f.orig[[2]]), x = deparse(f.orig), replacement = ''), "?")
         }
-        
-        # get formula variables (i.e., individual variables on lhs), and ensure "*" is the only LHS operator.
+
+        # get formula variables (i.e., individual variables on lhs), and ensure "*" is the only RHS operator.
         # e.g., f.orig = ~ a*b*c -> f.orig[[1]] = `~`, f.orig[[2]] = a*b*c
         f.orig.expr = f.orig[[2]]
         variables = get.variables(f.orig.expr, "*")
@@ -120,73 +105,31 @@ parse.art.con.formula = function(f.orig){
         # add "~" to lhs and turn into formula
         # e.g., pasted varialbes = "a:b:c" -> ~a:b:c
         f = as.formula(paste("~", pasted.variables, sep=""))
-        # END NEW
-        
-        # # OLD outer
-        # # make sure : not in original formula
-        # f.orig.str = deparse(f.orig)
-        # f.orig.has.colon = grepl(':', f.orig.str, fixed=TRUE)
-        # 
-        # if(f.orig.has.colon){
-        #   # OLD used stringr::str_replace
-        #   # NEW
-        #   stop("Formula cannot contain \":\" Did you mean ", as.formula(gsub(':', ' * ', f.orig.str)), 
-        #         " or \"", gsub('~', '', f.orig.str),"\"?")
-        # }
-        # 
-        # # Replace * with :
-        # # e.g.  ~ a*b*c ->  ~ a:b:c
-        # # NOTE: We do this because a*b*c is really a, b, c, a:b, a:c,...,a:b:c but we know that in 
-        # # contrast methods a*b*c is used interchangeably with a:b:c.
-        # # OLD inner
-        # #f = as.formula(pryr::substitute_q(f.orig, list('*' = as.name(':'))))
-        # # NEW
-        # f = as.formula(eval(substitute(substitute(f.orig, list('*' = as.name(':'))), list(f.orig = f.orig))))
-        # # END OLD outer
-        # 
+
         # extract terms from formula
         f.terms = terms(f)
-        
-        # unique variables in the formula as vetor of names
-        # e.g. ~ a:b:c -> c(a, b, c)
-        # OLD. Don't need this already parsed formula above to get variables
-        # variables = as.list(attr(f.terms, "variables"))[c(-1)]
-        
-        # OLD
-        # # ensure no dependent variable
-        # # the index of the variable (in variables) of the response. Zero if there is no response.
-        # # e.g. ~ a:b:c -> 0
-        # # if there was lhs: e.g. pairwise ~ a:b:c -> 1
-        # f.response = attr(f.terms, "response")
-        # if (f.response != 0) {
-        #     # OLD used stringr::str_replace
-        #     # NEW
-        #     stop("Formula must not have any variables on LHS (got ", variables[[1]], ").\n",
-        #          "Did you mean ", gsub(toString((variables[[1]])), '', f.orig.str))
-        # }
-        # END OLD
-        
+
         # char vector of names of rhs terms and their interactions
         # e.g. ~ a:b:c -> c("a:b:c"))
         term.labels = attr(f.terms, "term.labels")
-        
+
         # don't think we need this.
-        # I think it gets caught by 
-        # "Term or formula passed to art.con or artlm.con must contain a single 
+        # I think it gets caught by
+        # "Term or formula passed to art.con or artlm.con must contain a single
         # interaction term and no other terms, and the interaction term must be in art model formula."
         if (length(term.labels) != 1) {
             stop("Model must have exactly one interaction and no other terms (" ,
                  length(term.labels), " terms given)")
         }
-        
+
         return(parse.art.con.string.formula(term.labels[[1]]))
     } # end f is formula
-    
+
     # looking for "a:b:c"
     else if(is.character(f.orig) & length(f.orig) == 1){
         return(parse.art.con.string.formula(f.orig))
     }
-    
+
     # Error if f is not formula or string
     else{
         stop("Contrast must either be formula of form ~ X1*X2*X3 or
@@ -207,48 +150,37 @@ parse.art.con.formula = function(f.orig){
 ### grouping.variables: list of grouping variables (of type name) (e.g. list(1|d))
 ### error.variables: list of error variables (of type name) (e.g. list(Error(g)))
 parse.art.model.formula = function(m.f, f.parsed){
-    
+
     # get model formula terms
     m.f.terms = terms(m.f)
     # char vector of names of rhs terms and their interactions
     # e.g. Response ~ a*b + (1|d) + Error(g) -> c("a", "b", "1 | d", "Error(g)", "a:b")) not necessarily in this order
     m.f.term.labels = attr(m.f.terms, "term.labels")
-    
+
     # check if interaction term from f is in model formula
     f.interaction.term.label = f.parsed$interaction.term.label # f.parsed always has exactly one interaction
     is.interaction.term = grepl(f.interaction.term.label, m.f.term.labels)
-    
-    # TEST
-    print("f.parsed")
-    print(f.parsed)
-    print("m.f")
-    print(m.f.term.labels)
-    # END TEST
-    
+
     # if interaction term from f is not in model formula, error
     if(!any(is.interaction.term)){
         stop("Term or formula passed to art.con or artlm.con must contain a single interaction term and no other terms, and the interaction term must be in art model formula.")
     }
-    
+
     # response ~ a*b*c*d + (1|d) + Error(g) -> list(response, a, b, c, d, 1|d, Error(g))
     m.f.variables.all = as.list(attr(m.f.terms, "variables"))[c(-1)]
     m.f.response = m.f.variables.all[[1]]
     m.f.variables = m.f.variables.all[c(-1)]
-    
+
     #determine which variables on the rhs are grouping variables, error variables, or fixed variables
-    # OLD
-    # is.grouping.variable = laply(m.f.variables, function(term) as.list(term)[[1]] == quote(`|`))
-    # is.error.variable = laply(m.f.variables, function(term) as.list(term)[[1]] == quote(`Error`))
-    # NEW
     is.grouping.variable = sapply(m.f.variables, function(term) as.list(term)[[1]] == quote(`|`))
     is.error.variable = sapply(m.f.variables, function(term) as.list(term)[[1]] == quote(`Error`))
     #all other variables that aren't grouping or error variables must be fixed variables
     is.fixed.variable = !(is.grouping.variable | is.error.variable)
-    
+
     m.f.grouping = m.f.variables[is.grouping.variable]
     m.f.error = m.f.variables[is.error.variable]
     m.f.fixed = m.f.variables[is.fixed.variable] # remove response
-    
+
     list(
         response = m.f.response,
         fixed.variables = m.f.fixed,
@@ -264,15 +196,12 @@ parse.art.model.formula = function(m.f, f.parsed){
 ### df is the data frame used to creat the ART model
 ### formula is the contrast formula
 generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
-    
+
     # concatenate columns of data frame whose columns names are the variables in f.parsed.interaction.variables
     # e.g. abc
     f.concatenated.variable = f.parsed$concat.interaction.variable
-    # e.g. list(a, b, c) 
+    # e.g. list(a, b, c)
     f.interaction.variables = f.parsed$interaction.variables
-    # OLD
-    # art.con.df = unite_(df, f.concatenated.variable, f.interaction.variables, sep = ",", remove = TRUE) # concat columns and remove originals
-    # NEW
     # turn list of names to vector of strings. e.g, aa = as.name("a"), bb = as.name("b"), list(aa, bb) -> c("a","b")
     art.con.df = df
     # unname throws error when only one interaction variable and we don't need to concatenate in that case
@@ -282,7 +211,6 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
         art.con.df[[f.concatenated.variable]] = do.call(paste, c(unname(art.con.df[,f.interaction.variables.string.vec]), sep = ","))
         art.con.df[,f.interaction.variables.string.vec] = NULL
     }
-    # END NEW
     # note: when m was created would have thrown error if a fixed var column in df was not a factor
     art.con.df[[f.concatenated.variable]] = factor(art.con.df[[f.concatenated.variable]])
     art.con.df
@@ -294,14 +222,14 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed){
 ### note: this is not the same as using the full factorial model of all columns in df
 ###       there can be columns in df that are not used in the model.
 generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df, f.parsed){
-    
+
     # fixed variables in model formula
     m.f.fixed.variables = m.f.parsed$fixed.variables
     # interaction variables
     f.interaction.variables = f.parsed$interaction.variables
     # concatenated interaction variable
     f.concat.interaction.variable = f.parsed$concat.interaction.variable
-    
+
     # indices of interaction variables in model formula fixed variable list
     # e.g. f.interaction.variables = (a, c) and m.f.fixed.variables = (a, b, c) -> c(1, 3)
     interaction.variable.index = match(f.interaction.variables, m.f.fixed.variables)
@@ -309,17 +237,17 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
     # e.g. f.interaction.variables = (a, c) and m.f.fixed.variables = (a, b, c) -> list(b)
     m.f.fixed.variables.no.interaction.vars = m.f.fixed.variables[-interaction.variable.index]
     m.f.fixed.variables.with.concat = c(m.f.fixed.variables.no.interaction.vars, f.concat.interaction.variable)
-    
+
     # create formula with response m.f.response, fixed vars m.f.fixed.variables.with.concat
     # grouping variables m.f.grouping.variables, error variables m.f.error.variables
     m.f.response = m.f.parsed$response
     m.f.grouping.variables = m.f.parsed$grouping.variables
     m.f.error.variables = m.f.parsed$error.variables
-    
+
     # collapse fixed variable vector into string separated by *
     # e.g. list(ac,b) -> "ac*b"
     m.f.fixed.str = paste(m.f.fixed.variables.with.concat, collapse = "*")
-    # add parentheses around each grouping variable and 
+    # add parentheses around each grouping variable and
     # collapse grouping variables vector into string separated by +
     # e.g list(1|d, 1|e) -> "(1|d) + (1|e)"
     # note: empty list coerced to empty vector i.e list() -> character(0)
@@ -329,10 +257,8 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
     # e.g. list(Error(g), Error(h)) -> "Error(g) + Error(h)"
     # note: empty list coerced to empty vector i.e list() -> character(0)
     m.f.error.str = if(length(m.f.error.variables) == 0) character() else paste(m.f.error.variables, collapse = "+")
+
     # assemble concatenated art formula
-    # OLD
-    #art.concatenated.formula.rhs.str = stri_join(m.f.fixed.str, m.f.grouping.str, m.f.error.str, sep="+", ignore_null= TRUE)
-    # NEW
     # some terms may be missing (e.g., no goruping term). remove those from vector
     # because weird things happen when pasting multiple strings together and one is empty
     strings.to.join = c(m.f.fixed.str, m.f.grouping.str, m.f.error.str)
@@ -397,7 +323,7 @@ do.art.interaction.contrast = function(m, f.parsed, response, factor.contrasts, 
     # e.g. list("a", "b", "c") -> "~ a*b*c". will be passed to emmeans
     interaction.string.formula = paste("~", paste(interaction.variables, collapse="*"), sep = "")
     interaction.formula = as.formula(interaction.string.formula)
-    
+
     contrast(emmeans(artlm(m, interaction.string.term, response = response, factor.contrasts = factor.contrasts, ...),
                      interaction.formula), method=method, adjust=adjust, interaction=TRUE)
 }

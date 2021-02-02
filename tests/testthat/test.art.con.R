@@ -247,7 +247,7 @@ test_that("throws error if try to use : in formula version (i.e., not with strin
 
 test_that("throws error if dependent variables in contrast formula",{
     data(Higgins1990Table5, package="ARTool")
-    print("this test")
+
     m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
     expect_error(art.con(m, ~ DryMatter))
     expect_error(art.con(m, DryMatter ~Moisture*Fertilizer))
