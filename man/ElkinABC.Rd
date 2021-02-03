@@ -27,7 +27,7 @@ Synthetic data from an experiment with three within-subjects factors
 data(ElkinABC, package="ARTool")
 
 ## run contrast using the ART-C procedure on the data.
-m <- art(Y ~ A*B*C + (1|S), data=ElkinAB)
+m <- art(Y ~ A*B*C + (1|S), data=ElkinABC)
 art.con(m, "A:B:C")
 }
 }
