@@ -1,3 +1,12 @@
+# ARTool 0.11.0
+
+Major changes:
+
+* Added the `art.con()` and `artlm.con()` implementing the ART-C procedure
+  for contrast testing, and updated `vignette("art-contrasts")` to 
+  demonstrate it.
+
+
 # ARTool 0.10.8
 
 Minor release to update maintainer email address.
