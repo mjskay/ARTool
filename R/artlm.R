@@ -14,7 +14,7 @@
 #' calls this function as needed.
 #'
 #' @param m An object of class \code{\link{art}}.
-#' @param term An object of type \code{"character"} indicating the effect term
+#' @param term A character vector indicating the effect term
 #' in the transformed data in \code{m} to use as the aligned or art response.
 #' @param response Which response to use: the aligned response
 #' (\code{"aligned"}) or the aligned and ranked (\code{"art"}) response.

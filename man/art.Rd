@@ -109,26 +109,39 @@ anova(m, response="aligned")
 ## then we can run an anova on the ART responses (equivalent to anova(m, response="art"))
 anova(m)
 
-## if we want post-hoc tests, we can use art.con
-## e.g., pairwise contrasts on Moisture:
-art.con(m, "Moisture")
-## e.g., pairwise contrasts on Moisture:Fertilizer:
-art.con(m, "Moisture:Fertilizer")
 
-## if we want to use a specific method for post-hoc tests, artlm.con(m, term)
-## returns the linear model for the given term which we can then examine
-## using our preferred method (emmeans, glht, etc)
-## e.g., pairwise contrasts on Moisture:
+## if we want contrast tests, we can use art.con():
+## Ex 1: pairwise contrasts on Moisture:
+art.con(m, "Moisture")
+## Ex 2: pairwise contrasts on Moisture:Fertilizer:
+art.con(m, "Moisture:Fertilizer")
+## Ex 3: difference-of-difference tests on the Moisture:Fertilizer interaction:
+art.con(m, "Moisture:Fertilizer", interaction = TRUE)
+
+
+## The above three examples with art.con() can be constructed manually as well.
+## art.con() extracts the appropriate linear model and conducts contrasts
+## using emmeans(). If we want to use a specific method for post-hoc tests
+## other than emmeans(), artlm.con(m, term) returns the linear model for the
+## specified term which we can then examine using our preferred method
+## (emmeans, glht, etc). The equivalent calls for the above examples are:
 library(emmeans)
+
+## Ex 1: pairwise contrasts on Moisture:
 contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
 
-## e.g. pairwise contrasts on Moisture:Fertilizer:
-## See artlm.con documentation for more details on the syntax, specifically
+## Ex 2: pairwise contrasts on Moisture:Fertilizer:
+## See artlm.con() documentation for more details on the syntax, specifically
 ## the formula passed to emmeans.
 contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
 
-## For a more in-depth explanation and example, see this vignette:
-vignette("art-contrasts")
+## Ex 3: difference-of-difference tests on the Moisture:Fertilizer interaction:
+## Note the use of artlm() instead of artlm.con()
+contrast(emmeans(artlm(m.art, "Moisture:Fertilizer"), ~ Moisture:Fertilizer), method = "pairwise", interaction = TRUE)
+
+
+## For a more in-depth explanation and example of contrasts with art and
+## differences between interaction types, see vignette("art-contrasts")
 
 }
 
@@ -145,7 +158,7 @@ New York: ACM Press, pp. 143-146.
 }
 \seealso{
 \code{\link{summary.art}}, \code{\link{anova.art}},
-\code{\link{artlm}}.
+\code{\link{artlm}}, \code{\link{artlm.con}}, \code{\link{art.con}}.
 }
 \author{
 Matthew Kay

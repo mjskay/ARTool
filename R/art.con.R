@@ -3,50 +3,51 @@
 # Author: lelkin
 ###############################################################################
 
-#' Aligned Ranked Transform Contrast Procedure.
+#' Aligned Ranked Transform Contrasts
 #'
-#' A nonparametric method to conduct contrasts on data aligned-and-ranked using
-#' the ART-C procedure. This function is primarily used to conduct post hoc
-#' tests following a significant omnibus effect found with
-#' \code{\link{anova.art}}.
+#' Conduct contrast tests following an Aligned Ranked Transform (ART) ANOVA
+#' (\code{\link{anova.art}}). Conducts contrasts on \code{\link{art}} models
+#' using aligned-and-ranked linear models using the ART (Wobbrock et al. 2011)
+#' or ART-C (Elkin et al. 2021) alignment procedure, as appropriate to the requested contrast.
 #'
 #' An \code{\link{art}} model \code{m} stores the \code{formula} and \code{data}
-#' that were passed to \code{\link{art}} when \code{m} was created. This
-#' function extracts the original formula and data from \code{m}, and
-#' aligns-and-ranks that data, using the ART-C procedure, and conducts contrasts
-#' specified in parameter f.
+#' that were passed to \code{\link{art}} when \code{m} was created. Depending on the
+#' requested contrast type, this function either extracts the linear model from \code{m}
+#' needed to perform that contrast or creates a new linear model on data
+#' aligned-and-ranked using the ART-C
+#' procedure, then conducts the contrasts specified in parameter \code{formula}.
 #'
-#' Internally, this function uses \code{\link{artlm.con}} to create a linear
-#' model on data aligned-and-ranked with ART-C, computes estimated marginal
+#' Internally, this function uses \code{\link{artlm.con}} (when \code{interaction = FALSE})
+#' or \code{\link{artlm}} (when \code{interaction = TRUE}) to get the linear
+#' model necessary for the requested contrast, computes estimated marginal
 #' means on the linear model using \code{\link{emmeans}}, and conducts contrasts
 #' using \code{\link{contrast}}.
 #'
-#' The work describing the transformation itself is currently under review.
-#'
 #' @param m An object of class \code{\link{art}}.
-#' @param f Either an object of type \code{"character"} or type
-#'   \code{"formula"}, specifying the fixed effects whose levels will be
-#'   compared. See "Formula" section below.
-#' @param response Which response to use: the aligned (with ART-C) response
-#'   (\code{"aligned"}) or the aligned-and-ranked (with ART-C) response
-#'   (\code{"art"}). Default is "art". This argument is passed to artlm.con.
+#' @param formula Either a character vector or a formula specifying the fixed
+#'   effects whose levels will be compared. See "Formula" section below.
+#' @param response Which response to use: the aligned response
+#'   (\code{"aligned"}) or the aligned-and-ranked response
+#'   (\code{"art"}). Default is "art". This argument is passed to \code{\link{artlm.con}}
+#'   (when \code{interaction = FALSE}) or \code{\link{artlm}} (when \code{interaction = TRUE}).
 #' @param factor.contrasts The name of the contrast-generating function to be
 #'   applied by default to fixed effect factors. Sets the the first element of
 #'   \code{\link{options}("contrasts")} for the duration of this function. The
 #'   default is to use \code{"contr.sum"}, i.e. sum-to-zero contrasts, which is
 #'   appropriate for Type III ANOVAs (the default ANOVA type for
-#'   \code{\link{anova.art}}). This argument is passed to artlm.con.
+#'   \code{\link{anova.art}}). This argument is passed to \code{\link{artlm.con}} /
+#'   \code{\link{artlm}}.
 #' @param method Contrast method argument passed to \code{\link{contrast}}.
-#'   Note: default is \code{"pairwise"} but \code{\link{contrast}} default is
-#'   \code{"eff"}.
-#' @param interaction Logical value. Default is FALSE. If TRUE, conducts
-#'   interactions contrasts directly on \code{\link{art}} model m (i.e., does
-#'   not align and rank with ART-C procedure). See “Interaction contrasts”
-#'   section in \code{\link{contrast}}.
-#' @param adjust Character: adjustment method (e.g., "bonferroni") – passed to
+#'   Note: the default is \code{"pairwise"} even though the default for the
+#'   \code{\link{contrast}} function is \code{"eff"}.
+#' @param interaction Logical value. If \code{FALSE} (the default), conducts contrasts using
+#'   the ART-C procedure and \code{\link{artlm.con}}. If \code{TRUE}, conducts
+#'   difference-of-difference contrasts using a model returned by \code{\link{artlm}}.
+#'   See the "Interaction Contrasts" section in \code{\link{contrast}}.
+#' @param adjust Character: adjustment method (e.g., "bonferroni") passed to
 #'   \code{\link{contrast}}. If not provided, \code{\link{contrast}} will use
 #'   its default ("tukey" at the time of publication). All available options are listed
-#'   in \code{\link{summary.emmGrid}} in \code{P-value adjustments} section.
+#'   in \code{\link{summary.emmGrid}} in the "P-value adjustments" section.
 #' @param \dots Additional arguments passed to \code{\link{lm}} or
 #'   \code{\link{lmer}}.
 #' @return An object of class \code{emmGrid}. See \code{\link{contrast}}
@@ -54,15 +55,22 @@
 #' @author Lisa A. Elkin
 #'
 #' @section Formula: Contrasts compare combinations of levels from multiple
-#'   factors. The \code{f} parameter indicates which factors are involved. Two
-#'   formats are accepted: a \code{"character"} term as used in
-#'   \code{\link{artlm}} and \code{\link{artlm.con}}, or a \code{"formula"} as
-#'   used in \code{\link{emmeans}}. For example, contrasts comparing
+#'   factors. The \code{formula} parameter indicates which factors are involved. Two
+#'   formats are accepted: (1) a character vector as used in
+#'   \code{\link{artlm}} and \code{\link{artlm.con}}, with factors separated by \code{":"};
+#'   or (2) a formula as used in \code{\link{emmeans}}, with factors separated by \code{*}.
+#'   For example, contrasts comparing
 #'   combinations of levels of factors \emph{X1} and \emph{X2} can be expressed
-#'   as "X1:X2" (\code{"character"} term) or as ~ X1*X2 (\code{"formula"}).
+#'   as \code{"X1:X2"} (character vector) or as \code{~ X1*X2} (formula).
 #'
 #' @references Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
 #'   Under review.
+#'
+#'   Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
+#'   (2011). The Aligned Rank Transform for nonparametric factorial analyses
+#'   using only ANOVA procedures. \emph{Proceedings of the ACM Conference on
+#'   Human Factors in Computing Systems (CHI '11)}.  Vancouver, British Columbia
+#'   (May 7-12, 2011). New York: ACM Press, pp. 143-146.
 #'
 #' @export
 #'
@@ -73,7 +81,7 @@
 #' ## Perform aligned rank transform
 #' m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 #'
-#' ## In a typical workflow, contrast tests using ART-C would follow a
+#' ## In a some workflows, contrast tests using ART-C would follow a
 #' ## significant omnibus effect found by running an anova on the ART responses
 #' ## (equivalent to anova(m, response="art")).
 #' ## If conducting planned contrasts, this step can be skipped.
@@ -83,9 +91,9 @@
 #' ## If conducting contrasts as a post hoc test, this would follow a significant effect
 #' ## of Moisture on DryMatter.
 #'
-#' ## Using the "character" format for f
+#' ## Using a character vector for formula
 #' art.con(m, "Moisture")
-#' ## Or using the "formula" format for f
+#' ## Or using a formula
 #' art.con(m, ~ Moisture)
 #'
 #' ## Note: Since the ART-C procedure is mathematically equivalent to the ART procedure
@@ -97,20 +105,23 @@
 #' ## If conducting contrasts as a post hoc test, this would follow
 #' ## a significant Moisture:Fertlizer interaction effect on Drymatter.
 #'
-#' ## Using the "character" format for f
+#' ## Using a character vector for formula
 #' art.con(m, "Moisture:Fertilizer")
-#' ## Using the "formula" format for f
+#' ## Using a formula
 #' art.con(m, ~ Moisture*Fertilizer)
 #'
 #' ## We can also conduct interaction contrasts (comparing differences of differences)
 #' art.con(m, "Moisture:Fertilizer", interaction = TRUE)
 #'
+#' ## For more examples, see vignette("art-contrasts")
+#'
 #' }
 art.con = function(
-  m, f, response = "art", factor.contrasts="contr.sum", method = "pairwise",
+  m, formula, response = "art", factor.contrasts="contr.sum", method = "pairwise",
   interaction = FALSE, adjust, ...
 ) {
-  f.parsed = parse.art.con.formula(f)
+  f.parsed = parse.art.con.formula(formula)
+
   # syntax handled differently for interaction contrasts.
   if (interaction) {
     art.interaction.contrast = do.art.interaction.contrast(m, f.parsed, response, factor.contrasts, method, adjust, ...)

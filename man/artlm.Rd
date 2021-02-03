@@ -15,7 +15,7 @@ artlm(
 \arguments{
 \item{m}{An object of class \code{\link{art}}.}
 
-\item{term}{An object of type \code{"character"} indicating the effect term
+\item{term}{A character vector indicating the effect term
 in the transformed data in \code{m} to use as the aligned or art response.}
 
 \item{response}{Which response to use: the aligned response

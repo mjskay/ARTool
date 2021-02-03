@@ -4,14 +4,13 @@
 \alias{artlm.con}
 \title{Per-Term Linear Model on Data Aligned-and-Ranked with ART-C}
 \usage{
-artlm.con(m, f, response = "art", factor.contrasts = "contr.sum", ...)
+artlm.con(m, term, response = "art", factor.contrasts = "contr.sum", ...)
 }
 \arguments{
 \item{m}{An object of class \code{\link{art}}.}
 
-\item{f}{An object of type \code{"character"} indicating the effect term in
-the transformed data in \code{m} to use as the aligned or art response.
-this the same as the \code{"term"} in \code{\link{artlm}}}
+\item{term}{A character vector indicating the effect term in
+the transformed data in \code{m} to use as the aligned or art response.}
 
 \item{response}{Which response to use: the aligned (with ART-C) response
 (\code{"aligned"}) or the aligned and ranked (with ART-C) response
@@ -30,7 +29,7 @@ appropriate for Type III ANOVAs (the default ANOVA type for
 \value{
 An object of class \code{\link{lm}} if \code{formula(m)} does not
   contain grouping or error terms, an object of class \code{\link{merMod}}
-  (i.e. a model fit by \code{\link{lmer}}) if it contains grouping terms, or
+  (i.e. a model fit by \code{\link{lmer}}) if it does contain grouping terms, or
   an object of class \code{aovlist} (i.e. a model fit by \code{\link{aov}})
   if it contains error terms.
 }
@@ -40,16 +39,18 @@ aligned-and-ranked with ART-C alignment procedure by the specified term in
 the model.
 }
 \details{
-This function is used primarily to conduct contrasts on data
-aligned-and-ranked using the ART-C procedure using a different contrast test
-than provided by \code{\link{art.con}}, which uses (\code{\link{contrast}}).
-It is not necessary to use this function directly to conduct contrasts using
-the ART-C procedure.
+This function is used internally by \code{\link{art.con}} to construct
+linear models for contrasts using the ART-C procedure (Elkin et al. 2021).
+It is typically not necessary to use this function directly to conduct contrasts using
+the ART-C procedure, you can use \code{\link{art.con}} instead, which will
+ensure that the correct model and contrast test is run. However, should you
+wish to use the ART-C procedure with a different contrast test
+than provided by \code{\link{art.con}}, you may with to use this function.
 
 Internally, the ART-C procedure concatenates the variables specified
-  in \code{f}, and then removes the originals. When specifying the effect
+  in \code{term}, and then removes the originals. When specifying the effect
   terms on which to conduct contrasts, use the concatenation of the effects
-  specified in \code{f} instead of the original variables. This is demonstrated
+  specified in \code{term} instead of the original variables. This is demonstrated
   in the example below.
 }
 \examples{
@@ -58,7 +59,7 @@ Internally, the ART-C procedure concatenates the variables specified
 ## create an art model
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 
-## use emmeans to conduct pariwise contrasts on "Moisture"
+## use emmeans to conduct pairwise contrasts on "Moisture"
 contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
 
 ## use emmeans to conduct pairwise contrasts on "Moisture:Fertilizer"
@@ -69,7 +70,9 @@ contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
 ## do not exist in the model returned by artlm.con.
 contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
 
-## Note: art.con uses emmeans internally and the above examples are equivalent to
+## Note: art.con uses emmeans internally, and the above examples are equivalent to
+## the following calls to art.con, which is the recommended approach as it will
+## ensure the model selected and the contrasts extracted from emmeans match.
 art.con(m, "Moisture")
 art.con(m, "Moisture:Fertilizer")
 
