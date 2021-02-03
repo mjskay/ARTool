@@ -4,6 +4,8 @@ Version: 0.10.8.9000
 Date: 2020-10-31
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@northwestern.edu"),
+    person("Lisa A.", "Elkin", role = "aut",
+    email = "lelkin@cs.washington.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
 Maintainer: Matthew Kay <mjskay@northwestern.edu>
@@ -18,10 +20,10 @@ Imports:
     car (>= 2.0-24),
     plyr,
     magrittr,
-    dplyr
+    dplyr,
+    emmeans
 Suggests:
     testthat (>= 0.10.0),
-    emmeans,
     knitr,
     rmarkdown,
     ggplot2,

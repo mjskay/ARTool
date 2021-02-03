@@ -5,13 +5,10 @@
 \alias{InteractionTestData}
 \title{Synthetic Data Used in the Contrast Test Vignette}
 \description{
-See (\code{vignette("art-contrasts")} for a description of this data.
+See \code{vignette("art-contrasts")} for a description of this data.
 }
 \examples{
-\dontrun{
-## see this vignette
-vignette("art-contrasts")
-}
+## see vignette("art-contrasts")
 }
 \seealso{
 \code{\link{art}}, \code{\link{anova.art}}.

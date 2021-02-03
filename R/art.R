@@ -78,7 +78,7 @@
 #' etc., in the above output, see Wobbrock \emph{et al.} (2011).
 #' @author Matthew Kay
 #' @seealso \code{\link{summary.art}}, \code{\link{anova.art}},
-#' \code{\link{artlm}}.
+#' \code{\link{artlm}}, \code{\link{artlm.con}}, \code{\link{art.con}}.
 #' @references Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #'
@@ -108,22 +108,42 @@
 #' ## then we can run an anova on the ART responses (equivalent to anova(m, response="art"))
 #' anova(m)
 #'
-#' ## if we want post-hoc tests, artlm(m, term) returns the linear model for the
-#' ## given term
-#' ## which we can then examine using our preferred method (emmeans, glht, etc)
-#' ## e.g., pairwise contrasts on Moisture:
+#'
+#' ## if we want contrast tests, we can use art.con():
+#' ## Ex 1: pairwise contrasts on Moisture:
+#' art.con(m, "Moisture")
+#' ## Ex 2: pairwise contrasts on Moisture:Fertilizer:
+#' art.con(m, "Moisture:Fertilizer")
+#' ## Ex 3: difference-of-difference tests on the Moisture:Fertilizer interaction:
+#' art.con(m, "Moisture:Fertilizer", interaction = TRUE)
+#'
+#'
+#' ## The above three examples with art.con() can be constructed manually as well.
+#' ## art.con() extracts the appropriate linear model and conducts contrasts
+#' ## using emmeans(). If we want to use a specific method for post-hoc tests
+#' ## other than emmeans(), artlm.con(m, term) returns the linear model for the
+#' ## specified term which we can then examine using our preferred method
+#' ## (emmeans, glht, etc). The equivalent calls for the above examples are:
 #' library(emmeans)
-#' emmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
 #'
-#' ## pairwise contrasts on Fertilizer:
-#' emmeans(artlm(m, "Fertilizer"), pairwise ~ Fertilizer)
+#' ## Ex 1: pairwise contrasts on Moisture:
+#' contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
 #'
-#' ## N.B. The above types of contrasts ARE NOT valid for interactions.
-#' ## Instead, use testInteractions from the phia package. For example:
-#' library(phia)
-#' testInteractions(artlm(m, "Moisture:Fertilizer"), pairwise=c("Moisture", "Fertilizer"))
-#' ## For a more in-depth explanation and example, see this vignette:
-#' vignette("art-contrasts")
+#' ## Ex 2: pairwise contrasts on Moisture:Fertilizer:
+#' ## See artlm.con() documentation for more details on the syntax, specifically
+#' ## the formula passed to emmeans.
+#' contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
+#'
+#' ## Ex 3: difference-of-difference tests on the Moisture:Fertilizer interaction:
+#' ## Note the use of artlm() instead of artlm.con()
+#' contrast(
+#'   emmeans(artlm(m.art, "Moisture:Fertilizer"), ~ Moisture:Fertilizer),
+#'   method = "pairwise", interaction = TRUE
+#' )
+#'
+#'
+#' ## For a more in-depth explanation and example of contrasts with art and
+#' ## differences between interaction types, see vignette("art-contrasts")
 #'
 #' }
 #'
@@ -163,14 +183,13 @@ art = function(formula, data,
     #verify that all fixed effects are factors #TODO: can these be ordered factors?
     non.factor.terms = Filter(function (col) !is.factor(df[,col]) && !is.logical(df[,col]), 2:ncol(df))
     if (any(non.factor.terms)) {
-        stop(paste0(
+        stop(
             "All fixed effect terms must be factors or logical (e.g. not numeric).\n",
             "  The following terms are not factors or logical:\n    ",
             paste0(names(df)[non.factor.terms], collapse = "\n    "),
             "\n  If these terms are intended to represent categorical data, you may\n  ",
             "want to convert them into factors using factor()."
-            ))
-
+        )
     }
     #coerce fixed effects to numeric for processing
     for (j in 2:ncol(df)) {
@@ -182,7 +201,7 @@ art = function(formula, data,
         error.term.df = model.frame(f$error.terms, data)
         non.factor.error.terms = Filter(function (col) !is.factor(error.term.df[,col]), 1:ncol(error.term.df))
         if (any(non.factor.error.terms)) {
-            stop(paste0(
+            stop(
                 "The following Error terms are not factors:\n    ",
                 paste0(names(error.term.df)[non.factor.error.terms], collapse = "\n    "),
                 "\n  If these terms are intended to represent categorical data, such as subjects in a \n",
@@ -190,7 +209,7 @@ art = function(formula, data,
                 "  \n",
                 "  If you know what you are doing and still want Error terms that are not factors, use\n",
                 "  check.errors.are.factors = FALSE."
-                ))
+            )
         }
     }
 
