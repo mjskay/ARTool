@@ -137,7 +137,10 @@ contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertili
 
 ## Ex 3: difference-of-difference tests on the Moisture:Fertilizer interaction:
 ## Note the use of artlm() instead of artlm.con()
-contrast(emmeans(artlm(m.art, "Moisture:Fertilizer"), ~ Moisture:Fertilizer), method = "pairwise", interaction = TRUE)
+contrast(
+  emmeans(artlm(m.art, "Moisture:Fertilizer"), ~ Moisture:Fertilizer),
+  method = "pairwise", interaction = TRUE
+)
 
 
 ## For a more in-depth explanation and example of contrasts with art and
