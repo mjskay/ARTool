@@ -12,6 +12,7 @@ output: github_document
 [![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](https://dx.doi.org/10.1145/1978942.1978963)
 
 _Matthew Kay, Northwestern University <mjskay@northwestern.edu>_<br>
+_Lisa A. Elkin, University of Washington, <lelkin@cs.washington.edu>_<br>
 _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
 ARTool is an R package implementing the Aligned Rank Transform for conducting
@@ -151,9 +152,16 @@ Kay M and Wobbrock J (`r format(Sys.Date(), "%Y")`). _ARTool: Aligned Rank Trans
 Nonparametric Factorial ANOVAs_. R package version `r getNamespaceVersion("ARTool")`, <https://github.com/mjskay/ARTool>.
 DOI: [10.5281/zenodo.594511](https://dx.doi.org/10.5281/zenodo.594511).
 
+For the *ART* procedure used by `art()` and `anova.art()`, cite:
+
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
 Procedures." In _Proceedings of the ACM Conference on Human Factors in
 Computing Systems (CHI 2011)_, Vancouver, British Columbia (May 7-12, 2011). 
 New York: ACM Press, pp. 143-146. <https://depts.washington.edu/acelab/proj/art/>.
 DOI: [10.1145/1978942.1978963](https://dx.doi.org/10.1145/1978942.1978963).
+
+For the *ART-C* contrast testing procedure used by `art.con()` and `artlm.con()`, cite:
+
+Elkin L, Kay M, Higgins J and Wobbrock J (2021). "TODO: insert title." 
+arXiv eprint: TODO. <http://TODO>.

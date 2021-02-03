@@ -30,3 +30,18 @@ bibentry(
     pages = "143--146",
     url = "http://depts.washington.edu/aimgroup/proj/art/"
 )
+
+bibentry(
+    header = "For the ART-C contrast testing procedure used in art.con() and artlm.con(), cite:",
+    bibtype = "misc",
+    title = "TODO: insert ART-C title",
+    author = c(
+        person("Lisa A.", "Elkin"),
+        person("Matthew", "Kay"),
+        person("James J.", "Higgins"),
+        person("Jacob O.", "Wobbrock")
+    ),
+    year = 2021,
+    note = "arXiv eprint: TODO",
+    url = "http://TODO"
+)
