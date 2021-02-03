@@ -222,6 +222,8 @@ NULL
 #'      \item{Y}{a numeric vector}
 #' }
 #' @keywords datasets
+#' @source Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
+#' Under review (CHI 2021).
 #' @examples
 #' \dontrun{
 #' data(ElkinAB, package="ARTool")
@@ -248,6 +250,8 @@ NULL
 #'      \item{Y}{a numeric vector}
 #' }
 #' @keywords datasets
+#' @source Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
+#' Under review (CHI 2021).
 #' @examples
 #' \dontrun{
 #' data(ElkinABC, package="ARTool")

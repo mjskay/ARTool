@@ -13,6 +13,10 @@ A data frame with 32 observations on the following 4 variables.
      \item{Y}{a numeric vector}
 }
 }
+\source{
+Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
+Under review (CHI 2021).
+}
 \description{
 Synthetic data from an experiment with two within-subjects factors
 (\code{A} and \code{B}) having two levels each.
