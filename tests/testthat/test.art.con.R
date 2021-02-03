@@ -15,10 +15,10 @@ context("art.con")
 # Note: adjust method doesn't matter since t ratios don't get adjusted
 
 test_that("art.con returns same result as ARTool.exe + JMP: no grouping term, two-factor model", {
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
     # run art without grouping term to use lm
-    m = art(DryMatter ~ Moisture*Fertilizer, data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer, data = Higgins1990Table5)
 
     # single-factor contrasts
     expect_equal(
@@ -37,9 +37,9 @@ test_that("art.con returns same result as ARTool.exe + JMP: no grouping term, tw
 })
 
 test_that("art.con returns same result as ARTool.exe + JMP: no grouping term, three-factor model", {
-    data("ElkinABC")
+    data(ElkinABC, package = "ARTool")
 
-    m = art(Y ~ A*B*C, data=ElkinABC)
+    m = art(Y ~ A*B*C, data = ElkinABC)
 
     # single-factor contrasts
     expect_equal(
@@ -66,10 +66,10 @@ test_that("art.con returns same result as ARTool.exe + JMP: no grouping term, th
 })
 
 test_that("art.con returns same result as ARTool.exe + JMP: with grouping term, two-factor model", {
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
     #run with grouping term to force lmer
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
 
     # single-factor contrasts
     expect_equal(
@@ -88,9 +88,9 @@ test_that("art.con returns same result as ARTool.exe + JMP: with grouping term, 
 })
 
 test_that("art.con returns same result as ARTool.exe + JMP: with grouping term, three-factor model", {
-    data("ElkinABC")
+    data(ElkinABC, package = "ARTool")
 
-    m = art(Y ~ A*B*C + (1|S), data=ElkinABC)
+    m = art(Y ~ A*B*C + (1|S), data = ElkinABC)
 
     # single-factor contrasts
     expect_equal(
@@ -117,10 +117,10 @@ test_that("art.con returns same result as ARTool.exe + JMP: with grouping term, 
 })
 
 test_that("art.con returns same result as ARTool.exe + JMP: with error term, two-factor model", {
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
     #run art with Error term to force aov
-    m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data = Higgins1990Table5)
 
     # single-factor contrasts
     expect_equal(
@@ -131,8 +131,8 @@ test_that("art.con returns same result as ARTool.exe + JMP: with error term, two
 
     # two-factor contrasts
     # can't use Higgins Table 5 because it's unbalanced with respect to Moisture:Fertilizer
-    data(ElkinAB)
-    m = art(Y ~ A*B + Error(S), data=ElkinAB)
+    data(ElkinAB, package = "ARTool")
+    m = art(Y ~ A*B + Error(S), data = ElkinAB)
 
     # compare "A1,B1 - A1,B2", "A1,B1 - A2,B1", and "A1,B1, A2,B2" to results from JMP.
     expect_equal(
@@ -144,9 +144,9 @@ test_that("art.con returns same result as ARTool.exe + JMP: with error term, two
 })
 
 test_that("art.con returns same result as ARTool.exe + JMP: with error term, two-factor model", {
-    data("ElkinABC")
+    data(ElkinABC, package = "ARTool")
 
-    m = art(Y ~ A*B*C + Error(S), data=ElkinABC)
+    m = art(Y ~ A*B*C + Error(S), data = ElkinABC)
 
     # single-factor contrasts
     expect_equal(
@@ -173,10 +173,10 @@ test_that("art.con returns same result as ARTool.exe + JMP: with error term, two
 })
 
 test_that("art.con character format and formula format are equivalent", {
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
     #run with grouping term to force lmer
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
 
     # single-factor contrasts
     expect_equal(
@@ -193,18 +193,18 @@ test_that("art.con character format and formula format are equivalent", {
 })
 
 test_that("art.con interaction contrasts equivalent to artlm interaction contrasts",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
 
     expect_equal(
         summary(art.con(m, "Moisture:Fertilizer", interaction=TRUE)),
         summary(contrast(emmeans(artlm(m, "Moisture:Fertilizer"), ~ Moisture:Fertilizer), method="pairwise", interaction=TRUE))
     )
 
-    data("ElkinABC")
+    data(ElkinABC, package = "ARTool")
 
-    m = art(Y ~ A*B*C, data=ElkinABC)
+    m = art(Y ~ A*B*C, data = ElkinABC)
     expect_equal(
         summary(art.con(m, "A:B:C", interaction=TRUE)),
         summary(contrast(emmeans(artlm(m, "A:B:C"), ~ A:B:C), method="pairwise", interaction=TRUE))
@@ -212,50 +212,50 @@ test_that("art.con interaction contrasts equivalent to artlm interaction contras
 })
 
 test_that("throws error if vector of strings used",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
     expect_error(art.con(m, c("Moisture:Fertilizer", "Moisture")))
 })
 
 test_that("throws error if contrast string term has a space in it",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
     expect_error(art.con(m, "Moisture: Fertilizer"))
     expect_error(art.con(m, "Moisture :Fertilizer"))
     expect_error(art.con(m, " Moisture:Fertilizer"))
 })
 
 test_that("throws error if there is a grouping or error term in string contrast formula",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
     expect_error(art.con(m, "Moisture:Fertilizer+(1|Tray)"))
     expect_error(art.con(m, ~ Moisture*Fertilizer + (1|Tray)))
 
-    m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + Error(Tray), data = Higgins1990Table5)
     expect_error(art.con(m, "Moisture:Fertilizer+Error(Tray)"))
 })
 
 test_that("throws error if try to use : in formula version (i.e., not with string version)",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
     expect_error(art.con(m, ~ Moisture:Fertilizer))
 })
 
 test_that("throws error if dependent variables in contrast formula",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
+    m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = Higgins1990Table5)
     expect_error(art.con(m, ~ DryMatter))
     expect_error(art.con(m, DryMatter ~Moisture*Fertilizer))
 })
 
 test_that("throws error if model is not an ART model",{
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
-    m = aov(DryMatter ~ Moisture*Fertilizer, data=Higgins1990Table5)
+    m = aov(DryMatter ~ Moisture*Fertilizer, data = Higgins1990Table5)
     expect_error(art.con(m, ~ Moisture*Fertilizer))
 })

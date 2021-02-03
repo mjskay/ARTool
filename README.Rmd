@@ -59,7 +59,7 @@ First, let us load some example data:
 
 ```{r, message=FALSE}
 library(ARTool)
-data(Higgins1990Table5)
+data(Higgins1990Table5, package = "ARTool")
 ```
 
 `Higgins1990Table5`  is a data frame from an experiment in which the effects of `Moisture`

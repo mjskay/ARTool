@@ -31,7 +31,7 @@ from Higgins \emph{et al.} (1990).
 }
 \examples{
 
-data(Higgins1990Table5)
+data(Higgins1990Table5, package = "ARTool")
 
 ## run aligned-rank transform and ANOVA on the data
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)

@@ -90,7 +90,7 @@
 #' @keywords nonparametric
 #' @examples
 #' \donttest{
-#' data(Higgins1990Table5, package="ARTool")
+#' data(Higgins1990Table5, package = "ARTool")
 #'
 #' ## perform aligned rank transform
 #' m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)

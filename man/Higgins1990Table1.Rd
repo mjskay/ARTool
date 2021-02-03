@@ -26,7 +26,7 @@ errors.
 }
 \examples{
 
-data(Higgins1990Table1)
+data(Higgins1990Table1, package = "ARTool")
 
 ## run aligned-rank transform and ANOVA on the data
 ## Note: because there is only one observation per Subject

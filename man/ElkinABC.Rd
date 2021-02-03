@@ -24,10 +24,10 @@ Synthetic data from an experiment with three within-subjects factors
 }
 \examples{
 \donttest{
-data(ElkinABC, package="ARTool")
+data(ElkinABC, package = "ARTool")
 
 ## run contrast using the ART-C procedure on the data.
-m <- art(Y ~ A*B*C + (1|S), data=ElkinABC)
+m <- art(Y ~ A*B*C + (1|S), data = ElkinABC)
 art.con(m, "A:B:C")
 }
 }

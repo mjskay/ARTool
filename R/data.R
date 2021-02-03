@@ -56,7 +56,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' data(Higgins1990Table1)
+#' data(Higgins1990Table1, package = "ARTool")
 #'
 #' ## run aligned-rank transform and ANOVA on the data
 #' ## Note: because there is only one observation per Subject
@@ -130,7 +130,7 @@ NULL
 #' @keywords datasets
 #' @examples
 #'
-#' data(Higgins1990Table5)
+#' data(Higgins1990Table5, package = "ARTool")
 #'
 #' ## run aligned-rank transform and ANOVA on the data
 #' m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
@@ -199,10 +199,10 @@ NULL
 #' @keywords datasets
 #' @examples
 #' \donttest{
-#' data(HigginsABC, HigginsABC.art, package="ARTool")
+#' data(HigginsABC, HigginsABC.art, package = "ARTool")
 #'
 #' ## run aligned-rank transform and ANOVA on the data
-#' m <- art(Y ~ A*B*C + Error(Subject), data=HigginsABC)
+#' m <- art(Y ~ A*B*C + Error(Subject), data = HigginsABC)
 #' anova(m)
 #' }
 NULL
@@ -226,10 +226,10 @@ NULL
 #' Under review (CHI 2021).
 #' @examples
 #' \donttest{
-#' data(ElkinAB, package="ARTool")
+#' data(ElkinAB, package = "ARTool")
 #'
 #' ## run contrast using the ART-C procedure on the data.
-#' m <- art(Y ~ A*B + (1|S), data=ElkinAB)
+#' m <- art(Y ~ A*B + (1|S), data = ElkinAB)
 #' art.con(m, "A:B")
 #' }
 NULL
@@ -254,10 +254,10 @@ NULL
 #' Under review (CHI 2021).
 #' @examples
 #' \donttest{
-#' data(ElkinABC, package="ARTool")
+#' data(ElkinABC, package = "ARTool")
 #'
 #' ## run contrast using the ART-C procedure on the data.
-#' m <- art(Y ~ A*B*C + (1|S), data=ElkinABC)
+#' m <- art(Y ~ A*B*C + (1|S), data = ElkinABC)
 #' art.con(m, "A:B:C")
 #' }
 NULL

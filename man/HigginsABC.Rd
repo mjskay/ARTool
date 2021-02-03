@@ -25,10 +25,10 @@ within-\code{Subject}s factor (\code{C}) with two levels.
 }
 \examples{
 \donttest{
-data(HigginsABC, HigginsABC.art, package="ARTool")
+data(HigginsABC, HigginsABC.art, package = "ARTool")
 
 ## run aligned-rank transform and ANOVA on the data
-m <- art(Y ~ A*B*C + Error(Subject), data=HigginsABC)
+m <- art(Y ~ A*B*C + Error(Subject), data = HigginsABC)
 anova(m)
 }
 }

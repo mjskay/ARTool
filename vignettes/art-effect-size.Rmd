@@ -53,7 +53,7 @@ library(ggplot2)    #ggplot, stat_..., geom_..., etc
 Let's load the test dataset from <code>[vignette("art-contrasts")](art-contrasts.html)</code>:
 
 ```{r}
-data(InteractionTestData)
+data(InteractionTestData, package = "ARTool")
 df = InteractionTestData    #save some typing
 ```  
 

@@ -8,7 +8,7 @@ context("artlm")
 test_that("artlm returns models whose data can be recovered by emmeans", {
     skip_if_not_installed("emmeans")
 
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
 
     #run art without grouping term to use lm

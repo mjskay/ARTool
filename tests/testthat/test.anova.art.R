@@ -26,7 +26,7 @@ comparable.anova = function(m, include.error=FALSE) {
 }
 
 test_that("anova.art of Higgins1990Table5 matches results of the original ARTool", {
-    data(Higgins1990Table5, package="ARTool")
+    data(Higgins1990Table5, package = "ARTool")
 
     #reference result
     ref = data.frame(
@@ -51,7 +51,7 @@ test_that("anova.art of Higgins1990Table5 matches results of the original ARTool
 })
 
 test_that("anova.art of Higgins1990Table1 matches results of the original ARTool", {
-    data(Higgins1990Table1, package="ARTool")
+    data(Higgins1990Table1, package = "ARTool")
 
     #reference result
     ref = data.frame(
@@ -70,7 +70,7 @@ test_that("anova.art of Higgins1990Table1 matches results of the original ARTool
 })
 
 test_that("anova.art of HigginsABC matches results of the original ARTool", {
-    data(HigginsABC, package="ARTool")
+    data(HigginsABC, package = "ARTool")
 
     #reference result
     ref = data.frame(

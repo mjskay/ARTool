@@ -55,11 +55,13 @@ Internally, the ART-C procedure concatenates the variables specified
 }
 \examples{
 \donttest{
+data(Higgins1990Table5, package = "ARTool")
 
 ## create an art model
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 
 ## use emmeans to conduct pairwise contrasts on "Moisture"
+library(emmeans)
 contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
 
 ## use emmeans to conduct pairwise contrasts on "Moisture:Fertilizer"
