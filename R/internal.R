@@ -179,3 +179,8 @@ art.estimated.effects = function(formula.terms, data) {
         estimated.effects=estimated.effects
     )
 }
+
+## deparse1 backport
+deparse0 = function(expr, collapse = " ", width.cutoff = 500L, ...) {
+    paste(deparse(expr, width.cutoff, ...), collapse = collapse)
+}

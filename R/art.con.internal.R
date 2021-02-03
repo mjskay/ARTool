@@ -295,7 +295,7 @@ generate.art.concatenated.model = function(m.f, m.f.parsed, art.concatenated.df,
 artlm.con.internal = function(m, f.parsed, response, factor.contrasts, ...) {
     # make sure m is an art model
     if (!inherits(m, "art")) {
-        stop("Model must be an art model; got ", deparse1(class(m)), ".")
+        stop("Model must be an art model; got ", deparse0(class(m)), ".")
     }
     # get model formula
     m.f = m$formula
