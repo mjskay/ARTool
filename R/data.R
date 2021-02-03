@@ -198,7 +198,7 @@ NULL
 #' \emph{ARTool}. \url{https://depts.washington.edu/acelab/proj/art/}.
 #' @keywords datasets
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(HigginsABC, HigginsABC.art, package="ARTool")
 #'
 #' ## run aligned-rank transform and ANOVA on the data
@@ -225,7 +225,7 @@ NULL
 #' @source Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
 #' Under review (CHI 2021).
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(ElkinAB, package="ARTool")
 #'
 #' ## run contrast using the ART-C procedure on the data.
@@ -253,7 +253,7 @@ NULL
 #' @source Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
 #' Under review (CHI 2021).
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(ElkinABC, package="ARTool")
 #'
 #' ## run contrast using the ART-C procedure on the data.

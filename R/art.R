@@ -89,7 +89,7 @@
 #' New York: ACM Press, pp. 143-146.
 #' @keywords nonparametric
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(Higgins1990Table5, package="ARTool")
 #'
 #' ## perform aligned rank transform

@@ -75,7 +75,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(Higgins1990Table5, package="ARTool")
 #'
 #' ## Perform aligned rank transform

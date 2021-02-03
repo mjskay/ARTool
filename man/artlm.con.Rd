@@ -54,7 +54,7 @@ Internally, the ART-C procedure concatenates the variables specified
   in the example below.
 }
 \examples{
-\dontrun{
+\donttest{
 
 ## create an art model
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)

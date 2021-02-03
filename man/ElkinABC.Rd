@@ -23,7 +23,7 @@ Synthetic data from an experiment with three within-subjects factors
 (\code{A}, \code{B}, and \code{C}) having two levels each.
 }
 \examples{
-\dontrun{
+\donttest{
 data(ElkinABC, package="ARTool")
 
 ## run contrast using the ART-C procedure on the data.

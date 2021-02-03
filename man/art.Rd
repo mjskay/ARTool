@@ -90,7 +90,7 @@ For details on the transformation itself, see Wobbrock \emph{et al.} (2011)
 or the ARTool website: \url{https://depts.washington.edu/acelab/proj/art/}.
 }
 \examples{
-\dontrun{
+\donttest{
 data(Higgins1990Table5, package="ARTool")
 
 ## perform aligned rank transform
