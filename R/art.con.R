@@ -108,12 +108,12 @@
 #' ## data frame returned by the summary() method of emmGrid. For example:
 #' art.con(m, ~ Moisture) %>%
 #'   summary() %>%
-#'   mutate(stars = ifelse(p.value < 0.05, "*", ""))
+#'   mutate(sig = ifelse(p.value < 0.05, "*", ""))
 #'
 #' ## Or a more complex example:
 #' art.con(m, ~ Moisture) %>%
 #'   summary() %>%
-#'   mutate(stars = symnum(p.value, corr = FALSE, na = FALSE,
+#'   mutate(sig = symnum(p.value, corr = FALSE, na = FALSE,
 #'     cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
 #'     symbols = c("***", "**", "*", ".", " ")
 #'   ))
