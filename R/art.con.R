@@ -78,6 +78,8 @@
 #' \donttest{
 #' data(Higgins1990Table5, package = "ARTool")
 #'
+#' library(dplyr)
+#'
 #' ## Perform aligned rank transform
 #' m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
 #'
@@ -91,7 +93,7 @@
 #' ## If conducting contrasts as a post hoc test, this would follow a significant effect
 #' ## of Moisture on DryMatter.
 #'
-#' ## Using a character vector for formula
+#' ## Using a character vector
 #' art.con(m, "Moisture")
 #' ## Or using a formula
 #' art.con(m, ~ Moisture)
@@ -99,6 +101,22 @@
 #' ## Note: Since the ART-C procedure is mathematically equivalent to the ART procedure
 #' ## in the single-factor case, this is the same as
 #' ## emmeans(artlm(m, "Moisture"), pairwise ~ Moisture)
+#'
+#' ## art.con() returns an emmGrid object, which does not print asterisks
+#' ## beside "significant" tests (p < 0.05). If you wish to add stars beside
+#' ## tests of a particular significant level, you can always do that to the
+#' ## data frame returned by the summary() method of emmGrid. For example:
+#' art.con(m, ~ Moisture) %>%
+#'   summary() %>%
+#'   mutate(stars = ifelse(p.value < 0.05, "*", ""))
+#'
+#' ## Or a more complex example:
+#' art.con(m, ~ Moisture) %>%
+#'   summary() %>%
+#'   mutate(stars = symnum(p.value, corr = FALSE, na = FALSE,
+#'     cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+#'     symbols = c("***", "**", "*", ".", " ")
+#'   ))
 #'
 #' ## We can conduct contrasts comparing combinations of levels
 #' ## of Moisture and Fertilizer using the ART-C procedure.
