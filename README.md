@@ -6,13 +6,16 @@ status](https://github.com/mjskay/ARTool/workflows/R-CMD-check/badge.svg)](https
 [![Coverage
 status](https://codecov.io/gh/mjskay/ARTool/branch/master/graph/badge.svg)](https://codecov.io/github/mjskay/ARTool?branch=master)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
-[![GPL
-\>= 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
+[![GPL &gt;=
+2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool)
 [![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](https://dx.doi.org/10.1145/1978942.1978963)
 
 *Matthew Kay, Northwestern University <mjskay@northwestern.edu>*<br>
-*Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>*
+*Lisa A. Elkin, University of Washington,
+<lelkin@cs.washington.edu>*<br> *James J. Higgins, Kansas State
+University, <jhiggins@ksu.edu>*<br> *Jacob O. Wobbrock, University of
+Washington <wobbrock@uw.edu>*
 
 ARTool is an R package implementing the Aligned Rank Transform for
 conducting nonparametric analyses of variance on factorial models. This
@@ -62,7 +65,7 @@ First, let us load some example data:
 
 ``` r
 library(ARTool)
-data(Higgins1990Table5)
+data(Higgins1990Table5, package = "ARTool")
 ```
 
 `Higgins1990Table5` is a data frame from an experiment in which the
@@ -100,9 +103,9 @@ head(Higgins1990Table5, n=8)
 To analyze this data using the aligned rank transform, we first
 transform the data using `art` . We specify the response variable
 (`DryMatter` ), the fixed effects and all of their interactions
-(`Moisture*Fertilizer`, or equivalently `Moisture + Fertilizer +
-Moisture:Fertilizer`), and any grouping terms if present (here,
-`(1|Tray)` ).
+(`Moisture*Fertilizer`, or equivalently
+`Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms
+if present (here, `(1|Tray)` ).
 
 While `(1|Tray)` has no effect on the results of the aligned rank
 transformation, it will be used by `anova` to determine the type of
@@ -214,10 +217,12 @@ reproduce the issue.
 
 ## Citations
 
-Kay M and Wobbrock J (2020). *ARTool: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs*. R package version 0.10.8,
+Kay M and Wobbrock J (2021). *ARTool: Aligned Rank Transform for
+Nonparametric Factorial ANOVAs*. R package version 0.11.0,
 <https://github.com/mjskay/ARTool>. DOI:
 [10.5281/zenodo.594511](https://dx.doi.org/10.5281/zenodo.594511).
+
+For the *ART* procedure used by `art()` and `anova.art()`, cite:
 
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). “The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
@@ -226,3 +231,9 @@ Computing Systems (CHI 2011)*, Vancouver, British Columbia (May 7-12,
 2011). New York: ACM Press, pp. 143-146.
 <https://depts.washington.edu/acelab/proj/art/>. DOI:
 [10.1145/1978942.1978963](https://dx.doi.org/10.1145/1978942.1978963).
+
+For the *ART-C* contrast testing procedure used by `art.con()` and
+`artlm.con()`, cite:
+
+Elkin L, Kay M, Higgins J and Wobbrock J (2021). “TODO: insert title.”
+arXiv eprint: TODO. <http://TODO>.
