@@ -1,6 +1,6 @@
 ---
 title: "Contrast tests with ART"
-author: "Matthew Kay, Lisa A. Elkin"
+author: "Matthew Kay, Lisa A. Elkin, Jacob O. Wobbrock"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >

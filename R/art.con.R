@@ -52,7 +52,7 @@
 #'   \code{\link{lmer}}.
 #' @return An object of class \code{emmGrid}. See \code{\link{contrast}}
 #'   for details.
-#' @author Lisa A. Elkin
+#' @author Lisa A. Elkin, Matthew Kay, Jacob O. Wobbrock
 #'
 #' @section Formula: Contrasts compare combinations of levels from multiple
 #'   factors. The \code{formula} parameter indicates which factors are involved. Two

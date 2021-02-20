@@ -140,5 +140,5 @@ Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
   (May 7-12, 2011). New York: ACM Press, pp. 143-146.
 }
 \author{
-Lisa A. Elkin
+Lisa A. Elkin, Matthew Kay, Jacob O. Wobbrock
 }

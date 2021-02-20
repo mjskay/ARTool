@@ -6,6 +6,8 @@ bibentry(
     title = "{ARTool}: Aligned Rank Transform for Nonparametric Factorial ANOVAs",
     author = c(
         person("Matthew", "Kay"),
+        person("Lisa A.", "Elkin"),
+        person("James J.", "Higgins"),
         person("Jacob O.", "Wobbrock")
     ),
     year = year,

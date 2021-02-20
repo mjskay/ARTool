@@ -6,6 +6,8 @@ Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@northwestern.edu"),
     person("Lisa A.", "Elkin", role = "aut",
     email = "lelkin@cs.washington.edu"),
+    person("James J.", "Higgins", role = "aut",
+    email = "jhiggins@ksu.edu"),
     person("Jacob O.", "Wobbrock", role = "aut",
     email = "wobbrock@uw.edu"))
 Maintainer: Matthew Kay <mjskay@northwestern.edu>
