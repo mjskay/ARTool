@@ -235,5 +235,6 @@ Computing Systems (CHI 2011)*, Vancouver, British Columbia (May 7-12,
 For the *ART-C* contrast testing procedure used by `art.con()` and
 `artlm.con()`, cite:
 
-Elkin L, Kay M, Higgins J and Wobbrock J (2021). “TODO: insert title.”
-arXiv eprint: TODO. <http://TODO>.
+Elkin L, Kay M, Higgins J and Wobbrock J (2021). “An Aligned Rank
+Transform Procedure for Multifactor Contrast Tests.” [arXiv eprint:
+2102.11824](https://arxiv.org/abs/2102.11824).
