@@ -1,7 +1,7 @@
 Package: ARTool
 Title: Aligned Rank Transform
 Version: 0.11.0
-Date: 2021-02-02
+Date: 2021-02-23
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@northwestern.edu"),
     person("Lisa A.", "Elkin", role = "aut",
