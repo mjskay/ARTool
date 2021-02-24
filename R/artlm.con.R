@@ -46,7 +46,7 @@
 #' @author Lisa A. Elkin
 #' @references Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
 #'   (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
-#'   \href{arXiv eprint: 2102.11824}{https://arxiv.org/abs/2102.11824}.
+#'   \href{https://arxiv.org/abs/2102.11824}{arXiv eprint: 2102.11824}.
 #' @export
 #'
 #' @examples

@@ -16,7 +16,7 @@ A data frame with 32 observations on the following 4 variables.
 \source{
 Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
   (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
-  \href{arXiv eprint: 2102.11824}{https://arxiv.org/abs/2102.11824}.
+  \href{https://arxiv.org/abs/2102.11824}{arXiv eprint: 2102.11824}.
 }
 \description{
 Synthetic data from an experiment with two within-subjects factors
