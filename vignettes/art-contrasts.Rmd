@@ -19,7 +19,7 @@ differences across two factors can be performed by conducting those contrasts on
 linear model aligned-and-ranked on the factors involved in the contrasts.
 This linear model may be one of the models used in the ART procedure, or it may require
 concatenating factors and constructing a new model, a procedure called *ART contrasts* 
-or *ART-C* ([Lelkin et al. 2021](TODO)). 
+or *ART-C* ([Elkin et al. 2021](https://arxiv.org/abs/2102.11824)). 
 
 The `art.con()` function selects the appropriate model given a desired set of contrasts
 and then performs the requested contrasts. This page explains when and why a separate 

@@ -148,8 +148,9 @@ art.con(m, "Moisture:Fertilizer", interaction = TRUE)
 }
 }
 \references{
-Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
-  Under review.
+Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
+  (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
+  \href{arXiv eprint: 2102.11824}{https://arxiv.org/abs/2102.11824}.
 
   Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
   (2011). The Aligned Rank Transform for nonparametric factorial analyses

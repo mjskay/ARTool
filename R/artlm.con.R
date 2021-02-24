@@ -42,11 +42,11 @@
 #'   specified in \code{term} instead of the original variables. This is demonstrated
 #'   in the example below.
 #' @seealso See also \code{\link{art.con}}, which makes use of this function.
-
 #'
 #' @author Lisa A. Elkin
-#' @references Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
-#' Under review (CHI 2021).
+#' @references Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
+#'   (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
+#'   \href{arXiv eprint: 2102.11824}{https://arxiv.org/abs/2102.11824}.
 #' @export
 #'
 #' @examples

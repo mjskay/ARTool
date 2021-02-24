@@ -63,8 +63,9 @@
 #'   combinations of levels of factors \emph{X1} and \emph{X2} can be expressed
 #'   as \code{"X1:X2"} (character vector) or as \code{~ X1*X2} (formula).
 #'
-#' @references Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
-#'   Under review.
+#' @references Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
+#'   (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
+#'   \href{arXiv eprint: 2102.11824}{https://arxiv.org/abs/2102.11824}.
 #'
 #'   Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
 #'   (2011). The Aligned Rank Transform for nonparametric factorial analyses

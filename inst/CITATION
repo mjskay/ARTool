@@ -36,7 +36,7 @@ bibentry(
 bibentry(
     header = "For the ART-C contrast testing procedure used in art.con() and artlm.con(), cite:",
     bibtype = "misc",
-    title = "TODO: insert ART-C title",
+    title = "An Aligned Rank Transform Procedure for Multifactor Contrast Tests",
     author = c(
         person("Lisa A.", "Elkin"),
         person("Matthew", "Kay"),
@@ -44,6 +44,6 @@ bibentry(
         person("Jacob O.", "Wobbrock")
     ),
     year = 2021,
-    note = "arXiv eprint: TODO",
-    url = "http://TODO"
+    note = "arXiv eprint: 2102.11824",
+    url = "https://arxiv.org/abs/2102.11824"
 )

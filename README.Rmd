@@ -164,5 +164,5 @@ DOI: [10.1145/1978942.1978963](https://dx.doi.org/10.1145/1978942.1978963).
 
 For the *ART-C* contrast testing procedure used by `art.con()` and `artlm.con()`, cite:
 
-Elkin L, Kay M, Higgins J and Wobbrock J (2021). "TODO: insert title." 
-arXiv eprint: TODO. <http://TODO>.
+Elkin L, Kay M, Higgins J and Wobbrock J (2021). "An Aligned Rank Transform Procedure for Multifactor Contrast Tests." 
+[arXiv eprint: 2102.11824](https://arxiv.org/abs/2102.11824).

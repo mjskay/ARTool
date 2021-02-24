@@ -15,8 +15,9 @@ A data frame with 64 observations on the following 5 variables.
 }
 }
 \source{
-Lisa A. Elkin, Matthew Kay, James J. Higgins, Jacob O. Wobbrock.
-Under review (CHI 2021).
+Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
+  (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
+  \href{arXiv eprint: 2102.11824}{https://arxiv.org/abs/2102.11824}.
 }
 \description{
 Synthetic data from an experiment with three within-subjects factors
