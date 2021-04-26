@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-# ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
+# ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs
 
 [![R build status](https://github.com/mjskay/ARTool/workflows/R-CMD-check/badge.svg)](https://github.com/mjskay/ARTool/actions)
 [![Coverage status](https://codecov.io/gh/mjskay/ARTool/branch/master/graph/badge.svg)](https://codecov.io/github/mjskay/ARTool?branch=master)
@@ -17,18 +17,18 @@ _Jacob O. Wobbrock, University of Washington <wobbrock@uw.edu>_
 
 ARTool is an R package implementing the Aligned Rank Transform for conducting
 nonparametric analyses of variance on factorial models. This implementation is
-based on the ART procedure as used in the original implementation of 
+based on the ART procedure as used in the original implementation of
 [ARTool](https://depts.washington.edu/acelab/proj/art/) by Wobbrock et al.
 
 The package automates the Aligning-and-Ranking process using the `art` function.
 It also automates the process of running a series of ANOVAs on the transformed
 data and extracting the results of interest. It supports traditional ANOVA
-models (fit using `lm`), repeated measures ANOVAs (fit using `aov`), and 
+models (fit using `lm`), repeated measures ANOVAs (fit using `aov`), and
 mixed effects models (fit using `lmer`); the model used is determined by the
 formula passed to `art`.
 
 __Note__: The documentation of this package assumes some level of familiarity
-with when and why you may want to use the aligned rank transform; the 
+with when and why you may want to use the aligned rank transform; the
 [ARTool page](https://depts.washington.edu/acelab/proj/art/) provides a more in-depth (and
 highly approachable) introduction to the aligned rank transform and the
 motivation for its use.
@@ -72,21 +72,23 @@ str(Higgins1990Table5)
 head(Higgins1990Table5, n=8)
 ```
 
+**Note**: make sure your data is in _data.frame_ before transforming it.
+
 ### Step 1: Transform the data
 
 To analyze this data using the aligned rank transform, we first transform the
 data using `art` . We specify the response variable (`DryMatter` ), the fixed
-effects and all of their interactions (`Moisture*Fertilizer`, or equivalently 
-`Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if 
-present (here, `(1|Tray)` ). 
+effects and all of their interactions (`Moisture*Fertilizer`, or equivalently
+`Moisture + Fertilizer + Moisture:Fertilizer`), and any grouping terms if
+present (here, `(1|Tray)` ).
 
-While `(1|Tray)` has no effect on the results of 
-the aligned rank transformation, it will be used by `anova` to determine the 
+While `(1|Tray)` has no effect on the results of
+the aligned rank transformation, it will be used by `anova` to determine the
 type of model to run: when grouping terms are present, mixed effects models
 are run using `lmer`. If you wish to use a repeated measures ANOVA instead of
 a mixed effects model, you can use an `Error` term instead (see below for an
 example of this). If you do not having repeated measures, do not include
-any grouping terms or error terms. 
+any grouping terms or error terms.
 
 ```{r}
 m <- art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data=Higgins1990Table5)
@@ -104,7 +106,7 @@ summary(m)
 We see that the columns sums of aligned responses and the F values of ANOVAs on
 aligned responses not of interest are all ~0, indicating that the alignment
 correctly "stripped out" effects not of interest. Thus, we can apply the ANOVA
-on the transformed data. 
+on the transformed data.
 
 ### Step 3: Run the ANOVA
 
@@ -118,7 +120,7 @@ anova(m)
 
 ### Alternative model: Repeated Measures ANOVA
 
-This particular study could also be analyzed using a repeated measures ANOVA, 
+This particular study could also be analyzed using a repeated measures ANOVA,
 yielding the same results (note that repeated measures ANOVAs and mixed
 effects models will not always yield the same results). To instead run
 a repeated measures ANOVA, add an `Error` term to the model as you
@@ -142,8 +144,8 @@ This vignette is also available [here](https://cran.r-project.org/package=ARTool
 ## Problems
 
 Should you encounter any issues with this package, contact Matthew Kay
-(<mjskay@northwestern.edu>). If you have found a bug, please file it 
-[here](https://github.com/mjskay/ARTool/issues/new) with minimal code to 
+(<mjskay@northwestern.edu>). If you have found a bug, please file it
+[here](https://github.com/mjskay/ARTool/issues/new) with minimal code to
 reproduce the issue.
 
 ## Citations
@@ -157,11 +159,11 @@ For the *ART* procedure used by `art()` and `anova.art()`, cite:
 Wobbrock J, Findlater L, Gergle D and Higgins J (2011). "The Aligned
 Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
 Procedures." In _Proceedings of the ACM Conference on Human Factors in
-Computing Systems (CHI 2011)_, Vancouver, British Columbia (May 7-12, 2011). 
+Computing Systems (CHI 2011)_, Vancouver, British Columbia (May 7-12, 2011).
 New York: ACM Press, pp. 143-146. <https://depts.washington.edu/acelab/proj/art/>.
 DOI: [10.1145/1978942.1978963](https://dx.doi.org/10.1145/1978942.1978963).
 
 For the *ART-C* contrast testing procedure used by `art.con()` and `artlm.con()`, cite:
 
-Elkin L, Kay M, Higgins J and Wobbrock J (2021). "TODO: insert title." 
+Elkin L, Kay M, Higgins J and Wobbrock J (2021). "TODO: insert title."
 arXiv eprint: TODO. <http://TODO>.

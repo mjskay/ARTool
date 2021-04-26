@@ -95,6 +95,8 @@ head(Higgins1990Table5, n=8)
     ## 7   t2       m1         f3       6.5
     ## 8   t2       m1         f4       7.3
 
+**Note**: make sure your data is in _data.frame_ before transforming it.
+
 ### Step 1: Transform the data
 
 To analyze this data using the aligned rank transform, we first
@@ -126,17 +128,17 @@ summary(m)
 ```
 
     ## Aligned Rank Transform of Factorial Model
-    ## 
+    ##
     ## Call:
-    ## art(formula = DryMatter ~ Moisture * Fertilizer + (1 | Tray), 
+    ## art(formula = DryMatter ~ Moisture * Fertilizer + (1 | Tray),
     ##     data = Higgins1990Table5)
-    ## 
+    ##
     ## Column sums of aligned responses (should all be ~0):
-    ##            Moisture          Fertilizer Moisture:Fertilizer 
-    ##                   0                   0                   0 
-    ## 
+    ##            Moisture          Fertilizer Moisture:Fertilizer
+    ##                   0                   0                   0
+    ##
     ## F values of ANOVAs on aligned responses not of interest (should all be ~0):
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.
     ##       0       0       0       0       0       0
 
 We see that the columns sums of aligned responses and the F values of
@@ -155,12 +157,12 @@ anova(m)
 ```
 
     ## Analysis of Variance of Aligned Rank Transformed Data
-    ## 
-    ## Table Type: Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df) 
+    ##
+    ## Table Type: Analysis of Deviance Table (Type III Wald F tests with Kenward-Roger df)
     ## Model: Mixed Effects (lmer)
     ## Response: art(DryMatter)
-    ## 
-    ##                             F Df Df.res     Pr(>F)    
+    ##
+    ##                             F Df Df.res     Pr(>F)
     ## 1 Moisture             23.833  3      8 0.00024199 ***
     ## 2 Fertilizer          122.402  3     24 1.1124e-14 ***
     ## 3 Moisture:Fertilizer   5.118  9     24 0.00064665 ***
@@ -181,12 +183,12 @@ anova(m)
 ```
 
     ## Analysis of Variance of Aligned Rank Transformed Data
-    ## 
-    ## Table Type: Repeated Measures Analysis of Variance Table (Type I) 
+    ##
+    ## Table Type: Repeated Measures Analysis of Variance Table (Type I)
     ## Model: Repeated Measures (aov)
     ## Response: art(DryMatter)
-    ## 
-    ##                       Error Df Df.res F value     Pr(>F)    
+    ##
+    ##                       Error Df Df.res F value     Pr(>F)
     ## 1 Moisture             Tray  3      8  23.833 0.00024199 ***
     ## 2 Fertilizer          Withn  3     24 122.402 1.1124e-14 ***
     ## 3 Moisture:Fertilizer Withn  9     24   5.118 0.00064665 ***

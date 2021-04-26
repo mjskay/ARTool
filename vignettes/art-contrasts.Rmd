@@ -11,19 +11,19 @@ vignette: >
 
 ## Introduction
 
-The aligned-rank transform (ART) allows for non-parametric analyses of variance ([Wobbrock et al. 2011](https://doi.org/10.1145/1978942.1978963)). 
-But how should we do contrast tests with ART? 
+The aligned-rank transform (ART) allows for non-parametric analyses of variance ([Wobbrock et al. 2011](https://doi.org/10.1145/1978942.1978963)).
+But how should we do contrast tests with ART?
 
 Contrasts involving levels of single factors, combinations of factors, or differences of
 differences across two factors can be performed by conducting those contrasts on a
 linear model aligned-and-ranked on the factors involved in the contrasts.
 This linear model may be one of the models used in the ART procedure, or it may require
-concatenating factors and constructing a new model, a procedure called *ART contrasts* 
-or *ART-C* ([Lelkin et al. 2021](TODO)). 
+concatenating factors and constructing a new model, a procedure called *ART contrasts*
+or *ART-C* ([Lelkin et al. 2021](TODO)).
 
 The `art.con()` function selects the appropriate model given a desired set of contrasts
-and then performs the requested contrasts. This page explains when and why a separate 
-aligning-and-ranking procedure is needed to conduct contrasts and demonstrates how to 
+and then performs the requested contrasts. This page explains when and why a separate
+aligning-and-ranking procedure is needed to conduct contrasts and demonstrates how to
 conduct those contrasts using the `art.con()` function within the ART paradigm.
 
 If you are not sure when/how to select the appropriate aligned-and-ranked linear
@@ -66,18 +66,18 @@ Let's generate some test data where we actually know what the effects are. Speci
 
 ```{r}
 n_per_group = 150
-df = tibble(
+df = as.data.frame(tibble(
   X1 = factor(c(rep("A", n_per_group), rep("B", n_per_group))),
   X2 = factor(rep(c("C","D","E"), n_per_group * 2/3)),
   Y = rnorm(
-    n_per_group * 2, 
+    n_per_group * 2,
     (X1 == "B")
     + 2* (X2 == "D")
     + 2 * (X1 == "B" & X2 == "D")
     - 2 * (X1 == "A" & X2 == "D")
     + 2 * (X2 == "E")
-  ) 
-)
+  )
+))
 ```
 
 This is normally-distributed error with the same variance at all levels, so we can compare the results of ART and ART-C to a linear model,
@@ -88,7 +88,7 @@ I pre-ran the above code and saved it as `InteractionTestData` so that the text 
 ```{r}
 data(InteractionTestData, package = "ARTool")
 df = InteractionTestData    #save some typing
-```  
+```
 
 The "true" means from the model look like this:
 
@@ -103,7 +103,7 @@ The "true" means from the model look like this:
 Which we can see pretty well:
 
 ```{r interaction_plot, fig.cap=""}
-# variant of the Dark2 colorbrewer scale with specific name mappings (so 
+# variant of the Dark2 colorbrewer scale with specific name mappings (so
 # we can keep color -> name mapping consistent throughout this document)
 palette = c("#1b9e77", "#d95f02", "#7570b3")
 names(palette) = c("C", "D", "E")
@@ -145,7 +145,7 @@ m.art = art(Y ~ X1*X2, data = df)
 anova(m.art)
 ```
 
-Both have significance at all levels (expected given the number of samples and the "true" effects) and similar enough F values. 
+Both have significance at all levels (expected given the number of samples and the "true" effects) and similar enough F values.
 The real question is whether/what kind of contrast tests make sense.
 
 ### Contrast tests of main effects
@@ -176,7 +176,7 @@ contrast(emmeans(artlm.con(m.art, "X1"), ~ X1), method = "pairwise")
 contrast(emmeans(artlm.con(m.art, "X2"), ~ X2), method = "pairwise")
 ```
 
-We can also use the shortcut function `art.con()`, which will perform the 
+We can also use the shortcut function `art.con()`, which will perform the
 appropriate call to both `artlm.con()` and `emmeans()` for the desired contrast:
 
 ```{r, message=FALSE}
@@ -204,7 +204,7 @@ contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method = "pairwise")
 
 Compare these to the linear model: very different results!
 
-The linear model tests are easy to interpret: 
+The linear model tests are easy to interpret:
 they tell us the expected mean difference between combinations of levels.
 
 The ART results are more difficult to interpret. Take `A,C - A,D`, which looks like this:
@@ -218,11 +218,11 @@ df %>%
   stat_summary(fun = mean, geom = "point", size = 4) +
   scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
   scale_color_manual(guide = FALSE, values = palette) +
-  coord_cartesian(ylim=c(-6,10)) 
+  coord_cartesian(ylim=c(-6,10))
 ```
 
 The linear model correctly estimates this difference as approximately `0`, which is both the true effect and what we should expect from a visual
-inspection of the data. Unlike the linear model, the ART model gives us a statistically significant difference between `A,C` and `A,D`, 
+inspection of the data. Unlike the linear model, the ART model gives us a statistically significant difference between `A,C` and `A,D`,
 which if we interpret in the same way as the linear model is obviously incorrect.
 
 The key here is to understand that ART is reporting differences with the main effects subtracted out.
@@ -266,24 +266,24 @@ Before we test, let's try to visualize what's going on in just this interaction:
 plot_interaction_for_X2_levels = function(...) {
   x2_levels = c(...)
   df. = filter(df, X2 %in% x2_levels)
-  
+
   X1_in_X2 = df. %>%
     group_by(X1, X2) %>%
     summarise(Y = mean(Y), .groups = "drop") %>%
     spread(X1, Y)
-  
+
   print(
-    ggplot(df., aes(x = X1, y = Y, color = X2)) +  
-      geom_violin(trim = FALSE, adjust = 1.5) + 
+    ggplot(df., aes(x = X1, y = Y, color = X2)) +
+      geom_violin(trim = FALSE, adjust = 1.5) +
       geom_point(pch = "-", size = 4) +
-      stat_summary(fun = mean, geom = "point", size = 4) + 
+      stat_summary(fun = mean, geom = "point", size = 4) +
       stat_summary(aes(group = X2), fun = mean, geom = "line", size = 1, linetype = "dashed") +
       geom_errorbar(
-        aes(x = 2.2, ymin = A, ymax = B, y = NULL),  
+        aes(x = 2.2, ymin = A, ymax = B, y = NULL),
         data = X1_in_X2, width = .19, size = 0.8, color = "black"
       ) +
       geom_text(
-        aes(x = 2.35, y = (A + B)/2, label = paste("A - B |", X2)), 
+        aes(x = 2.35, y = (A + B)/2, label = paste("A - B |", X2)),
         data = X1_in_X2, hjust = 0, size = 5, color = "black"
       ) +
       scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
@@ -308,7 +308,7 @@ contrast(emmeans(m.linear, ~ X1:X2), method = "pairwise", interaction = TRUE)
 ```
 
 Here we can interpret the row `A - B    C - D` as the difference between (`A - B | C`) and (`A - B | D`), which
-is estimated as `3.82` (close to the true effect of 4, see the plot above). 
+is estimated as `3.82` (close to the true effect of 4, see the plot above).
 
 We can look at a similar plot for the row `A - B    C - E`:
 
@@ -317,8 +317,8 @@ plot_interaction_for_X2_levels("C", "E")
 ```
 
 Here the true effect for `A - B | C` is -1, `A - B | E` is also -1, and `(A - B | C) - (A - B | E)` is `0`.
-Visually, this sample looks close to the true effects (the height of `A - B | C` is about the same as `A - B | E`). 
-From the the row `A-B : C-E` above we can see that the 
+Visually, this sample looks close to the true effects (the height of `A - B | C` is about the same as `A - B | E`).
+From the the row `A-B : C-E` above we can see that the
 estimate from the linear model is ~0, as we should hope.
 
 A similar visual analysis finds the estimate for row `A - B    D - E` (~ -4.2) also to be correct (true effect is -4):
@@ -339,12 +339,12 @@ This is equivalent to:
 contrast(emmeans(artlm(m.art, "X1:X2"), ~ X1:X2), method = "pairwise", interaction = TRUE)
 ```
 
-And we see *t* values consistent with the linear model, and consistent estimates (given the standard error). 
-These types of comparisons work under ART because they do not involve coefficients of main 
+And we see *t* values consistent with the linear model, and consistent estimates (given the standard error).
+These types of comparisons work under ART because they do not involve coefficients of main
 effects (see the description of these tests in `vignette("phia")`),
 thus are consistent even when ART has stripped out the main effects.
 
-If you prefer the `phia` package, the code to run the equivalent tests using the `testInteractions` 
+If you prefer the `phia` package, the code to run the equivalent tests using the `testInteractions`
 function in `phia` instead of using `emmeans` is:
 
 ```{r}
@@ -352,8 +352,8 @@ testInteractions(artlm(m.art, "X1:X2"), pairwise = c("X1","X2"))
 ```
 
 While `emmeans()` uses _t_ tests in this case, `testInteractions()` gives the result of equivalent
-_F_ tests with one numerator degree of freedom (an _F_ test with $F(1,\nu) = f$ is equivalent to a two-sided 
+_F_ tests with one numerator degree of freedom (an _F_ test with $F(1,\nu) = f$ is equivalent to a two-sided
 _t_ test with $t(\nu) = \sqrt{f}$). I prefer the _t_ test in this case because the _t_ value preserves
 the direction of the effect (its sign) and is more amenable to calculating interpretable (ish)
-effect sizes like Cohen's _d_. For an example of the latter, see 
+effect sizes like Cohen's _d_. For an example of the latter, see
 <code>[vignette("art-effect-size")](art-effect-size.html)</code>.
