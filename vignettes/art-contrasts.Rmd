@@ -38,7 +38,7 @@ demonstrated in this vignette will select the appropriate method given a contras
 This type of interaction contrast must be conducted with ART-C
 4. [Tests of differences of differences in interactions](#tests-of-differences-of-differences-in-interactions): This type of interaction contrast can be conducted with ART
 
-## Libraries needed for this
+## Libraries needed for this vignette
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(  #default code chunk options
@@ -49,7 +49,7 @@ pander::panderOptions("table.split.table", Inf)     #don't split wide tables in 
 pander::panderOptions("table.style", "rmarkdown")   #table style that's supported by github
 ```
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(dplyr)      #data_frame, %>%, filter, summarise, group_by
 library(emmeans)    #emmeans, contrast
 library(phia)       #testInteractions
@@ -161,7 +161,8 @@ These are about right: The "true" effect for `A - B` is `-2.3333`, for `C - D` a
 we can then use with a library that does contrasts (such as `emmeans()`):
 
 ```{r, message=FALSE}
-# this works for single factors, though better to use artlm.con() or art.con() below
+# this works for single factors, though it is better (more general) to use
+# artlm.con() or art.con() (see below)
 contrast(emmeans(artlm(m.art, "X1"), ~ X1), method = "pairwise")
 contrast(emmeans(artlm(m.art, "X2"), ~ X2), method = "pairwise")
 ```
@@ -185,7 +186,7 @@ art.con(m.art, "X2")
 ```
 
 **Within a single factor** ART (i.e., `artlm()`) and ART-C (`artlm.con()`) are mathematically equivalent,
-so the contrast tests for ART and ART-C to have the same results.
+so the contrast tests for ART and ART-C have the same results.
 
 ### Tests of differences in pairwise combinations of levels between factors in interactions
 

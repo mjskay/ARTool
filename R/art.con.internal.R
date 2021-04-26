@@ -209,8 +209,10 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed) {
     f.concatenated.variable = f.parsed$concat.interaction.variable
     # e.g. list(a, b, c)
     f.interaction.variables = f.parsed$interaction.variables
+    # indexing in art.con.df used below with f.concatenated.variable does not work on tibbles,
+    # so convert to a data.frame in advance
+    art.con.df = as.data.frame(df, optional = TRUE)
     # turn list of names to vector of strings. e.g, aa = as.name("a"), bb = as.name("b"), list(aa, bb) -> c("a","b")
-    art.con.df = df
     # unname throws error when only one interaction variable and we don't need to concatenate in that case
     # this is easier than debugging it
     if (length(f.interaction.variables) > 1) {
