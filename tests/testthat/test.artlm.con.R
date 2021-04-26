@@ -37,6 +37,14 @@ test_that("artlm.con matches with art.con",{
     summary(contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), ~ MoistureFertilizer), method="pairwise"))
   )
 
+  # should still work even if input data frame is a tibble
+  m = art(DryMatter ~ Moisture*Fertilizer + (1|Tray), data = tibble::as_tibble(Higgins1990Table5))
+
+  expect_equal(
+    summary(art.con(m, "Moisture")),
+    summary(contrast(emmeans(artlm.con(m, "Moisture"), ~ Moisture), method="pairwise"))
+  )
+
   # error term
   # can't use Higgins Table 5 because it's unbalanced with respect to Moisture:Fertilizer
   data(ElkinAB, package = "ARTool")
