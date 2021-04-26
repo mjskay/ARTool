@@ -38,6 +38,7 @@ Suggests:
     psych,
     stringi,
     DescTools,
+    tibble,
     covr
 License: GPL (>= 2)
 Language: en-US
