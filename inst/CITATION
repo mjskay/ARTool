@@ -36,7 +36,7 @@ bibentry(
 
 bibentry(
     header = "For the ART-C contrast testing procedure used in art.con() and artlm.con(), cite:",
-    bibtype = "misc",
+    bibtype = "InProceedings",
     title = "An Aligned Rank Transform Procedure for Multifactor Contrast Tests",
     author = c(
         person("Lisa A.", "Elkin"),
