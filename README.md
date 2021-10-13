@@ -218,7 +218,7 @@ reproduce the issue.
 
 Kay, M., Elkin, L. A., Higgins, J. J., and Wobbrock, J. O. (2021).
 *ARTool: Aligned Rank Transform for Nonparametric Factorial ANOVAs*. R
-package version 0.11.0, <https://github.com/mjskay/ARTool>. DOI:
+package version 0.11.1, <https://github.com/mjskay/ARTool>. DOI:
 [10.5281/zenodo.594511](https://dx.doi.org/10.5281/zenodo.594511).
 
 For the *ART* procedure used by `art()` and `anova.art()`, cite:

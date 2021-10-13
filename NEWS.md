@@ -1,3 +1,8 @@
+# ARTool 0.11.1
+
+Minor release to update citations and DOIs.
+
+
 # ARTool 0.11.0
 
 Major changes:
