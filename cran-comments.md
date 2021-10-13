@@ -1,21 +1,31 @@
 ## Submission comments
-This submission adds the art.con() and artlm.con() methods for conducting
-contrasts on ART models.
+This submission contains minor documentation updates and bugfixes.
 
 
 ## Test environments
-* local Windows install, R-release 4.0.3
-* MacOS (Github), R-release 4.0.4
-* MacOS (Github), R-devel 2021-02-19 r80028
-* Linux (Github), R-release 4.0.4
-* Linux (Github), R-oldrel 3.6.3
-* win-builder Windows install, R-release 4.0.4
-* win-builder Windows install, R-devel 2021-02-20 r80030
+* local Windows install, R-release 4.1.1
+* MacOS (Github), R-release 4.1.1
+* Linux (Github), R-release 4.1.1
+* Linux (Github), R-oldrel 4.0.5
+* Solaris (rhub), R-release 4.1.1
+* win-builder Windows install, R-release
+* win-builder Windows install, R-devel
 
 
 ## R CMD check results
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+1 NOTE on winbuilder:
+
+Possibly mis-spelled words in DESCRIPTION:
+  Elkin (18:8)
+
+This is correctly spelled. It is the name of one of the authors in a citation added to the DESCRIPTION in this release.
 
 
 ## Downstream dependencies
-There are no downstream dependencies for this package.
+We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
+
