@@ -45,8 +45,10 @@
 #'
 #' @author Lisa A. Elkin
 #' @references Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
-#'   (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
-#'   \href{https://arxiv.org/abs/2102.11824}{arXiv eprint: 2102.11824}.
+#'   (2021). An aligned rank transform procedure for multifactor contrast tests.
+#'   \emph{Proceedings of the ACM Symposium on User Interface Software and
+#'   Technology (UIST '21)}. Virtual Event (October 10--14, 2021). New York:
+#'   ACM Press, pp. 754--768. \doi{10.1145/3472749.3474784}
 #' @export
 #'
 #' @examples

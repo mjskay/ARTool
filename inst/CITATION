@@ -30,7 +30,8 @@ bibentry(
     address = "New York",
     publisher = "ACM Press",
     pages = "143--146",
-    url = "http://depts.washington.edu/aimgroup/proj/art/"
+    url = "https://depts.washington.edu/acelab/proj/art/",
+    doi = "10.1145/1978942.1978963"
 )
 
 bibentry(
@@ -44,6 +45,9 @@ bibentry(
         person("Jacob O.", "Wobbrock")
     ),
     year = 2021,
-    note = "arXiv eprint: 2102.11824",
-    url = "https://arxiv.org/abs/2102.11824"
+    booktitle = "Proceedings of the ACM Symposium on User Interface Software and Technology (UIST '21)",
+    address = "New York",
+    publisher = "ACM Press",
+    pages = "754--768",
+    doi = "10.1145/3472749.3474784"
 )

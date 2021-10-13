@@ -149,14 +149,16 @@ art.con(m, "Moisture:Fertilizer", interaction = TRUE)
 }
 \references{
 Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O.
-  (2021). An Aligned Rank Transform Procedure for Multifactor Contrast Tests.
-  \href{https://arxiv.org/abs/2102.11824}{arXiv eprint: 2102.11824}.
+  (2021). An aligned rank transform procedure for multifactor contrast tests.
+  \emph{Proceedings of the ACM Symposium on User Interface Software and
+  Technology (UIST '21)}. Virtual Event (October 10--14, 2021). New York:
+  ACM Press, pp. 754--768. \doi{10.1145/3472749.3474784}
 
   Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-  (2011). The Aligned Rank Transform for nonparametric factorial analyses
+  (2011). The aligned rank transform for nonparametric factorial analyses
   using only ANOVA procedures. \emph{Proceedings of the ACM Conference on
   Human Factors in Computing Systems (CHI '11)}.  Vancouver, British Columbia
-  (May 7-12, 2011). New York: ACM Press, pp. 143-146.
+  (May 7--12, 2011). New York: ACM Press, pp. 143--146. \doi{10.1145/1978942.1978963}
 }
 \author{
 Lisa A. Elkin, Matthew Kay, Jacob O. Wobbrock

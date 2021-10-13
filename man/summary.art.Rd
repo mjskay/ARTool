@@ -26,10 +26,10 @@ not of interest are ~0. For more details on these diagnostics see Wobbrock
 }
 \references{
 Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J.
-(2011). The Aligned Rank Transform for nonparametric factorial analyses
+(2011). The aligned rank transform for nonparametric factorial analyses
 using only ANOVA procedures. \emph{Proceedings of the ACM Conference on
 Human Factors in Computing Systems (CHI '11)}.  Vancouver, British Columbia
-(May 7-12, 2011). New York: ACM Press, pp. 143-146.
+(May 7--12, 2011). New York: ACM Press, pp. 143--146. \doi{10.1145/1978942.1978963}
 }
 \seealso{
 See \code{\link{art}} for an example. See also

@@ -1,7 +1,7 @@
 Package: ARTool
 Title: Aligned Rank Transform
 Version: 0.11.0.9000
-Date: 2021-04-26
+Date: 2021-10-12
 Authors@R: c(person("Matthew", "Kay", role = c("aut", "cre"),
     email = "mjskay@northwestern.edu"),
     person("Lisa A.", "Elkin", role = "aut",
@@ -15,7 +15,11 @@ Description: The Aligned Rank Transform for nonparametric
     factorial ANOVAs as described by J. O. Wobbrock,
     L. Findlater, D. Gergle, & J. J. Higgins, "The Aligned
     Rank Transform for nonparametric factorial analyses
-    using only ANOVA procedures", CHI 2011 <DOI:10.1145/1978942.1978963>.
+    using only ANOVA procedures", CHI 2011 <DOI:10.1145/1978942.1978963>. Also
+    supports Aligned Rank Transform Contrasts as described
+    by L. A. Elkin, M. Kay, J. J. Higgins, & J. O. Wobbrock, "An Aligned Rank 
+    Transform Procedure for Multifactor Contrast Tests", UIST 2021
+    <DOI:10.1145/3472749.3474784>.
 Depends: R (>= 3.2)
 Imports:
     lme4,
@@ -45,5 +49,5 @@ Language: en-US
 BugReports: https://github.com/mjskay/ARTool/issues/new
 URL: https://github.com/mjskay/ARTool/
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8

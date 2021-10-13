@@ -5,8 +5,8 @@
 status](https://github.com/mjskay/ARTool/workflows/R-CMD-check/badge.svg)](https://github.com/mjskay/ARTool/actions)
 [![Coverage
 status](https://codecov.io/gh/mjskay/ARTool/branch/master/graph/badge.svg)](https://codecov.io/github/mjskay/ARTool?branch=master)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
-[![GPL &gt;=
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
+[![GPL \>=
 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool)
 [![DOI](https://img.shields.io/badge/DOI-10.1145%2F1978942.1978963-blue.svg)](https://dx.doi.org/10.1145/1978942.1978963)
@@ -210,31 +210,33 @@ This vignette is also available
 
 ## Problems
 
-Should you encounter any issues with this package, contact Matthew Kay
-(<mjskay@northwestern.edu>). If you have found a bug, please file it
+Should you encounter any bugs in this package, please file it
 [here](https://github.com/mjskay/ARTool/issues/new) with minimal code to
 reproduce the issue.
 
 ## Citations
 
-Kay M and Wobbrock J (2021). *ARTool: Aligned Rank Transform for
-Nonparametric Factorial ANOVAs*. R package version 0.11.0,
-<https://github.com/mjskay/ARTool>. DOI:
+Kay, M., Elkin, L. A., Higgins, J. J., and Wobbrock, J. O. (2021).
+*ARTool: Aligned Rank Transform for Nonparametric Factorial ANOVAs*. R
+package version 0.11.0, <https://github.com/mjskay/ARTool>. DOI:
 [10.5281/zenodo.594511](https://dx.doi.org/10.5281/zenodo.594511).
 
 For the *ART* procedure used by `art()` and `anova.art()`, cite:
 
-Wobbrock J, Findlater L, Gergle D and Higgins J (2011). “The Aligned
-Rank Transform for Nonparametric Factorial Analyses Using Only ANOVA
-Procedures.” In *Proceedings of the ACM Conference on Human Factors in
-Computing Systems (CHI 2011)*, Vancouver, British Columbia (May 7-12,
-2011). New York: ACM Press, pp. 143-146.
+Wobbrock, J. O., Findlater, L., Gergle, D., and Higgins, J. J. (2011).
+The Aligned Rank Transform for Nonparametric Factorial Analyses Using
+Only ANOVA Procedures. *Proceedings of the ACM Conference on Human
+Factors in Computing Systems (CHI 2011)*. Vancouver, British Columbia
+(May 7-12, 2011). New York: ACM Press, pp. 143-146.
 <https://depts.washington.edu/acelab/proj/art/>. DOI:
 [10.1145/1978942.1978963](https://dx.doi.org/10.1145/1978942.1978963).
 
 For the *ART-C* contrast testing procedure used by `art.con()` and
 `artlm.con()`, cite:
 
-Elkin L, Kay M, Higgins J and Wobbrock J (2021). “An Aligned Rank
-Transform Procedure for Multifactor Contrast Tests.” [arXiv eprint:
-2102.11824](https://arxiv.org/abs/2102.11824).
+Elkin, L. A., Kay, M, Higgins, J. J., and Wobbrock, J. O. (2021). An
+Aligned Rank Transform Procedure for Multifactor Contrast Tests.
+*Proceedings of the ACM Symposium on User Interface Software and
+Technology (UIST 2021)*. Virtual Event (October 10-14, 2021). New York:
+ACM Press, pp. 754-768. DOI:
+[10.1145/3472749.3474784](https://dx.doi.org/10.1145/3472749.3474784)
