@@ -54,7 +54,7 @@ library(dplyr)      #data_frame, %>%, filter, summarise, group_by
 library(emmeans)    #emmeans, contrast
 library(phia)       #testInteractions
 library(tidyr)      #spread
-library(ARTool)     #art, artlm
+library(ARTool)     #art, artlm, artlm.con, art.con
 library(ggplot2)    #ggplot, stat_..., geom_..., etc
 ```
 
@@ -116,7 +116,7 @@ df %>%
   stat_summary(aes(group = X2), fun = mean, geom = "line", size = 1) +
   stat_summary(aes(x = 1.5, group = NA), fun = mean, geom = "point", size = 9, pch = "+") +
   scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
-  scale_color_manual(guide = FALSE, values = palette) +
+  scale_color_manual(guide = "none", values = palette) +
   coord_cartesian(ylim = c(-6, 10)) +
   facet_grid(. ~ X2)
 ```
@@ -168,7 +168,7 @@ contrast(emmeans(artlm(m.art, "X2"), ~ X2), method = "pairwise")
 ```
 
 This is about right (effects in the same direction, the estimates aren't
-the same because they are on the scale of ranks and not the data, but the t values are similar to the linear model, as we should hope). However, I recommend using `artlm.con()` instead of `artlm()`, as it
+the same because they are on the scale of ranks and not the data, but the t values are similar to the linear model, as we should hope). However, we recommend using `artlm.con()` instead of `artlm()`, as it
 will also return the correct model in this case but not in the general case, as
 we will see below. Using `artlm.con()`, we get the same result as before:
 
@@ -218,7 +218,7 @@ df %>%
   geom_point(pch = "-", size = 4) +
   stat_summary(fun = mean, geom = "point", size = 4) +
   scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
-  scale_color_manual(guide = FALSE, values = palette) +
+  scale_color_manual(guide = "none", values = palette) +
   coord_cartesian(ylim=c(-6,10)) 
 ```
 
@@ -229,7 +229,7 @@ which if we interpret in the same way as the linear model is obviously incorrect
 The key here is to understand that ART is reporting differences with the main effects subtracted out.
 That is, the `A,C - A,D` effect is something like the difference between this combination of levels if we first
 subtracted out the effect of `C - D`. We can see this if we take the ART estimate for `C - D` in the `emmeans` output for `X2` above (`-123.13`) and the
-ART estimate for `A,C - A,D` (`125.12`) here, we can get approximate an estimate of the difference (`-123.13 + 125.12 == 1.99`)
+ART estimate for `A,C - A,D` (`125.12`) here, we can get an approximate estimate of the difference (`-123.13 + 125.12 == 1.99`)
 that is consistent with the expected 0 (given the SE here).
 
 The ART-C procedure was developed to align and rank data specifically for contrasts involving levels from any number of factors, and is available through `art.con()`:
@@ -257,7 +257,7 @@ contrast(emmeans(artlm.con(m.art, "X1:X2"), ~ X1X2), method = "pairwise")
 
 ### Tests of _differences of differences_ in interactions
 
-You may also with to test _differences of differences_; e.g., for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`?. We can test this using the `interaction` argument to `art.con()`.
+You may also wish to test _differences of differences_; e.g., for the interaction `X1:X2`, we might ask, is the difference `A - B` different when `X2 = C` compared to when `X2 = D`? We can test this using the `interaction` argument to `art.con()`.
 When the `interaction` argument is supplied to art.con, differences of differences are tested on data that has been aligned-and-ranked using the **original** ART method (i.e., the data is **not** aligned-and-ranked using the ART-C method,
 as it is not necessary for these contrasts).
 
@@ -288,7 +288,7 @@ plot_interaction_for_X2_levels = function(...) {
         data = X1_in_X2, hjust = 0, size = 5, color = "black"
       ) +
       scale_y_continuous(breaks = seq(-6, 10, by = 2), minor_breaks = -6:10) +
-      scale_color_manual(guide = FALSE, values = palette[x2_levels]) +
+      scale_color_manual(guide = "none", values = palette[x2_levels]) +
       coord_cartesian(xlim = c(0, 3.5), ylim = c(-6,10)) +
       facet_grid(. ~ X2)
   )
@@ -328,7 +328,7 @@ A similar visual analysis finds the estimate for row `A - B    D - E` (~ -4.2) a
 plot_interaction_for_X2_levels("D", "E")
 ```
 
-Now we look at these differences of differences in ART, using art.con():
+Now we look at these differences of differences in ART, using `art.con()`:
 
 ```{r}
 art.con(m.art, "X1:X2", interaction = TRUE)
@@ -354,7 +354,7 @@ testInteractions(artlm(m.art, "X1:X2"), pairwise = c("X1","X2"))
 
 While `emmeans()` uses _t_ tests in this case, `testInteractions()` gives the result of equivalent
 _F_ tests with one numerator degree of freedom (an _F_ test with $F(1,\nu) = f$ is equivalent to a two-sided 
-_t_ test with $t(\nu) = \sqrt{f}$). I prefer the _t_ test in this case because the _t_ value preserves
+_t_ test with $t(\nu) = \sqrt{f}$). We prefer the _t_ test in this case because the _t_ value preserves
 the direction of the effect (its sign) and is more amenable to calculating interpretable (ish)
 effect sizes like Cohen's _d_. For an example of the latter, see 
 <code>[vignette("art-effect-size")](art-effect-size.html)</code>.
