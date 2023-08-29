@@ -218,7 +218,6 @@ generate.art.concatenated.df = function(m.f.parsed, df, f.parsed) {
     if (length(f.interaction.variables) > 1) {
         f.interaction.variables.string.vec = sapply(f.interaction.variables,deparse)
         art.con.df[[f.concatenated.variable]] = do.call(paste, c(unname(art.con.df[,f.interaction.variables.string.vec]), sep = ","))
-        art.con.df[,f.interaction.variables.string.vec] = NULL
     }
     # note: when m was created would have thrown error if a fixed var column in df was not a factor
     art.con.df[[f.concatenated.variable]] = factor(art.con.df[[f.concatenated.variable]])

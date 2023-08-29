@@ -1,3 +1,11 @@
+# ARTool 0.11.1.9000
+
+Minor changes:
+
+* Retain unconcatenated columns in `art.con()` internal data so that contrasts 
+  can be computed for random slopes in mixed effects models (#37).
+
+
 # ARTool 0.11.1
 
 Minor changes:
