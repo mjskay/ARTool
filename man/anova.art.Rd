@@ -26,7 +26,7 @@ argument is passed to \code{\link{artlm}}. See 'Details'.}
 
 \item{type}{Type of ANOVAs to conduct. If \code{type} is \code{1} or
 \code{"I"}, then conducts Type I ANOVAs using \code{\link{anova}}.
-Otherwise, conducts Type II or Type III ANOVAs using \code{\link{Anova}}.
+Otherwise, conducts Type II or Type III ANOVAs using \code{\link[car]{Anova}}.
 The default is Type III \emph{if} the underlying model supports it. Models
 fit with \code{Error} terms are fit using \code{\link{aov}}, which only
 supports Type I ANOVAs.}
@@ -45,7 +45,7 @@ and ANOVA types may not support \code{"Chisq"}.}
 (\code{FALSE}), shows only the rows that are relevant depending on the type
 of \code{response}.}
 
-\item{\dots}{Additional arguments passed to \code{\link{Anova}} or
+\item{\dots}{Additional arguments passed to \code{\link[car]{Anova}} or
 \code{\link{anova}} by \code{anova.art} or to \code{\link{print}} by
 \code{print.anova.art}.}
 

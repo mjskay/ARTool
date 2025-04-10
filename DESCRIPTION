@@ -43,7 +43,7 @@ Suggests:
     covr
 License: GPL (>= 2)
 Language: en-US
-BugReports: https://github.com/mjskay/ARTool/issues/new
+BugReports: https://github.com/mjskay/ARTool/issues
 URL: https://github.com/mjskay/ARTool/
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2

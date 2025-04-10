@@ -39,7 +39,7 @@
 #' argument is passed to \code{\link{artlm}}. See 'Details'.
 #' @param type Type of ANOVAs to conduct. If \code{type} is \code{1} or
 #' \code{"I"}, then conducts Type I ANOVAs using \code{\link{anova}}.
-#' Otherwise, conducts Type II or Type III ANOVAs using \code{\link{Anova}}.
+#' Otherwise, conducts Type II or Type III ANOVAs using \code{\link[car]{Anova}}.
 #' The default is Type III \emph{if} the underlying model supports it. Models
 #' fit with \code{Error} terms are fit using \code{\link{aov}}, which only
 #' supports Type I ANOVAs.
@@ -59,7 +59,7 @@
 #' in addition to degrees of freedom are printed in some ANOVA types (e.g.
 #' repeated measures ANOVAs). Default \code{FALSE}, for brevity.
 #' @param digits Digits of output in printed table; see \code{\link{print}}.
-#' @param \dots Additional arguments passed to \code{\link{Anova}} or
+#' @param \dots Additional arguments passed to \code{\link[car]{Anova}} or
 #' \code{\link{anova}} by \code{anova.art} or to \code{\link{print}} by
 #' \code{print.anova.art}.
 #' @return An object of class \code{"anova"}, which usually is printed.

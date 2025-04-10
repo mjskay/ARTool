@@ -34,25 +34,25 @@ appropriate for Type III ANOVAs (the default ANOVA type for
 \code{\link{anova.art}}). This argument is passed to \code{\link{artlm.con}} /
 \code{\link{artlm}}.}
 
-\item{method}{Contrast method argument passed to \code{\link{contrast}}.
+\item{method}{Contrast method argument passed to \code{\link[emmeans]{contrast}}.
 Note: the default is \code{"pairwise"} even though the default for the
-\code{\link{contrast}} function is \code{"eff"}.}
+\code{\link[emmeans]{contrast}} function is \code{"eff"}.}
 
 \item{interaction}{Logical value. If \code{FALSE} (the default), conducts contrasts using
 the ART-C procedure and \code{\link{artlm.con}}. If \code{TRUE}, conducts
 difference-of-difference contrasts using a model returned by \code{\link{artlm}}.
-See the "Interaction Contrasts" section in \code{\link{contrast}}.}
+See the "Interaction Contrasts" section in \code{\link[emmeans]{contrast}}.}
 
 \item{adjust}{Character: adjustment method (e.g., "bonferroni") passed to
-\code{\link{contrast}}. If not provided, \code{\link{contrast}} will use
+\code{\link[emmeans]{contrast}}. If not provided, \code{\link[emmeans]{contrast}} will use
 its default ("tukey" at the time of publication). All available options are listed
-in \code{\link{summary.emmGrid}} in the "P-value adjustments" section.}
+in \code{\link[emmeans]{summary.emmGrid}} in the "P-value adjustments" section.}
 
 \item{\dots}{Additional arguments passed to \code{\link{lm}} or
-\code{\link{lmer}}.}
+\code{\link[lme4]{lmer}}.}
 }
 \value{
-An object of class \code{emmGrid}. See \code{\link{contrast}}
+An object of class \code{emmGrid}. See \code{\link[emmeans]{contrast}}
   for details.
 }
 \description{
@@ -72,15 +72,15 @@ procedure, then conducts the contrasts specified in parameter \code{formula}.
 Internally, this function uses \code{\link{artlm.con}} (when \code{interaction = FALSE})
 or \code{\link{artlm}} (when \code{interaction = TRUE}) to get the linear
 model necessary for the requested contrast, computes estimated marginal
-means on the linear model using \code{\link{emmeans}}, and conducts contrasts
-using \code{\link{contrast}}.
+means on the linear model using \code{\link[emmeans]{emmeans}}, and conducts contrasts
+using \code{\link[emmeans]{contrast}}.
 }
 \section{Formula}{
  Contrasts compare combinations of levels from multiple
   factors. The \code{formula} parameter indicates which factors are involved. Two
   formats are accepted: (1) a character vector as used in
   \code{\link{artlm}} and \code{\link{artlm.con}}, with factors separated by \code{":"};
-  or (2) a formula as used in \code{\link{emmeans}}, with factors separated by \code{*}.
+  or (2) a formula as used in \code{\link[emmeans]{emmeans}}, with factors separated by \code{*}.
   For example, contrasts comparing
   combinations of levels of factors \emph{X1} and \emph{X2} can be expressed
   as \code{"X1:X2"} (character vector) or as \code{~ X1*X2} (formula).

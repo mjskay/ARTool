@@ -28,7 +28,7 @@
 #' effect terms must be included. For example, \code{y ~ x} and \code{y ~
 #' a*b*c} and \code{y ~ a + b + b:c} are legal, but \code{y ~ a + b} is not, as
 #' it omits the interaction \code{a:b}. Grouping terms are specified as in
-#' \code{\link{lmer}}, e.g. \code{y ~ a*b*c + (1|d)} includes the random
+#' \code{\link[lme4]{lmer}}, e.g. \code{y ~ a*b*c + (1|d)} includes the random
 #' intercept term \code{(1|d)}. Error terms are specified as in
 #' \code{\link{aov}}, e.g. \code{y ~ a*b*c + Error(d)}. Grouping terms and
 #' error terms are not involved in the transformation, but are included in the
@@ -42,7 +42,7 @@
 #' (left-hand side) and one or more terms with all interactions on the
 #' right-hand side, e.g. \code{y ~ x} or \code{y ~ a*b*c} or \code{y ~ a + b +
 #' b:c}. If you want to run a mixed effects ANOVA on the transformed data using
-#' \code{\link{lmer}}, you can include grouping terms, as in \code{y ~ a*b*c +
+#' \code{\link[lme4]{lmer}}, you can include grouping terms, as in \code{y ~ a*b*c +
 #' (1|d)}.  If you want to run a repeated measures ANOVA using
 #' \code{\link{aov}}, you can include error terms, as in \code{y ~ a*b*c +
 #' Error(d)}. See 'Details'.

@@ -29,12 +29,12 @@ appropriate for Type III ANOVAs (the default ANOVA type for
 \code{\link{anova.art}}).}
 
 \item{\dots}{Additional arguments passed to \code{\link{lm}} or
-\code{\link{lmer}}.}
+\code{\link[lme4]{lmer}}.}
 }
 \value{
 An object of class \code{\link{lm}} if \code{formula(m)} does not
-contain grouping or error terms, an object of class \code{\link{merMod}}
-(i.e. a model fit by \code{\link{lmer}}) if it contains grouping terms, or
+contain grouping or error terms, an object of class \code{\link[lme4]{merMod}}
+(i.e. a model fit by \code{\link[lme4]{lmer}}) if it contains grouping terms, or
 an object of class \code{aovlist} (i.e. a model fit by \code{\link{aov}}) if
 it contains error terms.
 }
