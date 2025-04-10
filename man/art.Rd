@@ -128,12 +128,12 @@ art.con(m, "Moisture:Fertilizer", interaction = TRUE)
 library(emmeans)
 
 ## Ex 1: pairwise contrasts on Moisture:
-contrast(emmeans(artlm.con(m, "Moisture"), pairwise ~ Moisture))
+contrast(emmeans(artlm.con(m, "Moisture"), ~ Moisture), method = "pairwise")
 
 ## Ex 2: pairwise contrasts on Moisture:Fertilizer:
 ## See artlm.con() documentation for more details on the syntax, specifically
 ## the formula passed to emmeans.
-contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), pairwise ~ MoistureFertilizer))
+contrast(emmeans(artlm.con(m, "Moisture:Fertilizer"), ~ MoistureFertilizer), method = "pairwise")
 
 ## Ex 3: difference-of-difference tests on the Moisture:Fertilizer interaction:
 ## Note the use of artlm() instead of artlm.con()
