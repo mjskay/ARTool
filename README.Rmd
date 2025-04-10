@@ -5,7 +5,7 @@ output: github_document
 # ARTool: R Package for the Aligned Rank Transform for Nonparametric Factorial ANOVAs 
 
 [![R build status](https://github.com/mjskay/ARTool/workflows/R-CMD-check/badge.svg)](https://github.com/mjskay/ARTool/actions)
-[![Coverage status](https://codecov.io/gh/mjskay/ARTool/branch/master/graph/badge.svg)](https://codecov.io/github/mjskay/ARTool?branch=master)
+[![Coverage status](https://codecov.io/gh/mjskay/ARTool/branch/master/graph/badge.svg)](https://app.codecov.io/github/mjskay/ARTool?branch=master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/ARTool)](https://CRAN.R-project.org/package=ARTool)
 [![GPL >= 2](https://img.shields.io/badge/GPL-%E2%89%A52-brightgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 [![DOI](https://zenodo.org/badge/19809/mjskay/ARTool.svg)](https://zenodo.org/badge/latestdoi/19809/mjskay/ARTool)
@@ -132,13 +132,7 @@ anova(m)
 
 ## Contrast tests
 
-For an example of how to run contrast tests on an `art` model, see this vignette:
-
-```{r eval=FALSE}
-vignette("art-contrasts")
-```
-
-This vignette is also available [here](https://cran.r-project.org/package=ARTool/vignettes/art-contrasts.html).
+For an example of how to run contrast tests on an `art` model, see `vignette("art-contrasts")`.
 
 ## Problems
 

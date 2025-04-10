@@ -145,12 +145,12 @@ art.con = function(
 
   # syntax handled differently for interaction contrasts.
   if (interaction) {
-    art.interaction.contrast = do.art.interaction.contrast(m, f.parsed, response, factor.contrasts, method, adjust, ...)
+    art.interaction.contrast = .do.art.interaction.contrast(m, f.parsed, response, factor.contrasts, method, adjust, ...)
     art.interaction.contrast
   }
   else {
     artlm.con = artlm.con.internal(m, f.parsed, response, factor.contrasts, ...)
-    art.contrast = do.art.contrast(f.parsed, artlm.con, method, adjust)
+    art.contrast = .do.art.contrast(f.parsed, artlm.con, method, adjust)
     art.contrast
   }
 }
