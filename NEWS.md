@@ -1,4 +1,4 @@
-# ARTool 0.11.1.9000
+# ARTool 0.11.2
 
 Minor changes:
 

@@ -1,5 +1,12 @@
 ## Submission comments
-This submission contains minor documentation updates and bugfixes.
+This submission fixes a bug in an example introduced due to changes in emmeans.
+
+It is a new submission as the package was archived on CRAN:
+
+    X-CRAN-Comment: Archived on 2025-04-04 as issues were not corrected
+      in time
+
+Apologies, I missed the CRAN email during the spring break.
 
 
 ## Test environments
@@ -15,17 +22,14 @@ This submission contains minor documentation updates and bugfixes.
 ## R CMD check results
 0 errors | 0 warnings | 1 note
 
-1 NOTE on winbuilder:
-
-Possibly mis-spelled words in DESCRIPTION:
-  Elkin (18:8)
-
-This is correctly spelled. It is the name of one of the authors in a citation added to the DESCRIPTION in this release.
-
-
-## Downstream dependencies
-We checked 1 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
-
- * We saw 0 new problems
- * We failed to check 0 packages
+❯ checking CRAN incoming feasibility ... [14s] NOTE
+  Maintainer: 'Matthew Kay <mjskay@northwestern.edu>'
+  
+  New submission
+  
+  Package was archived on CRAN
+  
+  CRAN repository db overrides:
+    X-CRAN-Comment: Archived on 2025-04-04 as issues were not corrected
+      in time
 
