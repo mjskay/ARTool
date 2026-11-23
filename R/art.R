@@ -34,6 +34,12 @@
 #' error terms are not involved in the transformation, but are included in the
 #' model when ANOVAs are conducted, see \code{\link{anova.art}}.
 #'
+#' In a balanced design with one observation per subject \code{d} in each
+#' combination of within-subject factors \code{a} and \code{b},
+#' \code{Error(d/(a*b))} supplies separate error strata for \code{a},
+#' \code{b}, and \code{a:b}. With \code{Error(d)}, these tests use a common
+#' within-subject residual stratum. See the repeated-measures example below.
+#'
 #' For details on the transformation itself, see Wobbrock \emph{et al.} (2011)
 #' or the ARTool website: \url{https://depts.washington.edu/acelab/proj/art/}.
 #'
@@ -146,6 +152,11 @@
 #' ## differences between interaction types, see vignette("art-contrasts")
 #'
 #' }
+#'
+#' ## Two within-subject factors with a separate error stratum for each effect.
+#' data(ElkinAB, package = "ARTool")
+#' m <- art(Y ~ A*B + Error(S/(A*B)), data = ElkinAB)
+#' anova(m)
 #'
 #' @importFrom stats complete.cases model.frame terms
 #' @importFrom plyr laply llply
