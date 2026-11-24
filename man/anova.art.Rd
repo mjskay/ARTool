@@ -58,7 +58,11 @@ repeated measures ANOVAs). Default \code{FALSE}, for brevity.}
 \item{digits}{Digits of output in printed table; see \code{\link{print}}.}
 }
 \value{
-An object of class \code{"anova"}, which usually is printed.
+A data frame of class \code{"anova.art"} and \code{"anova"}.
+The \code{Term} column contains the term labels.
+Use \code{anova(m)$Term} to extract them, where \code{m} is an object
+returned by \code{\link{art}}.
+The print method displays these terms as numbered row labels.
 }
 \description{
 Conduct analyses of variance on aligned rank transformed data.
