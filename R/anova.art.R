@@ -62,7 +62,11 @@
 #' @param \dots Additional arguments passed to \code{\link[car]{Anova}} or
 #' \code{\link{anova}} by \code{anova.art} or to \code{\link{print}} by
 #' \code{print.anova.art}.
-#' @return An object of class \code{"anova"}, which usually is printed.
+#' @return A data frame of class \code{"anova.art"} and \code{"anova"}.
+#' The \code{Term} column contains the term labels.
+#' Use \code{anova(m)$Term} to extract them, where \code{m} is an object
+#' returned by \code{\link{art}}.
+#' The print method displays these terms as numbered row labels.
 #' @author Matthew Kay
 #' @seealso See \code{\link{art}} for an example. See also
 #' \code{\link{summary.art}}, \code{\link{artlm}}.
